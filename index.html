@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌙 Рыболовный Дневник</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* ============================================================
+           ТЕМНАЯ ТЕМА "НОЧНОЕ ОЗЕРО" 🌙
+           ============================================================ */
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            background: #0f1a2e;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, rgba(74, 158, 158, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(212, 160, 74, 0.04) 0%, transparent 50%);
+            color: #c8d6e5;
+            padding: 16px 16px 100px;
+            max-width: 520px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #1a2a3a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #4a9e9e; border-radius: 4px; }
+
+        /* ===== ХЕДЕР ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: rgba(26, 42, 58, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 18px;
+            border: 1px solid rgba(74, 158, 158, 0.15);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 16px;
+            position: sticky;
+            top: 8px;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #e8f0f0;
+            letter-spacing: -0.3px;
+        }
+        .header h1 i { color: #4a9e9e; margin-right: 6px; }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-info span {
+            font-weight: 600;
+            color: #8aa8b8;
+            font-size: 13px;
+        }
+        .btn-logout {
+            background: rgba(212, 160, 74, 0.12);
+            color: #d4a04a;
+            border: 1px solid rgba(212, 160, 74, 0.15);
+            padding: 6px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-logout:hover {
+            background: rgba(212, 160, 74, 0.25);
+            transform: scale(0.95);
+        }
+
+        /* ===== КАРТОЧКИ ===== */
+        .card {
+            background: rgba(26, 42, 58, 0.80);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(74, 158, 158, 0.08);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-1px); }
+        .card h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #e8f0f0;
+            margin-bottom: 14px;
+            letter-spacing: -0.3px;
+        }
+        .card h2 i { margin-right: 8px; color: #4a9e9e; }
+
+        /* ===== ВКЛАДКИ ===== */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 16px;
+            background: rgba(26, 42, 58, 0.70);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 16px;
+            padding: 4px;
+            border: 1px solid rgba(74, 158, 158, 0.08);
+        }
+        .tabs button {
+            flex: 1;
+            padding: 10px 4px;
+            border: none;
+            border-radius: 13px;
+            background: transparent;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6a8a9a;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tabs button i { margin-right: 4px; font-style: normal; }
+        .tabs button.active {
+            background: #4a9e9e;
+            color: #0f1a2e;
+            box-shadow: 0 4px 20px rgba(74, 158, 158, 0.30);
+        }
+        .tabs button.active i { color: #0f1a2e; }
+        .tabs button:not(.active):hover {
+            background: rgba(74, 158, 158, 0.10);
+            color: #b8d0d8;
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.35s ease; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== ФОРМЫ - УЛУЧШЕННАЯ ЧИТАЕМОСТЬ ===== */
+        .form-group { margin-bottom: 14px; }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #8aa8b8;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* ОСНОВНЫЕ ПОЛЯ ВВОДА - СВЕТЛЫЕ И ЧИТАЕМЫЕ */
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid rgba(74, 158, 158, 0.2);
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.3s;
+            background: rgba(30, 50, 70, 0.7);
+            color: #e8f0f0;
+        }
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #7a9aaa;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4a9e9e;
+            box-shadow: 0 0 0 4px rgba(74, 158, 158, 0.15);
+            background: rgba(40, 65, 90, 0.8);
+        }
+        
+        /* ВЫПАДАЮЩИЕ СПИСКИ - СВЕТЛЫЙ ТЕКСТ И КОНТРАСТНЫЙ ФОН */
+        .form-group select {
+            background: rgba(30, 50, 70, 0.8);
+            color: #e8f0f0;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a9e9e' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+        }
+        
+        /* ОПЦИИ ВНУТРИ SELECT - СВЕТЛЫЕ И ЧИТАЕМЫЕ */
+        .form-group select option {
+            background: #1a2a3a;
+            color: #e8f0f0;
+            padding: 10px 14px;
+            font-size: 14px;
+        }
+        .form-group select option:hover {
+            background: #2a4a5a;
+        }
+        .form-group select option:checked {
+            background: #4a9e9e;
+            color: #0f1a2e;
+        }
+
+        .form-group textarea { resize: vertical; min-height: 60px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .required { color: #e87060; font-weight: 700; }
+        .optional { color: #5a7a8a; font-weight: 400; font-size: 11px; text-transform: none; }
+
+        .form-section {
+            background: rgba(15, 26, 46, 0.4);
+            border-radius: 14px;
+            padding: 16px;
+            margin: 14px 0;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+        }
+        .form-section h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #b0c8d0;
+            margin-bottom: 12px;
+        }
+        .form-section h3 i { margin-right: 6px; color: #4a9e9e; }
+
+        /* ===== КНОПКИ ===== */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #4a9e9e;
+            color: #0f1a2e;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 0.3px;
+        }
+        .btn-primary:hover {
+            background: #5ab0b0;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(74, 158, 158, 0.35);
+        }
+        .btn-primary:active { transform: scale(0.97); }
+
+        .btn-secondary {
+            padding: 10px 18px;
+            background: rgba(74, 158, 158, 0.10);
+            border: 1px solid rgba(74, 158, 158, 0.15);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #8aa8b8;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: rgba(74, 158, 158, 0.20);
+        }
+        .btn-secondary i { margin-right: 5px; }
+
+        .btn-warning {
+            background: rgba(212, 160, 74, 0.12);
+            border-color: rgba(212, 160, 74, 0.20);
+            color: #d4a04a;
+            width: 100%;
+        }
+        .btn-warning:hover {
+            background: rgba(212, 160, 74, 0.25);
+        }
+
+        /* ===== УРОВЕНЬ КЛЕВА ===== */
+        .bite-buttons { display: flex; gap: 8px; }
+        .bite-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid rgba(74, 158, 158, 0.15);
+            border-radius: 12px;
+            background: rgba(15, 26, 46, 0.4);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #7a9aaa;
+        }
+        .bite-btn:hover { background: rgba(74, 158, 158, 0.10); }
+        .bite-btn.selected-red {
+            border-color: #e87060;
+            background: rgba(232, 112, 96, 0.12);
+            color: #e87060;
+            box-shadow: 0 0 0 3px rgba(232, 112, 96, 0.08);
+        }
+        .bite-btn.selected-orange {
+            border-color: #d4a04a;
+            background: rgba(212, 160, 74, 0.12);
+            color: #d4a04a;
+            box-shadow: 0 0 0 3px rgba(212, 160, 74, 0.08);
+        }
+        .bite-btn.selected-green {
+            border-color: #4a9e9e;
+            background: rgba(74, 158, 158, 0.12);
+            color: #4a9e9e;
+            box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.08);
+        }
+
+        /* ===== ПРИМАНКИ С УЛОВОМ ===== */
+        .bait-group {
+            background: rgba(15, 26, 46, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+        }
+        
+        .bait-group .bait-header {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 40px;
+            gap: 8px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        
+        /* СТИЛИ ДЛЯ SELECT И INPUT ВНУТРИ ПРИМАНОК - СВЕТЛЫЕ */
+        .bait-group .bait-header select,
+        .bait-group .bait-header input {
+            padding: 8px 12px;
+            border: 1px solid rgba(74, 158, 158, 0.15);
+            border-radius: 10px;
+            font-size: 13px;
+            background: rgba(30, 50, 70, 0.7);
+            color: #e8f0f0;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .bait-group .bait-header select:focus,
+        .bait-group .bait-header input:focus {
+            outline: none;
+            border-color: #4a9e9e;
+            box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.12);
+            background: rgba(40, 65, 90, 0.8);
+        }
+        
+        /* ВЫПАДАЮЩИЙ СПИСОК ПРИМАНОК - СТРЕЛКА */
+        .bait-group .bait-header select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%234a9e9e' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+        
+        .bait-group .bait-header select option {
+            background: #1a2a3a;
+            color: #e8f0f0;
+            padding: 8px 12px;
+        }
+        .bait-group .bait-header select option:checked {
+            background: #4a9e9e;
+            color: #0f1a2e;
+        }
+        
+        .bait-group .bait-header .removeBtn {
+            background: rgba(232, 112, 96, 0.10);
+            border: none;
+            border-radius: 10px;
+            color: #e87060;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-align: center;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bait-group .bait-header .removeBtn:hover {
+            background: rgba(232, 112, 96, 0.25);
+        }
+
+        /* УЛОВЫ ВНУТРИ ПРИМАНКИ - СВЕТЛЫЕ SELECT И INPUT */
+        .bait-group .catches-for-bait {
+            padding-left: 4px;
+        }
+        .bait-group .catches-for-bait .catch-row {
+            display: grid;
+            grid-template-columns: 1.2fr 0.7fr 0.7fr 36px;
+            gap: 6px;
+            margin-bottom: 6px;
+            align-items: center;
+        }
+        .bait-group .catches-for-bait .catch-row select,
+        .bait-group .catches-for-bait .catch-row input {
+            padding: 6px 10px;
+            border: 1px solid rgba(74, 158, 158, 0.12);
+            border-radius: 8px;
+            font-size: 12px;
+            background: rgba(30, 50, 70, 0.6);
+            color: #e8f0f0;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .bait-group .catches-for-bait .catch-row select:focus,
+        .bait-group .catches-for-bait .catch-row input:focus {
+            outline: none;
+            border-color: #4a9e9e;
+            box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.10);
+            background: rgba(40, 65, 90, 0.7);
+        }
+        
+        /* ВЫПАДАЮЩИЙ СПИСОК РЫБЫ - СВЕТЛЫЙ И ЧИТАЕМЫЙ */
+        .bait-group .catches-for-bait .catch-row select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M1 1l3 3 3-3' stroke='%234a9e9e' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 28px;
+            font-weight: 500;
+        }
+        
+        .bait-group .catches-for-bait .catch-row select option {
+            background: #1a2a3a;
+            color: #e8f0f0;
+            padding: 8px 12px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        .bait-group .catches-for-bait .catch-row select option:hover {
+            background: #2a4a5a;
+        }
+        .bait-group .catches-for-bait .catch-row select option:checked {
+            background: #4a9e9e;
+            color: #0f1a2e;
+            font-weight: 700;
+        }
+        
+        .bait-group .catches-for-bait .catch-row input {
+            font-weight: 500;
+        }
+        .bait-group .catches-for-bait .catch-row input::placeholder {
+            color: #6a8a9a;
+        }
+        
+        .bait-group .catches-for-bait .catch-row .removeBtn {
+            background: rgba(232, 112, 96, 0.08);
+            border: none;
+            border-radius: 8px;
+            color: #e87060;
+            padding: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .bait-group .catches-for-bait .catch-row .removeBtn:hover {
+            background: rgba(232, 112, 96, 0.20);
+        }
+
+        .bait-group .add-catch-for-bait {
+            padding: 6px 12px;
+            background: rgba(74, 158, 158, 0.06);
+            border: 1px dashed rgba(74, 158, 158, 0.12);
+            border-radius: 8px;
+            color: #6a8a9a;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 6px;
+            width: 100%;
+            text-align: center;
+        }
+        .bait-group .add-catch-for-bait:hover {
+            background: rgba(74, 158, 158, 0.12);
+            color: #8aa8b8;
+        }
+
+        .no-catch-warning {
+            background: rgba(212, 160, 74, 0.08);
+            border: 1px dashed rgba(212, 160, 74, 0.20);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            color: #d4a04a;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .no-catch-warning i { font-size: 20px; display: block; margin-bottom: 4px; }
+
+        /* ===== СПИСОК РЫБАЛОК ===== */
+        .trip-item {
+            background: rgba(26, 42, 58, 0.5);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border-left: 3px solid #4a9e9e;
+            transition: all 0.3s;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+        }
+        .trip-item:hover {
+            background: rgba(26, 42, 58, 0.7);
+            transform: translateX(4px);
+        }
+        .trip-item.no-catch {
+            border-left-color: #d4a04a;
+        }
+        .trip-item .trip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .trip-item .trip-date {
+            font-weight: 700;
+            font-size: 14px;
+            color: #d0e0e8;
+        }
+        .trip-item .trip-bite { font-size: 20px; }
+        .trip-item .trip-details {
+            font-size: 12px;
+            color: #6a8a9a;
+            margin: 4px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+        }
+        .trip-item .trip-details span { color: #8aa8b8; }
+        .trip-item .trip-fish {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .trip-item .fish-tag {
+            background: rgba(74, 158, 158, 0.10);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6ab0b0;
+            border: 1px solid rgba(74, 158, 158, 0.08);
+        }
+        .trip-item .bait-tag {
+            background: rgba(212, 160, 74, 0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            color: #d4a04a;
+            margin-right: 4px;
+            border: 1px solid rgba(212, 160, 74, 0.08);
+        }
+        .trip-item .delete-btn {
+            background: none;
+            border: none;
+            color: #4a6a7a;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 4px;
+            transition: color 0.3s;
+        }
+        .trip-item .delete-btn:hover { color: #e87060; }
+        .trip-item .no-catch-label {
+            color: #d4a04a;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .filters input, .filters select {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid rgba(74, 158, 158, 0.12);
+            border-radius: 12px;
+            font-size: 13px;
+            background: rgba(30, 50, 70, 0.6);
+            color: #e8f0f0;
+            min-width: 100px;
+        }
+        .filters input:focus, .filters select:focus {
+            border-color: #4a9e9e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.10);
+        }
+        .filters input::placeholder { color: #6a8a9a; }
+        .filters select option { background: #1a2a3a; color: #e8f0f0; }
+
+        /* ===== СТАТИСТИКА ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: rgba(15, 26, 46, 0.5);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+        }
+        .stat-item .value {
+            display: block;
+            font-size: 26px;
+            font-weight: 800;
+            color: #e8f0f0;
+        }
+        .stat-item .value.gold { color: #d4a04a; }
+        .stat-item .label {
+            font-size: 11px;
+            color: #6a8a9a;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .chart-container { position: relative; height: 220px; margin-top: 10px; }
+        .chart-wrapper {
+            background: rgba(15, 26, 46, 0.4);
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 12px;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .chart-controls select {
+            padding: 8px 12px;
+            border: 1px solid rgba(74, 158, 158, 0.12);
+            border-radius: 10px;
+            font-size: 12px;
+            background: rgba(30, 50, 70, 0.6);
+            color: #e8f0f0;
+            flex: 1;
+            min-width: 70px;
+        }
+        .chart-controls select:focus { border-color: #4a9e9e; outline: none; }
+        .chart-controls select option { background: #1a2a3a; color: #e8f0f0; }
+        .chart-controls button {
+            padding: 8px 16px;
+            background: #4a9e9e;
+            color: #0f1a2e;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .chart-controls button:hover {
+            background: #5ab0b0;
+            transform: scale(0.97);
+        }
+
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        .chart-bar .label {
+            font-size: 12px;
+            color: #8aa8b8;
+            min-width: 70px;
+            font-weight: 500;
+        }
+        .chart-bar .bar {
+            flex: 1;
+            height: 20px;
+            background: rgba(74, 158, 158, 0.06);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .chart-bar .bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+        .chart-bar .value {
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: right;
+            color: #b0c8d0;
+        }
+
+        /* ===== СПИСОК ПРИМАНОК ДЛЯ СТАТИСТИКИ ===== */
+        .bait-stats-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(15, 26, 46, 0.3);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(74, 158, 158, 0.06);
+            transition: all 0.3s;
+        }
+        .bait-stats-item:hover {
+            background: rgba(15, 26, 46, 0.5);
+        }
+        .bait-stats-item .bait-name {
+            flex: 1;
+            font-weight: 600;
+            color: #d0e0e8;
+            font-size: 14px;
+        }
+        .bait-stats-item .bait-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #8aa8b8;
+        }
+        .bait-stats-item .bait-stats .catch-count {
+            color: #6ab0b0;
+            font-weight: 600;
+        }
+        .bait-stats-item .bait-stats .efficiency {
+            font-weight: 700;
+            min-width: 50px;
+            text-align: right;
+        }
+        .bait-stats-item .bait-stats .efficiency.high { color: #4a9e9e; }
+        .bait-stats-item .bait-stats .efficiency.medium { color: #d4a04a; }
+        .bait-stats-item .bait-stats .efficiency.low { color: #e87060; }
+
+        .bait-stats-item .bait-bar-wrap {
+            width: 100px;
+            height: 6px;
+            background: rgba(74, 158, 158, 0.10);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .bait-stats-item .bait-bar-wrap .bait-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        /* ===== УВЕДОМЛЕНИЯ ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1a2a3a;
+            color: #e8f0f0;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            max-width: 90%;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(74, 158, 158, 0.10);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast.success { border-color: #4a9e9e; }
+        .toast.error { border-color: #e87060; }
+        .toast.warning { border-color: #d4a04a; }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #5a7a8a;
+        }
+        .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; color: #4a6a7a; }
+        .text-muted {
+            color: #5a7a8a;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* ===== АДАПТАЦИЯ ===== */
+        @media (max-width: 480px) {
+            .form-row { grid-template-columns: 1fr; }
+            .bait-group .bait-header {
+                grid-template-columns: 1fr 1fr 36px;
+                gap: 6px;
+            }
+            .bait-group .catches-for-bait .catch-row {
+                grid-template-columns: 1fr 0.7fr 0.7fr 32px;
+                gap: 4px;
+            }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .header h1 { font-size: 16px; }
+            .tabs button { font-size: 11px; padding: 8px 4px; }
+            .bait-stats-item {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .bait-stats-item .bait-bar-wrap { width: 100%; }
+        }
+
+        @media (max-width: 380px) {
+            body { padding: 10px 10px 80px; }
+            .card { padding: 14px; }
+            .bait-group .bait-header {
+                grid-template-columns: 1fr 1fr 32px;
+                gap: 4px;
+            }
+            .bait-group .catches-for-bait .catch-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 4px;
+            }
+            .bait-group .catches-for-bait .catch-row .removeBtn {
+                grid-column: span 2;
+            }
+        }
+
+        /* ===== АВТОКОМПЛИТ ===== */
+        input::-webkit-calendar-picker-indicator {
+            filter: invert(0.6) sepia(0.2) hue-rotate(160deg);
+            cursor: pointer;
+        }
+        input::-webkit-datetime-edit { color: #e0e8ec; }
+
+        .bait-tag { transition: all 0.3s; }
+        .bait-tag:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+<!-- ===== ХЕДЕР ===== -->
+<div class="header">
+    <h1><i>🌙</i> Рыболовный Дневник</h1>
+    <div class="user-info">
+        <span>🐟 Рыбак</span>
+        <button class="btn-logout" onclick="clearAllData()">✕</button>
+    </div>
+</div>
+
+<!-- ===== ВКЛАДКИ ===== -->
+<div class="tabs">
+    <button class="active" onclick="switchTab('add')"><i>🎣</i> Добавить</button>
+    <button onclick="switchTab('list')"><i>📋</i> Список</button>
+    <button onclick="switchTab('stats')"><i>📊</i> Отчеты</button>
+    <button onclick="switchTab('baits')"><i>🎯</i> Приманки</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- ===== ВКЛАДКА: ДОБАВИТЬ ===== -->
+<div id="tab-add" class="tab-content active">
+    <div class="card">
+        <h2><i>🌙</i> Новая рыбалка</h2>
+        <form id="fishingForm" onsubmit="saveTrip(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Дата <span class="required">*</span></label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Время начала <span class="required">*</span></label>
+                    <input type="time" id="timeStart" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Время окончания</label>
+                    <input type="time" id="timeEnd">
+                </div>
+                <div class="form-group">
+                    <label>Место</label>
+                    <input type="text" id="location" placeholder="Ночное озеро, залив">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Температура (°C)</label>
+                    <input type="number" id="temperature" step="0.1" placeholder="18.5">
+                </div>
+                <div class="form-group">
+                    <label>Погода</label>
+                    <select id="weather">
+                        <option value="">Выберите...</option>
+                        <option value="Солнечно">☀️ Солнечно</option>
+                        <option value="Облачно">⛅ Облачно</option>
+                        <option value="Дождь">🌧️ Дождь</option>
+                        <option value="Гроза">⛈️ Гроза</option>
+                        <option value="Туман">🌫️ Туман</option>
+                        <option value="Ветер">💨 Ветер</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ветер</label>
+                    <select id="wind">
+                        <option value="">Выберите...</option>
+                        <option value="Безветренно">Безветренно</option>
+                        <option value="Слабый">Слабый (до 5 м/с)</option>
+                        <option value="Умеренный">Умеренный (6-10 м/с)</option>
+                        <option value="Сильный">Сильный (>10 м/с)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Уровень клева <span class="required">*</span></label>
+                    <div class="bite-buttons">
+                        <button type="button" class="bite-btn" data-level="1" onclick="selectBite(this)">🔴 Нет</button>
+                        <button type="button" class="bite-btn" data-level="2" onclick="selectBite(this)">🟠 Плохо</button>
+                        <button type="button" class="bite-btn" data-level="3" onclick="selectBite(this)">🟢 Хорошо</button>
+                    </div>
+                    <input type="hidden" id="biteLevel" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3><i>🎣</i> Снасть</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Тип снасти</label>
+                        <select id="equipmentType">
+                            <option value="">Выберите...</option>
+                            <option value="Спиннинг">Спиннинг</option>
+                            <option value="Удочка">Удочка</option>
+                            <option value="Донка">Донка</option>
+                            <option value="Спиннинг+Удочка">Спиннинг+Удочка</option>
+                            <option value="Другое">Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Класс снасти</label>
+                        <select id="tackleType">
+                            <option value="">Выберите...</option>
+                            <option value="Ультралайт">Ультралайт</option>
+                            <option value="Лайт">Лайт</option>
+                            <option value="Медиум">Медиум</option>
+                            <option value="Хеви">Хеви</option>
+                            <option value="Экстра-Хеви">Экстра-Хеви</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ПРИМАНКИ С УЛОВОМ ===== -->
+            <div class="form-section">
+                <h3><i>🎯</i> Приманки и улов на них</h3>
+                <div id="baitsWithCatchesContainer">
+                    <div class="bait-group">
+                        <div class="bait-header">
+                            <select class="baitTypeSelect" onchange="updateBaitName(this)">
+                                <option value="">Выберите приманку...</option>
+                            </select>
+                            <input type="text" class="baitNameInput" placeholder="Название приманки" list="baitDatalist">
+                            <datalist id="baitDatalist"></datalist>
+                            <button type="button" class="removeBtn" onclick="removeBaitGroup(this)">✕</button>
+                        </div>
+                        <div class="catches-for-bait">
+                            <div class="catch-row">
+                                <select class="fishType">
+                                    <option value="">Выберите рыбу...</option>
+                                    <option value="Щука">Щука</option>
+                                    <option value="Окунь">Окунь</option>
+                                    <option value="Голавль">Голавль</option>
+                                    <option value="Судак">Судак</option>
+                                    <option value="Берш">Берш</option>
+                                    <option value="Язь">Язь</option>
+                                    <option value="Лещ">Лещ</option>
+                                    <option value="Плотва">Плотва</option>
+                                    <option value="Карась">Карась</option>
+                                    <option value="Сазан">Сазан</option>
+                                    <option value="Карп">Карп</option>
+                                    <option value="Линь">Линь</option>
+                                    <option value="Жерех">Жерех</option>
+                                    <option value="Красноперка">Красноперка</option>
+                                </select>
+                                <input type="number" class="catchQuantity" placeholder="Кол-во" value="1" min="1">
+                                <input type="number" class="catchWeight" placeholder="Вес (г)" step="1">
+                                <button type="button" class="removeBtn" onclick="removeCatchFromBait(this)">✕</button>
+                            </div>
+                        </div>
+                        <button type="button" class="add-catch-for-bait" onclick="addCatchToBait(this)">➕ Добавить рыбу на эту приманку</button>
+                    </div>
+                </div>
+                <button type="button" class="btn-secondary" onclick="addBaitGroup()" style="margin-top:10px;width:100%;">
+                    <i>➕</i> Добавить приманку
+                </button>
+                <div id="noCatchWarning" class="no-catch-warning" style="display:none;margin-top:10px;">
+                    <i>🌙</i>
+                    <strong>Нулевой улов</strong><br>
+                    <span style="font-size:12px;">Можно сохранить рыбалку и без улова</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Заметки</label>
+                <textarea id="notes" rows="3" placeholder="Заметки о рыбалке, погоде, настроении..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">🌙 Сохранить рыбалку</button>
+        </form>
+    </div>
+</div>
+
+<!-- ===== ВКЛАДКА: СПИСОК ===== -->
+<div id="tab-list" class="tab-content">
+    <div class="card">
+        <h2><i>📋</i> Мои рыбалки</h2>
+        <div class="filters">
+            <input type="text" id="searchInput" placeholder="🔍 Поиск по месту..." oninput="renderList()">
+            <select id="filterFish" onchange="renderList()">
+                <option value="">Все рыбы</option>
+                <option value="Щука">Щука</option>
+                <option value="Окунь">Окунь</option>
+                <option value="Голавль">Голавль</option>
+                <option value="Судак">Судак</option>
+                <option value="Берш">Берш</option>
+                <option value="Язь">Язь</option>
+                <option value="Лещ">Лещ</option>
+                <option value="Плотва">Плотва</option>
+                <option value="Карась">Карась</option>
+                <option value="Сазан">Сазан</option>
+                <option value="Карп">Карп</option>
+                <option value="Линь">Линь</option>
+                <option value="Жерех">Жерех</option>
+            </select>
+        </div>
+        <div id="tripsList"></div>
+    </div>
+</div>
+
+<!-- ===== ВКЛАДКА: ОТЧЕТЫ ===== -->
+<div id="tab-stats" class="tab-content">
+    <div class="card">
+        <h2><i>📊</i> Статистика</h2>
+        <div class="stats-grid" id="statsSummary">
+            <div class="stat-item">
+                <span class="value" id="totalTrips">0</span>
+                <span class="label">🌙 Рыбалок</span>
+            </div>
+            <div class="stat-item">
+                <span class="value" id="totalCatches">0</span>
+                <span class="label">🐟 Всего рыбы</span>
+            </div>
+            <div class="stat-item">
+                <span class="value" id="avgBite">-</span>
+                <span class="label">🎯 Средний клев</span>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3><i>📈</i> Динамика клева</h3>
+            <div class="chart-controls">
+                <select id="chartPeriod" onchange="updateLineChart()">
+                    <option value="week">Неделя</option>
+                    <option value="month" selected>Месяц</option>
+                    <option value="3months">3 мес.</option>
+                    <option value="6months">6 мес.</option>
+                    <option value="year">Год</option>
+                    <option value="all">Всё</option>
+                </select>
+                <select id="chartGroupBy" onchange="updateLineChart()">
+                    <option value="day" selected>По дням</option>
+                    <option value="hour">По часам</option>
+                </select>
+                <button onclick="updateLineChart()">🔄</button>
+            </div>
+            <div class="chart-wrapper">
+                <div class="chart-container">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+            <div id="chartInfo" class="text-muted"></div>
+        </div>
+
+        <div class="form-section">
+            <h3><i>🎯</i> Уровень клева</h3>
+            <div id="biteChart"></div>
+        </div>
+
+        <div class="form-section">
+            <h3><i>🐟</i> Улов по видам рыб</h3>
+            <div id="fishChart"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== ВКЛАДКА: УЛОВИСТОСТЬ ПРИМАНОК ===== -->
+<div id="tab-baits" class="tab-content">
+    <div class="card">
+        <h2><i>🎯</i> Уловистость приманок</h2>
+        <div id="baitEfficiencyContainer">
+            <div class="empty-state">
+                <i>🎯</i>
+                Нет данных о приманках.<br>
+                Добавьте рыбалки с приманками!
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== УВЕДОМЛЕНИЯ ===== -->
+<div id="toast" class="toast"></div>
+
+<script>
+    // ============================================================
+    // 0. БАЗОВЫЙ СПИСОК ПРИМАНОК - ПУСТОЙ!
+    // ============================================================
+    const DEFAULT_BAITS = [];
+
+    // ============================================================
+    // 1. РАБОТА С ДАННЫМИ
+    // ============================================================
+    function getTrips() {
+        const data = localStorage.getItem('fishingTripsV2');
+        return data ? JSON.parse(data) : [];
+    }
+    function saveTrips(trips) {
+        localStorage.setItem('fishingTripsV2', JSON.stringify(trips));
+    }
+
+    // ============================================================
+    // 2. УРОВЕНЬ КЛЕВА
+    // ============================================================
+    function selectBite(btn) {
+        document.querySelectorAll('.bite-btn').forEach(b => b.className = 'bite-btn');
+        const level = parseInt(btn.dataset.level);
+        const colors = ['', 'selected-red', 'selected-orange', 'selected-green'];
+        btn.classList.add(colors[level]);
+        document.getElementById('biteLevel').value = level;
+    }
+
+    // ============================================================
+    // 3. ПРИМАНКИ С УЛОВОМ
+    // ============================================================
+    
+    function getAllUsedBaits() {
+        const trips = getTrips();
+        const baits = new Set();
+        trips.forEach(t => {
+            if (t.baits) {
+                t.baits.forEach(b => {
+                    if (b.name) baits.add(b.name);
+                });
+            }
+        });
+        return Array.from(baits).sort();
+    }
+
+    function getBaitEmoji(name) {
+        const lower = name.toLowerCase();
+        if (lower.includes('вертушк') || lower.includes('спиннербейт')) return '🟡';
+        if (lower.includes('колебалк') || lower.includes('блесн')) return '🟡';
+        if (lower.includes('тейл') || lower.includes('спиннер')) return '🟣';
+        if (lower.includes('джиг') || lower.includes('микроджиг') || lower.includes('наноджиг')) return '🔵';
+        if (lower.includes('воблер') || lower.includes('поппер') || lower.includes('цикад')) return '🟢';
+        if (lower.includes('силикон')) return '⚪';
+        if (lower.includes('желез')) return '⚪';
+        if (lower.includes('пластмасс')) return '⚪';
+        if (lower.includes('наживк')) return '🟤';
+        return '🎯';
+    }
+
+    function updateBaitDatalist() {
+        const datalist = document.getElementById('baitDatalist');
+        const baits = getAllUsedBaits();
+        datalist.innerHTML = baits.map(b => `<option value="${b}">`).join('');
+        
+        document.querySelectorAll('.baitTypeSelect').forEach(sel => {
+            const currentVal = sel.value;
+            const baitsList = getAllUsedBaits();
+            let html = '<option value="">Выберите приманку...</option>';
+            baitsList.forEach(b => {
+                const emoji = getBaitEmoji(b);
+                html += `<option value="${b}">${emoji} ${b}</option>`;
+            });
+            sel.innerHTML = html;
+            if (currentVal && baitsList.includes(currentVal)) {
+                sel.value = currentVal;
+            } else {
+                const group = sel.closest('.bait-group');
+                const nameInput = group.querySelector('.baitNameInput');
+                if (nameInput && nameInput.value && baitsList.includes(nameInput.value)) {
+                    sel.value = nameInput.value;
+                }
+            }
+        });
+    }
+
+    function addBaitGroup(name = '', type = '') {
+        const container = document.getElementById('baitsWithCatchesContainer');
+        const template = container.querySelector('.bait-group');
+        const clone = template.cloneNode(true);
+        
+        const baitSelect = clone.querySelector('.baitTypeSelect');
+        const baitName = clone.querySelector('.baitNameInput');
+        baitSelect.value = type;
+        baitName.value = name;
+        
+        const catchesContainer = clone.querySelector('.catches-for-bait');
+        catchesContainer.innerHTML = catchesContainer.querySelector('.catch-row').outerHTML;
+        const row = catchesContainer.querySelector('.catch-row');
+        row.querySelector('select').value = '';
+        row.querySelectorAll('input').forEach(inp => {
+            if (inp.classList.contains('catchQuantity')) inp.value = 1;
+            else inp.value = '';
+        });
+        
+        const baits = getAllUsedBaits();
+        let html = '<option value="">Выберите приманку...</option>';
+        baits.forEach(b => {
+            const emoji = getBaitEmoji(b);
+            html += `<option value="${b}">${emoji} ${b}</option>`;
+        });
+        baitSelect.innerHTML = html;
+        if (type && baits.includes(type)) baitSelect.value = type;
+        
+        container.appendChild(clone);
+        updateBaitDatalist();
+    }
+
+    function removeBaitGroup(btn) {
+        const container = document.getElementById('baitsWithCatchesContainer');
+        if (container.querySelectorAll('.bait-group').length > 1) {
+            btn.closest('.bait-group').remove();
+        } else {
+            showToast('Должна быть хотя бы одна приманка', 'error');
+        }
+    }
+
+    function addCatchToBait(btn) {
+        const container = btn.closest('.bait-group').querySelector('.catches-for-bait');
+        const clone = container.querySelector('.catch-row').cloneNode(true);
+        clone.querySelector('select').value = '';
+        clone.querySelectorAll('input').forEach(inp => {
+            if (inp.classList.contains('catchQuantity')) inp.value = 1;
+            else inp.value = '';
+        });
+        container.appendChild(clone);
+    }
+
+    function removeCatchFromBait(btn) {
+        const container = btn.closest('.catches-for-bait');
+        if (container.querySelectorAll('.catch-row').length > 1) {
+            btn.closest('.catch-row').remove();
+        } else {
+            showToast('Должна быть хотя бы одна рыба', 'error');
+        }
+    }
+
+    function updateBaitName(select) {
+        const group = select.closest('.bait-group');
+        const nameInput = group.querySelector('.baitNameInput');
+        if (select.value) {
+            nameInput.value = select.value;
+        }
+    }
+
+    function getBaitsWithCatches() {
+        const result = [];
+        document.querySelectorAll('#baitsWithCatchesContainer .bait-group').forEach(group => {
+            const name = group.querySelector('.baitNameInput').value.trim();
+            const type = group.querySelector('.baitTypeSelect').value;
+            if (!name) return;
+            
+            const catches = [];
+            group.querySelectorAll('.catches-for-bait .catch-row').forEach(row => {
+                const fishType = row.querySelector('.fishType').value;
+                const quantity = parseInt(row.querySelector('.catchQuantity').value) || 1;
+                const weight = parseFloat(row.querySelector('.catchWeight').value) || null;
+                if (fishType) catches.push({ fishType, quantity, weight });
+            });
+            
+            result.push({
+                name: name,
+                type: type || 'Другое',
+                catches: catches
+            });
+        });
+        return result;
+    }
+
+    // ============================================================
+    // 4. СОХРАНЕНИЕ РЫБАЛКИ
+    // ============================================================
+    function saveTrip(e) {
+        e.preventDefault();
+        
+        const biteLevel = parseInt(document.getElementById('biteLevel').value);
+        if (!biteLevel) {
+            showToast('Выберите уровень клева!', 'error');
+            return;
+        }
+
+        const baitsData = getBaitsWithCatches();
+
+        if (baitsData.length === 0) {
+            if (!confirm('Вы не указали ни одной приманки. Продолжить?')) {
+                return;
+            }
+        }
+
+        const trip = {
+            id: Date.now(),
+            date: document.getElementById('date').value,
+            timeStart: document.getElementById('timeStart').value,
+            timeEnd: document.getElementById('timeEnd').value || null,
+            location: document.getElementById('location').value,
+            temperature: parseFloat(document.getElementById('temperature').value) || null,
+            weather: document.getElementById('weather').value,
+            wind: document.getElementById('wind').value,
+            biteLevel: biteLevel,
+            equipmentType: document.getElementById('equipmentType').value,
+            tackleType: document.getElementById('tackleType').value,
+            baits: baitsData,
+            notes: document.getElementById('notes').value,
+            createdAt: new Date().toISOString()
+        };
+
+        const trips = getTrips();
+        trips.push(trip);
+        saveTrips(trips);
+
+        const totalCatch = baitsData.reduce((s, b) => s + b.catches.reduce((ss, c) => ss + c.quantity, 0), 0);
+        if (totalCatch === 0) {
+            showToast('🌙 Рыбалка сохранена! (без улова)', 'warning');
+        } else {
+            showToast(`✅ Рыбалка сохранена! (${totalCatch} шт.)`, 'success');
+        }
+        
+        document.getElementById('fishingForm').reset();
+        document.getElementById('biteLevel').value = '';
+        document.querySelectorAll('.bite-btn').forEach(b => b.className = 'bite-btn');
+        
+        const container = document.getElementById('baitsWithCatchesContainer');
+        container.innerHTML = container.querySelector('.bait-group').outerHTML;
+        const firstGroup = container.querySelector('.bait-group');
+        firstGroup.querySelectorAll('.baitNameInput').forEach(inp => inp.value = '');
+        firstGroup.querySelector('.baitTypeSelect').value = '';
+        const catchContainer = firstGroup.querySelector('.catches-for-bait');
+        catchContainer.innerHTML = catchContainer.querySelector('.catch-row').outerHTML;
+        const row = catchContainer.querySelector('.catch-row');
+        row.querySelector('select').value = '';
+        row.querySelectorAll('input').forEach(inp => {
+            if (inp.classList.contains('catchQuantity')) inp.value = 1;
+            else inp.value = '';
+        });
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+        document.getElementById('timeStart').value = new Date().toTimeString().slice(0,5);
+        
+        updateBaitDatalist();
+        renderList();
+        renderStats();
+        updateLineChart();
+        renderBaitEfficiency();
+        switchTab('list');
+    }
+
+    // ============================================================
+    // 5. ВКЛАДКИ
+    // ============================================================
+    function switchTab(tab) {
+        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        const btns = document.querySelectorAll('.tabs button');
+        const tabs = { 'add': 0, 'list': 1, 'stats': 2, 'baits': 3 };
+        btns[tabs[tab]].classList.add('active');
+        document.getElementById('tab-' + tab).classList.add('active');
+        if (tab === 'list') renderList();
+        if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 300); }
+        if (tab === 'baits') renderBaitEfficiency();
+        if (tab === 'add') updateBaitDatalist();
+    }
+
+    // ============================================================
+    // 6. СПИСОК РЫБАЛОК
+    // ============================================================
+    function renderList() {
+        const container = document.getElementById('tripsList');
+        let trips = getTrips();
+        if (trips.length === 0) {
+            container.innerHTML = `<div class="empty-state"><i>🌙</i>Пока нет ни одной рыбалки.<br>Добавьте свою первую!</div>`;
+            return;
+        }
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const fishFilter = document.getElementById('filterFish').value;
+        trips = trips.filter(t => {
+            const matchSearch = !search || (t.location || '').toLowerCase().includes(search) || (t.notes || '').toLowerCase().includes(search);
+            let matchFish = true;
+            if (fishFilter) {
+                matchFish = t.baits && t.baits.some(b => b.catches && b.catches.some(c => c.fishType === fishFilter));
+            }
+            return matchSearch && matchFish;
+        });
+        trips.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        container.innerHTML = trips.map(trip => {
+            const date = new Date(trip.date).toLocaleDateString('ru-RU');
+            const timeStart = (trip.timeStart || '').slice(0,5);
+            const timeEnd = (trip.timeEnd || '').slice(0,5);
+            const biteEmoji = trip.biteLevel === 3 ? '🟢' : trip.biteLevel === 2 ? '🟠' : '🔴';
+            
+            let totalCatch = 0;
+            const allFish = [];
+            const allBaits = [];
+            if (trip.baits) {
+                trip.baits.forEach(b => {
+                    if (b.name) allBaits.push(b.name);
+                    if (b.catches) {
+                        b.catches.forEach(c => {
+                            totalCatch += c.quantity || 0;
+                            allFish.push(c.fishType);
+                        });
+                    }
+                });
+            }
+            
+            const hasCatch = totalCatch > 0;
+            const fishTags = hasCatch ? 
+                Object.entries(allFish.reduce((acc, f) => { acc[f] = (acc[f] || 0) + 1; return acc; }, {}))
+                    .map(([name, count]) => `<span class="fish-tag">${name}${count > 1 ? ' ×'+count : ''}</span>`).join('') :
+                `<span class="no-catch-label">🌙 Без улова</span>`;
+            
+            const baitTags = allBaits.length > 0 ? 
+                allBaits.map(b => {
+                    const emoji = getBaitEmoji(b);
+                    return `<span class="bait-tag">${emoji} ${b}</span>`;
+                }).join('') : '';
+            
+            const noCatchClass = !hasCatch ? 'no-catch' : '';
+            
+            return `<div class="trip-item ${noCatchClass}">
+                <div class="trip-header">
+                    <span class="trip-date">${date} ${timeStart}${timeEnd ? '-'+timeEnd : ''}</span>
+                    <span class="trip-bite">${biteEmoji}</span>
+                </div>
+                <div class="trip-details">
+                    ${trip.location ? '<span>📍 '+trip.location+'</span>' : ''}
+                    ${trip.temperature ? '<span>🌡️ '+trip.temperature+'°C</span>' : ''}
+                    ${trip.weather ? '<span>'+trip.weather+'</span>' : ''}
+                    ${trip.equipmentType ? '<span>🎣 '+trip.equipmentType+(trip.tackleType ? ' ('+trip.tackleType+')' : '')+'</span>' : ''}
+                    ${hasCatch ? `<span>🐟 ${totalCatch} шт.</span>` : '<span>🐟 0 шт.</span>'}
+                </div>
+                ${baitTags ? '<div style="margin-top:4px;">'+baitTags+'</div>' : ''}
+                <div class="trip-fish">${fishTags}</div>
+                <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:11px;color:#5a7a8a;">
+                        ${allBaits.length > 0 ? allBaits.length+' приманок' : 'Без приманок'}
+                    </span>
+                    <button class="delete-btn" onclick="deleteTrip(${trip.id})">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    function deleteTrip(id) {
+        if (!confirm('Удалить эту рыбалку?')) return;
+        let trips = getTrips();
+        trips = trips.filter(t => t.id !== id);
+        saveTrips(trips);
+        updateBaitDatalist();
+        renderList();
+        renderStats();
+        updateLineChart();
+        renderBaitEfficiency();
+        showToast('🗑️ Рыбалка удалена', 'success');
+    }
+
+    // ============================================================
+    // 7. СТАТИСТИКА
+    // ============================================================
+    function renderStats() {
+        const trips = getTrips();
+        const totalTrips = trips.length;
+        let totalCatches = 0;
+        trips.forEach(t => {
+            if (t.baits) {
+                t.baits.forEach(b => {
+                    if (b.catches) {
+                        b.catches.forEach(c => { totalCatches += c.quantity || 0; });
+                    }
+                });
+            }
+        });
+        document.getElementById('totalTrips').textContent = totalTrips;
+        document.getElementById('totalCatches').textContent = totalCatches;
+        
+        if (totalTrips > 0) {
+            const avg = trips.reduce((s, t) => s + t.biteLevel, 0) / totalTrips;
+            document.getElementById('avgBite').textContent = avg.toFixed(1);
+        } else {
+            document.getElementById('avgBite').textContent = '-';
+        }
+
+        const biteStats = {1:0, 2:0, 3:0};
+        trips.forEach(t => { if(t.biteLevel >= 1 && t.biteLevel <= 3) biteStats[t.biteLevel]++; });
+        const biteLabels = ['🔴 Нет клева','🟠 Плохо','🟢 Хорошо'];
+        const biteColors = ['#e87060','#d4a04a','#4a9e9e'];
+        const biteValues = [biteStats[1], biteStats[2], biteStats[3]];
+        const maxBite = Math.max(...biteValues, 1);
+        document.getElementById('biteChart').innerHTML = biteLabels.map((l, i) => `
+            <div class="chart-bar"><span class="label">${l}</span><div class="bar"><div class="bar-fill" style="width:${(biteValues[i]/maxBite*100)}%;background:${biteColors[i]};"></div></div><span class="value">${biteValues[i]}</span></div>
+        `).join('');
+
+        const fishStats = {};
+        trips.forEach(t => {
+            if (t.baits) {
+                t.baits.forEach(b => {
+                    if (b.catches) {
+                        b.catches.forEach(c => {
+                            if (c.fishType) fishStats[c.fishType] = (fishStats[c.fishType] || 0) + (c.quantity || 0);
+                        });
+                    }
+                });
+            }
+        });
+        const fishEntries = Object.entries(fishStats).sort((a, b) => b[1] - a[1]);
+        const maxFish = Math.max(...fishEntries.map(([,v]) => v), 1);
+        const fishContainer = document.getElementById('fishChart');
+        if (fishEntries.length === 0) {
+            fishContainer.innerHTML = '<div style="text-align:center;padding:20px;color:#5a7a8a;">Нет данных</div>';
+        } else {
+            fishContainer.innerHTML = fishEntries.map(([name, count]) => `
+                <div class="chart-bar"><span class="label">${name}</span><div class="bar"><div class="bar-fill" style="width:${(count/maxFish*100)}%;background:#4a9e9e;"></div></div><span class="value">${count}</span></div>
+            `).join('');
+        }
+    }
+
+    // ============================================================
+    // 8. ЛИНЕЙНЫЙ ГРАФИК
+    // ============================================================
+    let lineChartInstance = null;
+
+    function updateLineChart() {
+        const trips = getTrips();
+        if (trips.length === 0) {
+            document.getElementById('chartInfo').textContent = 'Нет данных';
+            if (lineChartInstance) { lineChartInstance.destroy(); lineChartInstance = null; }
+            return;
+        }
+
+        const period = document.getElementById('chartPeriod').value;
+        const groupBy = document.getElementById('chartGroupBy').value;
+
+        let filteredTrips = [...trips];
+        const now = new Date();
+        if (period !== 'all') {
+            let cutoff = new Date();
+            if (period === 'week') cutoff.setDate(now.getDate() - 7);
+            else if (period === 'month') cutoff.setMonth(now.getMonth() - 1);
+            else if (period === '3months') cutoff.setMonth(now.getMonth() - 3);
+            else if (period === '6months') cutoff.setMonth(now.getMonth() - 6);
+            else if (period === 'year') cutoff.setFullYear(now.getFullYear() - 1);
+            filteredTrips = filteredTrips.filter(t => new Date(t.date) >= cutoff);
+        }
+
+        if (filteredTrips.length === 0) {
+            document.getElementById('chartInfo').textContent = 'Нет данных за период';
+            if (lineChartInstance) { lineChartInstance.destroy(); lineChartInstance = null; }
+            return;
+        }
+
+        const groupedData = {};
+        filteredTrips.forEach(t => {
+            const date = new Date(t.date);
+            let key;
+            if (groupBy === 'day') {
+                key = date.toISOString().split('T')[0];
+            } else {
+                key = date.toISOString().split('T')[0] + ' ' + String(date.getHours()).padStart(2, '0') + ':00';
+            }
+            if (!groupedData[key]) {
+                groupedData[key] = { total: 0, count: 0, trips: [] };
+            }
+            groupedData[key].total += t.biteLevel;
+            groupedData[key].count += 1;
+            groupedData[key].trips.push(t);
+        });
+
+        const sortedKeys = Object.keys(groupedData).sort();
+        const labels = [];
+        const avgData = [];
+        const maxData = [];
+        const minData = [];
+
+        sortedKeys.forEach(key => {
+            const data = groupedData[key];
+            const avg = data.total / data.count;
+            labels.push(key);
+            avgData.push(Math.round(avg * 10) / 10);
+            const levels = data.trips.map(t => t.biteLevel);
+            maxData.push(Math.max(...levels));
+            minData.push(Math.min(...levels));
+        });
+
+        const totalTrips = filteredTrips.length;
+        document.getElementById('chartInfo').textContent = 
+            `📊 ${totalTrips} рыбалок, ${labels.length} ${groupBy === 'day' ? 'дней' : 'часов'}`;
+
+        const ctx = document.getElementById('lineChart').getContext('2d');
+        if (lineChartInstance) {
+            lineChartInstance.destroy();
+        }
+
+        lineChartInstance = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Средний клев',
+                        data: avgData,
+                        borderColor: '#4a9e9e',
+                        backgroundColor: 'rgba(74, 158, 158, 0.10)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#4a9e9e'
+                    },
+                    {
+                        label: 'Максимум',
+                        data: maxData,
+                        borderColor: '#4a9e9e',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        fill: false,
+                        tension: 0.2,
+                        pointBackgroundColor: '#4a9e9e'
+                    },
+                    {
+                        label: 'Минимум',
+                        data: minData,
+                        borderColor: '#e87060',
+                        borderDash: [5, 5],
+                        borderWidth: 2,
+                        pointRadius: 2,
+                        fill: false,
+                        tension: 0.2,
+                        pointBackgroundColor: '#e87060'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: { size: 10, weight: '600' },
+                            boxWidth: 10,
+                            padding: 6,
+                            color: '#8aa8b8'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15,26,46,0.95)',
+                        titleColor: '#e8f0f0',
+                        bodyColor: '#c8d6e5',
+                        borderColor: 'rgba(74,158,158,0.15)',
+                        borderWidth: 1,
+                        cornerRadius: 12,
+                        padding: 12,
+                        callbacks: {
+                            afterBody: function(context) {
+                                const key = context[0].label;
+                                const data = groupedData[key];
+                                if (data) {
+                                    const levels = data.trips.map(t => t.biteLevel);
+                                    return `Рыбалок: ${data.count}\nУровни: ${levels.join(', ')}`;
+                                }
+                                return '';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0.5,
+                        max: 3.5,
+                        ticks: {
+                            stepSize: 0.5,
+                            color: '#6a8a9a',
+                            callback: function(value) {
+                                if (value === 1) return '🔴 Нет';
+                                if (value === 2) return '🟠 Плохо';
+                                if (value === 3) return '🟢 Хорошо';
+                                return '';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Уровень клева',
+                            font: { size: 10, weight: '600' },
+                            color: '#6a8a9a'
+                        },
+                        grid: { color: 'rgba(74,158,158,0.06)' }
+                    },
+                    x: {
+                        ticks: {
+                            maxRotation: 45,
+                            font: { size: 9 },
+                            color: '#6a8a9a'
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
+    // ============================================================
+// 9. УЛОВИСТОСТЬ ПРИМАНОК (ИСПРАВЛЕННАЯ ФОРМУЛА)
+// ============================================================
+function renderBaitEfficiency() {
+    const container = document.getElementById('baitEfficiencyContainer');
+    const trips = getTrips();
+    
+    // Собираем статистику по приманкам
+    const baitStats = {};
+    
+    trips.forEach(t => {
+        if (t.baits) {
+            // Для каждой рыбалки считаем общий улов на этой рыбалке
+            let tripTotalCatch = 0;
+            t.baits.forEach(b => {
+                if (b.catches) {
+                    b.catches.forEach(c => {
+                        tripTotalCatch += c.quantity || 0;
+                    });
+                }
+            });
+            
+            // Для каждой приманки на этой рыбалке
+            t.baits.forEach(b => {
+                if (!b.name) return;
+                
+                if (!baitStats[b.name]) {
+                    baitStats[b.name] = {
+                        totalCatch: 0,        // рыбы на эту приманку
+                        tripsCount: 0,
+                        tripsData: [],         // храним данные по каждой рыбалке
+                        fishTypes: {}
+                    };
+                }
+                
+                // Считаем улов на эту приманку
+                let baitCatch = 0;
+                if (b.catches) {
+                    b.catches.forEach(c => {
+                        const qty = c.quantity || 0;
+                        baitCatch += qty;
+                        baitStats[b.name].totalCatch += qty;
+                        if (c.fishType) {
+                            baitStats[b.name].fishTypes[c.fishType] = 
+                                (baitStats[b.name].fishTypes[c.fishType] || 0) + qty;
+                        }
+                    });
+                }
+                
+                // Сохраняем данные по этой рыбалке
+                baitStats[b.name].tripsData.push({
+                    tripTotalCatch: tripTotalCatch,
+                    baitCatch: baitCatch
+                });
+                baitStats[b.name].tripsCount += 1;
+            });
+        }
+    });
+
+    const baitNames = Object.keys(baitStats);
+    if (baitNames.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i>🎯</i>
+                Нет данных о приманках.<br>
+                Добавьте рыбалки с приманками!
+            </div>
+        `;
+        return;
+    }
+
+    // Вычисляем эффективность для каждой приманки
+    const baitEfficiency = baitNames.map(name => {
+        const stats = baitStats[name];
+        
+        // Считаем общий улов на рыбалках, где использовалась эта приманка
+        let totalCatchOnTripsWithBait = 0;
+        stats.tripsData.forEach(data => {
+            totalCatchOnTripsWithBait += data.tripTotalCatch;
+        });
+        
+        // Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100
+        const efficiency = totalCatchOnTripsWithBait > 0 
+            ? (stats.totalCatch / totalCatchOnTripsWithBait * 100) 
+            : 0;
+        
+        return {
+            name: name,
+            totalCatch: stats.totalCatch,
+            tripsCount: stats.tripsCount,
+            efficiency: efficiency,
+            fishTypes: stats.fishTypes,
+            totalCatchOnTripsWithBait: totalCatchOnTripsWithBait,
+            emoji: getBaitEmoji(name)
+        };
+    }).sort((a, b) => b.efficiency - a.efficiency);
+
+    const maxEfficiency = Math.max(...baitEfficiency.map(b => b.efficiency), 1);
+
+    container.innerHTML = `
+        <div style="margin-bottom:14px;color:#6a8a9a;font-size:13px;">
+            <span>🎯 Всего приманок: <strong style="color:#e8f0f0;">${baitNames.length}</strong></span>
+            <span style="margin-left:16px;">📊 Расчет: % от улова на рыбалках с этой приманкой</span>
+        </div>
+        ${baitEfficiency.map(b => {
+            let effClass = 'high';
+            if (b.efficiency < 15) effClass = 'low';
+            else if (b.efficiency < 40) effClass = 'medium';
+            
+            return `
+                <div class="bait-stats-item">
+                    <span class="bait-name">${b.emoji} ${b.name}</span>
+                    <div class="bait-bar-wrap">
+                        <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:#4a9e9e;"></div>
+                    </div>
+                    <div class="bait-stats">
+                        <span class="catch-count">${b.totalCatch} шт.</span>
+                        <span class="efficiency ${effClass}">${b.efficiency.toFixed(1)}%</span>
+                    </div>
+                </div>
+            `;
+        }).join('')}
+        <div style="margin-top:12px;padding:10px 14px;background:rgba(15,26,46,0.3);border-radius:10px;font-size:12px;color:#6a8a9a;">
+            <span class="gold-text">●</span> Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100%
+        </div>
+    `;
+}
+
+    // ============================================================
+    // 10. УВЕДОМЛЕНИЯ
+    // ============================================================
+    function showToast(msg, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.className = 'toast ' + type;
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ============================================================
+    // 11. СБРОС
+    // ============================================================
+    function clearAllData() {
+        if (confirm('Удалить ВСЕ данные о рыбалках?')) {
+            localStorage.removeItem('fishingTripsV2');
+            updateBaitDatalist();
+            renderList();
+            renderStats();
+            updateLineChart();
+            renderBaitEfficiency();
+            showToast('Все данные удалены', 'error');
+        }
+    }
+
+    // ============================================================
+    // 12. ЗАПУСК
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').value = today;
+        document.getElementById('timeStart').value = new Date().toTimeString().slice(0,5);
+        
+        updateBaitDatalist();
+        
+        renderList();
+        renderStats();
+        renderBaitEfficiency();
+        setTimeout(updateLineChart, 300);
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.baitNameInput')) {
+                updateBaitDatalist();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
