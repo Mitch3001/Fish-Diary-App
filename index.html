@@ -369,14 +369,13 @@
         .stat-item .value { display: block; font-size: 26px; font-weight: 800; color: #e8f0f0; }
         .stat-item .label { font-size: 11px; color: #6a8a9a; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
 
-        .chart-container { position: relative; height: 220px; margin-top: 10px; overflow-x: auto; }
+        .chart-container { position: relative; height: 240px; margin-top: 10px; overflow-x: auto; overflow-y: hidden; }
         .chart-wrapper {
             background: rgba(15,26,46,0.4);
             border-radius: 14px;
             padding: 16px;
             margin-top: 12px;
             border: 1px solid rgba(74,158,158,0.06);
-            overflow-x: auto;
         }
 
         .chart-controls {
@@ -385,7 +384,7 @@
             flex-wrap: wrap;
             margin-bottom: 12px;
         }
-        .chart-controls select, .chart-controls input {
+        .chart-controls select {
             padding: 8px 12px;
             border: 1px solid rgba(74,158,158,0.12);
             border-radius: 10px;
@@ -409,32 +408,54 @@
         }
         .chart-controls button:hover { background: #5ab0b0; }
 
-        .line-chart {
-            display: flex;
-            align-items: flex-end;
-            height: 180px;
-            padding: 10px 0;
-            gap: 4px;
-            min-width: 100%;
-        }
-        .line-chart .bar-column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 20px;
+        /* ===== ЛИНЕЙНАЯ ДИАГРАММА (SVG) ===== */
+        .line-chart-container {
             position: relative;
-        }
-        .line-chart .bar-column .bar {
+            height: 220px;
+            padding: 5px 0 5px 0;
             width: 100%;
-            min-height: 2px;
-            border-radius: 3px 3px 0 0;
-            transition: height 0.6s ease;
-            position: relative;
+            overflow: visible;
         }
-        .line-chart .bar-column .bar-label { font-size: 7px; color: #6a8a9a; margin-top: 4px; text-align: center; white-space: nowrap; max-width: 40px; overflow: hidden; text-overflow: ellipsis; }
-        .line-chart .bar-column .bar-value { font-size: 8px; color: #8aa8b8; margin-bottom: 2px; font-weight: 600; }
-        .line-chart .bar-column .bar-dot { width: 6px; height: 6px; border-radius: 50%; position: absolute; top: -3px; left: 50%; transform: translateX(-50%); }
+        .line-chart-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .line-chart-svg .grid-line {
+            stroke: rgba(74,158,158,0.08);
+            stroke-width: 1;
+            stroke-dasharray: 4,4;
+        }
+        .line-chart-svg .chart-line {
+            stroke-width: 2.5;
+            fill: none;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+        .line-chart-svg .chart-line-fill {
+            opacity: 0.1;
+        }
+        .line-chart-svg .dot {
+            stroke-width: 2;
+        }
+        .line-chart-svg .label-x {
+            font-size: 9px;
+            fill: #8aa8b8;
+            text-anchor: middle;
+            font-weight: 500;
+        }
+        .line-chart-svg .label-y {
+            font-size: 9px;
+            fill: #6a8a9a;
+            text-anchor: end;
+            dominant-baseline: middle;
+        }
+        .line-chart-svg .value-label {
+            font-size: 9px;
+            fill: #b0c8d0;
+            text-anchor: middle;
+            font-weight: 600;
+        }
 
         .chart-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
         .chart-bar .label { font-size: 12px; color: #8aa8b8; min-width: 70px; font-weight: 500; }
@@ -500,7 +521,9 @@
             .tabs button { font-size: 11px; padding: 8px 4px; }
             .bait-stats-item { flex-wrap: wrap; gap: 6px; }
             .bait-stats-item .bait-bar-wrap { width: 100%; }
-            .line-chart .bar-column .bar-label { font-size: 6px; }
+            .line-chart-svg .label-x { font-size: 7px; }
+            .line-chart-svg .label-y { font-size: 7px; }
+            .line-chart-svg .value-label { font-size: 7px; }
         }
         @media (max-width: 380px) {
             body { padding: 10px 10px 80px; }
@@ -513,10 +536,40 @@
         input::-webkit-datetime-edit { color: #e0e8ec; }
         .bait-tag { transition: all 0.3s; }
         .bait-tag:hover { transform: scale(1.05); }
-        .line-chart-wrapper { padding: 10px 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .line-chart-wrapper .line-chart { min-width: 100%; }
         .gold-text { color: #d4a04a; }
-        .chart-param-label { font-size: 11px; color: #6a8a9a; margin-top: 6px; text-align: center; }
+        .chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        
+        /* Стили для списка приманок в режиме "Рыба" */
+        .bait-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(15,26,46,0.3);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            border-left: 3px solid #4a9e9e;
+        }
+        .bait-result-item .bait-name {
+            font-weight: 600;
+            color: #d0e0e8;
+            font-size: 14px;
+        }
+        .bait-result-item .bait-catch {
+            color: #6ab0b0;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .bait-result-item .bait-date {
+            color: #6a8a9a;
+            font-size: 12px;
+        }
+        .bait-result-title {
+            color: #8aa8b8;
+            font-size: 13px;
+            margin: 8px 0 6px 0;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -610,6 +663,7 @@
                                 <option value="Спиннинг">Спиннинг</option>
                                 <option value="Удочка">Удочка</option>
                                 <option value="Донка">Донка</option>
+                                <option value="Зимняя удочка">❄️ Зимняя удочка</option>
                                 <option value="Спиннинг+Удочка">Спиннинг+Удочка</option>
                                 <option value="Другое">Другое</option>
                             </select>
@@ -748,18 +802,23 @@
                         <option value="bite">🎯 Уровень клева</option>
                         <option value="catch">🐟 Количество рыбы</option>
                         <option value="bait">🎣 Результативность приманки</option>
+                        <option value="fish">🐠 Уловистость по рыбе</option>
                     </select>
                     <select id="chartBaitSelect" onchange="updateLineChart()" style="display:none;">
                         <option value="">Выберите приманку...</option>
                     </select>
+                    <select id="chartFishSelect" onchange="updateLineChart()" style="display:none;">
+                        <option value="">Выберите рыбу...</option>
+                    </select>
                     <button onclick="updateLineChart()">🔄</button>
                 </div>
                 <div class="chart-wrapper">
-                    <div class="chart-container" id="lineChartContainer">
+                    <div class="chart-container chart-scroll" id="lineChartContainer">
                         <div id="lineChartContent"></div>
                     </div>
                 </div>
                 <div id="chartInfo" class="text-muted"></div>
+                <div id="fishBaitDetails" style="margin-top:10px;"></div>
             </div>
 
             <div class="form-section">
@@ -834,6 +893,23 @@
             return Array.from(baits).sort();
         }
 
+        function getAllFishTypes() {
+            const trips = getTrips();
+            const fish = new Set();
+            trips.forEach(t => {
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                if (c.fishType) fish.add(c.fishType);
+                            });
+                        }
+                    });
+                }
+            });
+            return Array.from(fish).sort();
+        }
+
         function getBaitEmoji(name) {
             const lower = name.toLowerCase();
             if (lower.includes('вертушк') || lower.includes('спиннербейт')) return '🟡';
@@ -867,19 +943,28 @@
                 }
             });
             
-            // Обновляем select для графика
-            updateBaitSelectForChart();
+            updateChartSelects();
         }
 
-        function updateBaitSelectForChart() {
-            const select = document.getElementById('chartBaitSelect');
+        function updateChartSelects() {
+            // Обновляем select приманок
+            const baitSelect = document.getElementById('chartBaitSelect');
             const baits = getAllUsedBaits();
             let html = '<option value="">Выберите приманку...</option>';
             baits.forEach(b => {
                 const emoji = getBaitEmoji(b);
                 html += `<option value="${b}">${emoji} ${b}</option>`;
             });
-            select.innerHTML = html;
+            baitSelect.innerHTML = html;
+
+            // Обновляем select рыб
+            const fishSelect = document.getElementById('chartFishSelect');
+            const fish = getAllFishTypes();
+            let fishHtml = '<option value="">Выберите рыбу...</option>';
+            fish.forEach(f => {
+                fishHtml += `<option value="${f}">🐟 ${f}</option>`;
+            });
+            fishSelect.innerHTML = fishHtml;
         }
 
         function addBaitGroup(name = '', type = '') {
@@ -1064,7 +1149,7 @@
             btns[tabs[tab]].classList.add('active');
             document.getElementById('tab-' + tab).classList.add('active');
             if (tab === 'list') renderList();
-            if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 100); }
+            if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 200); }
             if (tab === 'baits') renderBaitEfficiency();
             if (tab === 'add') updateBaitDatalist();
         }
@@ -1224,26 +1309,31 @@
         }
 
         // ============================================================
-        // 8. ЛИНЕЙНЫЙ ГРАФИК (С ВЫБОРОМ ПАРАМЕТРА)
+        // 8. ЛИНЕЙНАЯ ДИАГРАММА (С ДАТАМИ, ЦВЕТНЫМИ ТОЧКАМИ И "РЫБА")
         // ============================================================
         function updateLineChart() {
             const container = document.getElementById('lineChartContent');
+            const detailsContainer = document.getElementById('fishBaitDetails');
             const trips = getTrips();
             const param = document.getElementById('chartParam').value;
             const period = document.getElementById('chartPeriod').value;
             const selectedBait = document.getElementById('chartBaitSelect').value;
+            const selectedFish = document.getElementById('chartFishSelect').value;
             
-            // Показываем/скрываем выбор приманки
             const baitSelect = document.getElementById('chartBaitSelect');
-            if (param === 'bait') {
-                baitSelect.style.display = 'block';
-                updateBaitSelectForChart();
-            } else {
-                baitSelect.style.display = 'none';
-            }
+            const fishSelect = document.getElementById('chartFishSelect');
+            
+            // Показываем/скрываем выборы
+            baitSelect.style.display = param === 'bait' ? 'block' : 'none';
+            fishSelect.style.display = param === 'fish' ? 'block' : 'none';
+            
+            if (param === 'bait') updateBaitSelectForChart();
+            if (param === 'fish') updateChartSelects();
+            
+            detailsContainer.innerHTML = '';
             
             if (trips.length === 0) {
-                container.innerHTML = '<div class="text-muted">Нет данных для отображения</div>';
+                container.innerHTML = '<div class="text-muted">📭 Нет данных.<br>Добавьте свои первые рыбалки!</div>';
                 document.getElementById('chartInfo').textContent = 'Нет данных';
                 return;
             }
@@ -1261,7 +1351,7 @@
             }
 
             if (filteredTrips.length === 0) {
-                container.innerHTML = '<div class="text-muted">Нет данных за выбранный период</div>';
+                container.innerHTML = '<div class="text-muted">📭 Нет данных за выбранный период</div>';
                 document.getElementById('chartInfo').textContent = 'Нет данных за период';
                 return;
             }
@@ -1269,29 +1359,38 @@
             // Группируем по дням
             const groupedData = {};
             filteredTrips.forEach(t => {
-                const key = new Date(t.date).toISOString().split('T')[0];
+                const dateObj = new Date(t.date);
+                const key = dateObj.toISOString().split('T')[0];
                 if (!groupedData[key]) {
                     groupedData[key] = {
+                        date: dateObj,
                         biteTotal: 0,
                         biteCount: 0,
                         catchTotal: 0,
-                        baitCatches: {}
+                        baitCatches: {},
+                        fishCatches: {}
                     };
                 }
-                groupedData[key].biteTotal += t.biteLevel;
+                groupedData[key].biteTotal += t.biteLevel || 1;
                 groupedData[key].biteCount += 1;
                 
-                // Считаем общий улов за день
                 let dayCatch = 0;
-                if (t.baits) {
+                if (t.baits && t.baits.length > 0) {
                     t.baits.forEach(b => {
-                        if (b.catches) {
+                        if (b.catches && b.catches.length > 0) {
                             b.catches.forEach(c => {
-                                dayCatch += c.quantity || 0;
-                                // Для выбранной приманки
+                                const qty = c.quantity || 0;
+                                dayCatch += qty;
                                 if (selectedBait && b.name === selectedBait) {
                                     groupedData[key].baitCatches[selectedBait] = 
-                                        (groupedData[key].baitCatches[selectedBait] || 0) + (c.quantity || 0);
+                                        (groupedData[key].baitCatches[selectedBait] || 0) + qty;
+                                }
+                                if (selectedFish && c.fishType === selectedFish) {
+                                    if (!groupedData[key].fishCatches[selectedFish]) {
+                                        groupedData[key].fishCatches[selectedFish] = {};
+                                    }
+                                    groupedData[key].fishCatches[selectedFish][b.name] = 
+                                        (groupedData[key].fishCatches[selectedFish][b.name] || 0) + qty;
                                 }
                             });
                         }
@@ -1301,11 +1400,17 @@
             });
 
             const sortedKeys = Object.keys(groupedData).sort();
-            const labels = [];
-            const values = [];
-            let maxVal = 1;
+            
+            if (sortedKeys.length === 0) {
+                container.innerHTML = '<div class="text-muted">📭 Нет данных для построения графика</div>';
+                document.getElementById('chartInfo').textContent = 'Нет данных';
+                return;
+            }
+
+            // Подготавливаем данные
+            const dataPoints = [];
+            let maxVal = 0;
             let labelText = '';
-            let color = '#4a9e9e';
             
             sortedKeys.forEach(key => {
                 const data = groupedData[key];
@@ -1313,62 +1418,174 @@
                 
                 if (param === 'bite') {
                     val = data.biteTotal / data.biteCount;
-                    labelText = 'Средний уровень клева';
-                    color = val >= 2.5 ? '#4a9e9e' : val >= 1.5 ? '#d4a04a' : '#e87060';
+                    labelText = '📊 Средний уровень клева';
                 } else if (param === 'catch') {
                     val = data.catchTotal;
-                    labelText = 'Количество пойманной рыбы';
-                    color = '#4a9e9e';
+                    labelText = '🐟 Количество пойманной рыбы';
                 } else if (param === 'bait') {
                     if (selectedBait) {
                         val = data.baitCatches[selectedBait] || 0;
-                        labelText = `Количество рыбы на приманку "${selectedBait}"`;
-                        color = '#d4a04a';
+                        labelText = `🎣 Приманка "${selectedBait}"`;
                     } else {
                         val = 0;
-                        labelText = 'Выберите приманку';
-                        color = '#6a8a9a';
+                        labelText = '⚠️ Выберите приманку';
+                    }
+                } else if (param === 'fish') {
+                    if (selectedFish) {
+                        val = 0;
+                        if (data.fishCatches[selectedFish]) {
+                            val = Object.values(data.fishCatches[selectedFish]).reduce((a, b) => a + b, 0);
+                        }
+                        labelText = `🐠 Рыба "${selectedFish}"`;
+                    } else {
+                        val = 0;
+                        labelText = '⚠️ Выберите рыбу';
                     }
                 }
                 
-                labels.push(key.slice(5)); // MM-DD
-                values.push(Math.round(val * 10) / 10);
+                const dateObj = data.date;
+                const day = String(dateObj.getDate()).padStart(2, '0');
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                dataPoints.push({
+                    label: `${day}.${month}`,
+                    fullLabel: `${day}.${month}.${String(dateObj.getFullYear()).slice(2)}`,
+                    value: Math.round(val * 10) / 10,
+                    date: dateObj,
+                    rawData: data
+                });
                 if (val > maxVal) maxVal = val;
             });
 
             if (maxVal === 0) {
-                container.innerHTML = '<div class="text-muted">Нет данных для отображения</div>';
+                if ((param === 'bait' && !selectedBait) || (param === 'fish' && !selectedFish)) {
+                    container.innerHTML = `<div class="text-muted">${param === 'bait' ? '🎯' : '🐠'} Выберите ${param === 'bait' ? 'приманку' : 'рыбу'} из списка</div>`;
+                } else {
+                    container.innerHTML = '<div class="text-muted">📭 Нет данных для отображения</div>';
+                }
                 document.getElementById('chartInfo').textContent = 'Нет данных';
                 return;
             }
 
             const totalTrips = filteredTrips.length;
             document.getElementById('chartInfo').textContent = 
-                `📊 ${totalTrips} рыбалок, ${labels.length} дней | ${labelText}`;
+                `📊 ${totalTrips} рыбалок, ${dataPoints.length} дней | ${labelText}`;
 
-            // Строим график
-            let html = `<div class="line-chart-wrapper"><div class="line-chart">`;
+            // Если выбран параметр "Рыба" — показываем детали по приманкам
+            if (param === 'fish' && selectedFish) {
+                let detailsHtml = `<div class="bait-result-title">🎣 Приманки на которых ловилась "${selectedFish}":</div>`;
+                let hasData = false;
+                
+                dataPoints.forEach(dp => {
+                    if (dp.rawData.fishCatches[selectedFish]) {
+                        const baits = dp.rawData.fishCatches[selectedFish];
+                        Object.keys(baits).forEach(baitName => {
+                            if (baits[baitName] > 0) {
+                                hasData = true;
+                                detailsHtml += `
+                                    <div class="bait-result-item">
+                                        <span class="bait-name">${getBaitEmoji(baitName)} ${baitName}</span>
+                                        <span class="bait-catch">${baits[baitName]} шт.</span>
+                                        <span class="bait-date">${dp.fullLabel}</span>
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                });
+                
+                if (!hasData) {
+                    detailsHtml += `<div class="text-muted">Нет данных по этой рыбе</div>`;
+                }
+                detailsContainer.innerHTML = detailsHtml;
+            } else {
+                detailsContainer.innerHTML = '';
+            }
+
+            // Строим SVG с ломаной линией
+            const padding = { top: 25, right: 20, bottom: 30, left: 35 };
+            const width = Math.max(dataPoints.length * 55, 350);
+            const height = 220;
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
             
-            values.forEach((val, i) => {
-                const heightPercent = (val / maxVal) * 100;
-                const barColor = param === 'bite' ? 
+            let svg = `<svg class="line-chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">`;
+            
+            // Горизонтальные линии сетки
+            for (let i = 0; i <= 4; i++) {
+                const yPos = padding.top + (chartHeight - (i / 4) * chartHeight);
+                svg += `<line class="grid-line" x1="${padding.left}" y1="${yPos}" x2="${width - padding.right}" y2="${yPos}" />`;
+            }
+            
+            // Значения на оси Y
+            for (let i = 0; i <= 4; i++) {
+                const yPos = padding.top + (chartHeight - (i / 4) * chartHeight);
+                const val = Math.round((i / 4) * maxVal * 10) / 10;
+                svg += `<text class="label-y" x="${padding.left - 5}" y="${yPos}">${val}</text>`;
+            }
+            
+            if (dataPoints.length === 1) {
+                const xPos = padding.left + chartWidth / 2;
+                const yPos = padding.top + chartHeight - (dataPoints[0].value / maxVal) * chartHeight;
+                const val = dataPoints[0].value;
+                const color = param === 'bite' ? 
                     (val >= 2.5 ? '#4a9e9e' : val >= 1.5 ? '#d4a04a' : '#e87060') : 
                     '#4a9e9e';
-                const dotColor = barColor;
+                svg += `<circle cx="${xPos}" cy="${yPos}" r="6" fill="${color}" stroke="#0f1a2e" stroke-width="2" />`;
+                svg += `<text class="value-label" x="${xPos}" y="${yPos - 12}">${val}</text>`;
+                svg += `<text class="label-x" x="${xPos}" y="${height - 5}">${dataPoints[0].label}</text>`;
+            } else {
+                const points = dataPoints.map((p, i) => {
+                    const xPos = padding.left + (i / (dataPoints.length - 1)) * chartWidth;
+                    const yPos = padding.top + chartHeight - (p.value / maxVal) * chartHeight;
+                    return { x: xPos, y: yPos, value: p.value, label: p.label, fullLabel: p.fullLabel };
+                });
                 
-                html += `
-                    <div class="bar-column">
-                        <div class="bar-value">${val}</div>
-                        <div class="bar" style="height:${Math.max(heightPercent, 3)}%;background:${barColor};">
-                            <div class="bar-dot" style="background:${dotColor};"></div>
-                        </div>
-                        <div class="bar-label">${labels[i]}</div>
-                    </div>
-                `;
-            });
+                // Цвет линии
+                let lineColor = '#4a9e9e';
+                if (param === 'bite') lineColor = '#4a9e9e';
+                
+                // Заливка под линией
+                const fillPath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + 
+                    ` L ${points[points.length - 1].x} ${padding.top + chartHeight} L ${points[0].x} ${padding.top + chartHeight} Z`;
+                svg += `<path class="chart-line-fill" d="${fillPath}" fill="${lineColor}" />`;
+                
+                // Основная линия
+                const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+                svg += `<path class="chart-line" d="${linePath}" stroke="${lineColor}" />`;
+                
+                // Точки и подписи
+                points.forEach((p, i) => {
+                    let dotColor;
+                    if (param === 'bite') {
+                        dotColor = p.value >= 2.5 ? '#4a9e9e' : p.value >= 1.5 ? '#d4a04a' : '#e87060';
+                    } else {
+                        dotColor = '#4a9e9e';
+                    }
+                    
+                    // Точка с обводкой
+                    svg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${dotColor}" stroke="#0f1a2e" stroke-width="2" />`;
+                    
+                    // Значение над точкой
+                    svg += `<text class="value-label" x="${p.x}" y="${p.y - 12}">${p.value}</text>`;
+                    
+                    // Подпись даты под точкой
+                    svg += `<text class="label-x" x="${p.x}" y="${height - 5}">${p.label}</text>`;
+                });
+            }
             
-            html += `</div></div>`;
-            container.innerHTML = html;
+            svg += `</svg>`;
+            container.innerHTML = svg;
+        }
+
+        function updateBaitSelectForChart() {
+            const select = document.getElementById('chartBaitSelect');
+            const baits = getAllUsedBaits();
+            let html = '<option value="">Выберите приманку...</option>';
+            baits.forEach(b => {
+                const emoji = getBaitEmoji(b);
+                html += `<option value="${b}">${emoji} ${b}</option>`;
+            });
+            select.innerHTML = html;
         }
 
         // ============================================================
@@ -1529,9 +1746,8 @@
             renderList();
             renderStats();
             renderBaitEfficiency();
-            setTimeout(updateLineChart, 200);
+            setTimeout(updateLineChart, 300);
             
-            // Следим за изменением параметра графика
             document.getElementById('chartParam').addEventListener('change', function() {
                 updateLineChart();
             });
