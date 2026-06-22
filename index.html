@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🌙 Рыболовный Дневник</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         /* ============================================================
-           ТЕМНАЯ ТЕМА "НОЧНОЕ ОЗЕРО" 🌙
+           ВСЕ СТИЛИ ВНУТРИ — БЕЗ ВНЕШНИХ ЗАПРОСОВ
            ============================================================ */
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -29,7 +27,6 @@
         ::-webkit-scrollbar-track { background: #1a2a3a; border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: #4a9e9e; border-radius: 4px; }
 
-        /* ===== ХЕДЕР ===== */
         .header {
             display: flex;
             justify-content: space-between;
@@ -81,7 +78,6 @@
             transform: scale(0.95);
         }
 
-        /* ===== КАРТОЧКИ ===== */
         .card {
             background: rgba(26, 42, 58, 0.80);
             backdrop-filter: blur(12px);
@@ -103,7 +99,6 @@
         }
         .card h2 i { margin-right: 8px; color: #4a9e9e; }
 
-        /* ===== ВКЛАДКИ ===== */
         .tabs {
             display: flex;
             gap: 5px;
@@ -147,7 +142,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== ФОРМЫ - УЛУЧШЕННАЯ ЧИТАЕМОСТЬ ===== */
         .form-group { margin-bottom: 14px; }
         .form-group label {
             display: block;
@@ -159,7 +153,6 @@
             letter-spacing: 0.5px;
         }
         
-        /* ОСНОВНЫЕ ПОЛЯ ВВОДА - СВЕТЛЫЕ И ЧИТАЕМЫЕ */
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -185,7 +178,6 @@
             background: rgba(40, 65, 90, 0.8);
         }
         
-        /* ВЫПАДАЮЩИЕ СПИСКИ - СВЕТЛЫЙ ТЕКСТ И КОНТРАСТНЫЙ ФОН */
         .form-group select {
             background: rgba(30, 50, 70, 0.8);
             color: #e8f0f0;
@@ -198,15 +190,11 @@
             padding-right: 40px;
         }
         
-        /* ОПЦИИ ВНУТРИ SELECT - СВЕТЛЫЕ И ЧИТАЕМЫЕ */
         .form-group select option {
             background: #1a2a3a;
             color: #e8f0f0;
             padding: 10px 14px;
             font-size: 14px;
-        }
-        .form-group select option:hover {
-            background: #2a4a5a;
         }
         .form-group select option:checked {
             background: #4a9e9e;
@@ -233,7 +221,6 @@
         }
         .form-section h3 i { margin-right: 6px; color: #4a9e9e; }
 
-        /* ===== КНОПКИ ===== */
         .btn-primary {
             width: 100%;
             padding: 14px;
@@ -270,17 +257,6 @@
         }
         .btn-secondary i { margin-right: 5px; }
 
-        .btn-warning {
-            background: rgba(212, 160, 74, 0.12);
-            border-color: rgba(212, 160, 74, 0.20);
-            color: #d4a04a;
-            width: 100%;
-        }
-        .btn-warning:hover {
-            background: rgba(212, 160, 74, 0.25);
-        }
-
-        /* ===== УРОВЕНЬ КЛЕВА ===== */
         .bite-buttons { display: flex; gap: 8px; }
         .bite-btn {
             flex: 1;
@@ -314,7 +290,6 @@
             box-shadow: 0 0 0 3px rgba(74, 158, 158, 0.08);
         }
 
-        /* ===== ПРИМАНКИ С УЛОВОМ ===== */
         .bait-group {
             background: rgba(15, 26, 46, 0.3);
             border-radius: 12px;
@@ -331,7 +306,6 @@
             align-items: center;
         }
         
-        /* СТИЛИ ДЛЯ SELECT И INPUT ВНУТРИ ПРИМАНОК - СВЕТЛЫЕ */
         .bait-group .bait-header select,
         .bait-group .bait-header input {
             padding: 8px 12px;
@@ -351,7 +325,6 @@
             background: rgba(40, 65, 90, 0.8);
         }
         
-        /* ВЫПАДАЮЩИЙ СПИСОК ПРИМАНОК - СТРЕЛКА */
         .bait-group .bait-header select {
             appearance: none;
             -webkit-appearance: none;
@@ -390,7 +363,6 @@
             background: rgba(232, 112, 96, 0.25);
         }
 
-        /* УЛОВЫ ВНУТРИ ПРИМАНКИ - СВЕТЛЫЕ SELECT И INPUT */
         .bait-group .catches-for-bait {
             padding-left: 4px;
         }
@@ -420,7 +392,6 @@
             background: rgba(40, 65, 90, 0.7);
         }
         
-        /* ВЫПАДАЮЩИЙ СПИСОК РЫБЫ - СВЕТЛЫЙ И ЧИТАЕМЫЙ */
         .bait-group .catches-for-bait .catch-row select {
             appearance: none;
             -webkit-appearance: none;
@@ -437,9 +408,6 @@
             padding: 8px 12px;
             font-weight: 500;
             font-size: 13px;
-        }
-        .bait-group .catches-for-bait .catch-row select option:hover {
-            background: #2a4a5a;
         }
         .bait-group .catches-for-bait .catch-row select option:checked {
             background: #4a9e9e;
@@ -502,7 +470,6 @@
         }
         .no-catch-warning i { font-size: 20px; display: block; margin-bottom: 4px; }
 
-        /* ===== СПИСОК РЫБАЛОК ===== */
         .trip-item {
             background: rgba(26, 42, 58, 0.5);
             border-radius: 14px;
@@ -603,7 +570,6 @@
         .filters input::placeholder { color: #6a8a9a; }
         .filters select option { background: #1a2a3a; color: #e8f0f0; }
 
-        /* ===== СТАТИСТИКА ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -632,13 +598,21 @@
             letter-spacing: 0.3px;
         }
 
-        .chart-container { position: relative; height: 220px; margin-top: 10px; }
+        /* ===== ВСТРОЕННЫЕ ГРАФИКИ (без Chart.js) ===== */
+        .chart-container { 
+            position: relative; 
+            height: 220px; 
+            margin-top: 10px;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
         .chart-wrapper {
             background: rgba(15, 26, 46, 0.4);
             border-radius: 14px;
             padding: 16px;
             margin-top: 12px;
             border: 1px solid rgba(74, 158, 158, 0.06);
+            overflow-x: auto;
         }
 
         .chart-controls {
@@ -675,6 +649,58 @@
             transform: scale(0.97);
         }
 
+        /* ===== ЛИНЕЙНЫЙ ГРАФИК (CSS) ===== */
+        .line-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 180px;
+            padding: 10px 0;
+            gap: 4px;
+            min-width: 100%;
+            position: relative;
+        }
+        .line-chart .bar-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 20px;
+            position: relative;
+        }
+        .line-chart .bar-column .bar {
+            width: 100%;
+            min-height: 2px;
+            border-radius: 3px 3px 0 0;
+            transition: height 0.6s ease;
+            position: relative;
+        }
+        .line-chart .bar-column .bar-label {
+            font-size: 7px;
+            color: #6a8a9a;
+            margin-top: 4px;
+            text-align: center;
+            transform: rotate(-30deg);
+            white-space: nowrap;
+            max-width: 40px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .line-chart .bar-column .bar-value {
+            font-size: 8px;
+            color: #8aa8b8;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+        .line-chart .bar-column .bar-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
         .chart-bar {
             display: flex;
             align-items: center;
@@ -707,7 +733,6 @@
             color: #b0c8d0;
         }
 
-        /* ===== СПИСОК ПРИМАНОК ДЛЯ СТАТИСТИКИ ===== */
         .bait-stats-item {
             display: flex;
             align-items: center;
@@ -760,7 +785,6 @@
             transition: width 0.8s ease;
         }
 
-        /* ===== УВЕДОМЛЕНИЯ ===== */
         .toast {
             position: fixed;
             bottom: 20px;
@@ -801,7 +825,6 @@
             padding: 10px;
         }
 
-        /* ===== АДАПТАЦИЯ ===== */
         @media (max-width: 480px) {
             .form-row { grid-template-columns: 1fr; }
             .bait-group .bait-header {
@@ -820,6 +843,10 @@
                 gap: 6px;
             }
             .bait-stats-item .bait-bar-wrap { width: 100%; }
+            .line-chart .bar-column .bar-label {
+                font-size: 6px;
+                transform: rotate(-45deg);
+            }
         }
 
         @media (max-width: 380px) {
@@ -838,7 +865,6 @@
             }
         }
 
-        /* ===== АВТОКОМПЛИТ ===== */
         input::-webkit-calendar-picker-indicator {
             filter: invert(0.6) sepia(0.2) hue-rotate(160deg);
             cursor: pointer;
@@ -847,6 +873,16 @@
 
         .bait-tag { transition: all 0.3s; }
         .bait-tag:hover { transform: scale(1.05); }
+
+        /* ===== СТИЛИ ДЛЯ ЛИНЕЙНОГО ГРАФИКА ===== */
+        .line-chart-wrapper {
+            padding: 10px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .line-chart-wrapper .line-chart {
+            min-width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1079,15 +1115,11 @@
                     <option value="year">Год</option>
                     <option value="all">Всё</option>
                 </select>
-                <select id="chartGroupBy" onchange="updateLineChart()">
-                    <option value="day" selected>По дням</option>
-                    <option value="hour">По часам</option>
-                </select>
                 <button onclick="updateLineChart()">🔄</button>
             </div>
             <div class="chart-wrapper">
-                <div class="chart-container">
-                    <canvas id="lineChart"></canvas>
+                <div class="chart-container" id="lineChartContainer">
+                    <div id="lineChartContent"></div>
                 </div>
             </div>
             <div id="chartInfo" class="text-muted"></div>
@@ -1389,7 +1421,7 @@
         btns[tabs[tab]].classList.add('active');
         document.getElementById('tab-' + tab).classList.add('active');
         if (tab === 'list') renderList();
-        if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 300); }
+        if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 100); }
         if (tab === 'baits') renderBaitEfficiency();
         if (tab === 'add') updateBaitDatalist();
     }
@@ -1549,20 +1581,19 @@
     }
 
     // ============================================================
-    // 8. ЛИНЕЙНЫЙ ГРАФИК
+    // 8. ЛИНЕЙНЫЙ ГРАФИК (ВСТРОЕННЫЙ, БЕЗ CHART.JS)
     // ============================================================
-    let lineChartInstance = null;
-
     function updateLineChart() {
+        const container = document.getElementById('lineChartContent');
         const trips = getTrips();
+        
         if (trips.length === 0) {
+            container.innerHTML = '<div class="text-muted">Нет данных для отображения</div>';
             document.getElementById('chartInfo').textContent = 'Нет данных';
-            if (lineChartInstance) { lineChartInstance.destroy(); lineChartInstance = null; }
             return;
         }
 
         const period = document.getElementById('chartPeriod').value;
-        const groupBy = document.getElementById('chartGroupBy').value;
 
         let filteredTrips = [...trips];
         const now = new Date();
@@ -1577,294 +1608,180 @@
         }
 
         if (filteredTrips.length === 0) {
+            container.innerHTML = '<div class="text-muted">Нет данных за выбранный период</div>';
             document.getElementById('chartInfo').textContent = 'Нет данных за период';
-            if (lineChartInstance) { lineChartInstance.destroy(); lineChartInstance = null; }
             return;
         }
 
+        // Группируем по дням
         const groupedData = {};
         filteredTrips.forEach(t => {
-            const date = new Date(t.date);
-            let key;
-            if (groupBy === 'day') {
-                key = date.toISOString().split('T')[0];
-            } else {
-                key = date.toISOString().split('T')[0] + ' ' + String(date.getHours()).padStart(2, '0') + ':00';
-            }
+            const key = new Date(t.date).toISOString().split('T')[0];
             if (!groupedData[key]) {
-                groupedData[key] = { total: 0, count: 0, trips: [] };
+                groupedData[key] = { total: 0, count: 0 };
             }
             groupedData[key].total += t.biteLevel;
             groupedData[key].count += 1;
-            groupedData[key].trips.push(t);
         });
 
         const sortedKeys = Object.keys(groupedData).sort();
         const labels = [];
         const avgData = [];
-        const maxData = [];
-        const minData = [];
-
+        
         sortedKeys.forEach(key => {
             const data = groupedData[key];
             const avg = data.total / data.count;
-            labels.push(key);
+            labels.push(key.slice(5)); // MM-DD
             avgData.push(Math.round(avg * 10) / 10);
-            const levels = data.trips.map(t => t.biteLevel);
-            maxData.push(Math.max(...levels));
-            minData.push(Math.min(...levels));
         });
 
         const totalTrips = filteredTrips.length;
         document.getElementById('chartInfo').textContent = 
-            `📊 ${totalTrips} рыбалок, ${labels.length} ${groupBy === 'day' ? 'дней' : 'часов'}`;
+            `📊 ${totalTrips} рыбалок, ${labels.length} дней`;
 
-        const ctx = document.getElementById('lineChart').getContext('2d');
-        if (lineChartInstance) {
-            lineChartInstance.destroy();
-        }
-
-        lineChartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Средний клев',
-                        data: avgData,
-                        borderColor: '#4a9e9e',
-                        backgroundColor: 'rgba(74, 158, 158, 0.10)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 4,
-                        pointHoverRadius: 6,
-                        borderWidth: 3,
-                        pointBackgroundColor: '#4a9e9e'
-                    },
-                    {
-                        label: 'Максимум',
-                        data: maxData,
-                        borderColor: '#4a9e9e',
-                        borderDash: [5, 5],
-                        borderWidth: 2,
-                        pointRadius: 2,
-                        fill: false,
-                        tension: 0.2,
-                        pointBackgroundColor: '#4a9e9e'
-                    },
-                    {
-                        label: 'Минимум',
-                        data: minData,
-                        borderColor: '#e87060',
-                        borderDash: [5, 5],
-                        borderWidth: 2,
-                        pointRadius: 2,
-                        fill: false,
-                        tension: 0.2,
-                        pointBackgroundColor: '#e87060'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: { size: 10, weight: '600' },
-                            boxWidth: 10,
-                            padding: 6,
-                            color: '#8aa8b8'
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(15,26,46,0.95)',
-                        titleColor: '#e8f0f0',
-                        bodyColor: '#c8d6e5',
-                        borderColor: 'rgba(74,158,158,0.15)',
-                        borderWidth: 1,
-                        cornerRadius: 12,
-                        padding: 12,
-                        callbacks: {
-                            afterBody: function(context) {
-                                const key = context[0].label;
-                                const data = groupedData[key];
-                                if (data) {
-                                    const levels = data.trips.map(t => t.biteLevel);
-                                    return `Рыбалок: ${data.count}\nУровни: ${levels.join(', ')}`;
-                                }
-                                return '';
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        min: 0.5,
-                        max: 3.5,
-                        ticks: {
-                            stepSize: 0.5,
-                            color: '#6a8a9a',
-                            callback: function(value) {
-                                if (value === 1) return '🔴 Нет';
-                                if (value === 2) return '🟠 Плохо';
-                                if (value === 3) return '🟢 Хорошо';
-                                return '';
-                            }
-                        },
-                        title: {
-                            display: true,
-                            text: 'Уровень клева',
-                            font: { size: 10, weight: '600' },
-                            color: '#6a8a9a'
-                        },
-                        grid: { color: 'rgba(74,158,158,0.06)' }
-                    },
-                    x: {
-                        ticks: {
-                            maxRotation: 45,
-                            font: { size: 9 },
-                            color: '#6a8a9a'
-                        },
-                        grid: { display: false }
-                    }
-                }
-            }
+        // Строим график с помощью CSS
+        const maxVal = Math.max(...avgData, 1);
+        
+        let html = `<div class="line-chart-wrapper"><div class="line-chart">`;
+        
+        avgData.forEach((val, i) => {
+            const heightPercent = (val / 3) * 100;
+            const barColor = val >= 2.5 ? '#4a9e9e' : val >= 1.5 ? '#d4a04a' : '#e87060';
+            const dotColor = val >= 2.5 ? '#4a9e9e' : val >= 1.5 ? '#d4a04a' : '#e87060';
+            
+            html += `
+                <div class="bar-column">
+                    <div class="bar-value">${val.toFixed(1)}</div>
+                    <div class="bar" style="height:${Math.max(heightPercent, 5)}%;background:${barColor};">
+                        <div class="bar-dot" style="background:${dotColor};"></div>
+                    </div>
+                    <div class="bar-label">${labels[i]}</div>
+                </div>
+            `;
         });
+        
+        html += `</div></div>`;
+        container.innerHTML = html;
     }
 
     // ============================================================
-// 9. УЛОВИСТОСТЬ ПРИМАНОК (ИСПРАВЛЕННАЯ ФОРМУЛА)
-// ============================================================
-function renderBaitEfficiency() {
-    const container = document.getElementById('baitEfficiencyContainer');
-    const trips = getTrips();
-    
-    // Собираем статистику по приманкам
-    const baitStats = {};
-    
-    trips.forEach(t => {
-        if (t.baits) {
-            // Для каждой рыбалки считаем общий улов на этой рыбалке
-            let tripTotalCatch = 0;
-            t.baits.forEach(b => {
-                if (b.catches) {
-                    b.catches.forEach(c => {
-                        tripTotalCatch += c.quantity || 0;
-                    });
-                }
-            });
-            
-            // Для каждой приманки на этой рыбалке
-            t.baits.forEach(b => {
-                if (!b.name) return;
-                
-                if (!baitStats[b.name]) {
-                    baitStats[b.name] = {
-                        totalCatch: 0,        // рыбы на эту приманку
-                        tripsCount: 0,
-                        tripsData: [],         // храним данные по каждой рыбалке
-                        fishTypes: {}
-                    };
-                }
-                
-                // Считаем улов на эту приманку
-                let baitCatch = 0;
-                if (b.catches) {
-                    b.catches.forEach(c => {
-                        const qty = c.quantity || 0;
-                        baitCatch += qty;
-                        baitStats[b.name].totalCatch += qty;
-                        if (c.fishType) {
-                            baitStats[b.name].fishTypes[c.fishType] = 
-                                (baitStats[b.name].fishTypes[c.fishType] || 0) + qty;
-                        }
-                    });
-                }
-                
-                // Сохраняем данные по этой рыбалке
-                baitStats[b.name].tripsData.push({
-                    tripTotalCatch: tripTotalCatch,
-                    baitCatch: baitCatch
+    // 9. УЛОВИСТОСТЬ ПРИМАНОК (ИСПРАВЛЕННАЯ ФОРМУЛА)
+    // ============================================================
+    function renderBaitEfficiency() {
+        const container = document.getElementById('baitEfficiencyContainer');
+        const trips = getTrips();
+        
+        const baitStats = {};
+        
+        trips.forEach(t => {
+            if (t.baits) {
+                let tripTotalCatch = 0;
+                t.baits.forEach(b => {
+                    if (b.catches) {
+                        b.catches.forEach(c => {
+                            tripTotalCatch += c.quantity || 0;
+                        });
+                    }
                 });
-                baitStats[b.name].tripsCount += 1;
-            });
-        }
-    });
-
-    const baitNames = Object.keys(baitStats);
-    if (baitNames.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <i>🎯</i>
-                Нет данных о приманках.<br>
-                Добавьте рыбалки с приманками!
-            </div>
-        `;
-        return;
-    }
-
-    // Вычисляем эффективность для каждой приманки
-    const baitEfficiency = baitNames.map(name => {
-        const stats = baitStats[name];
-        
-        // Считаем общий улов на рыбалках, где использовалась эта приманка
-        let totalCatchOnTripsWithBait = 0;
-        stats.tripsData.forEach(data => {
-            totalCatchOnTripsWithBait += data.tripTotalCatch;
+                
+                t.baits.forEach(b => {
+                    if (!b.name) return;
+                    
+                    if (!baitStats[b.name]) {
+                        baitStats[b.name] = {
+                            totalCatch: 0,
+                            tripsCount: 0,
+                            tripsData: [],
+                            fishTypes: {}
+                        };
+                    }
+                    
+                    let baitCatch = 0;
+                    if (b.catches) {
+                        b.catches.forEach(c => {
+                            const qty = c.quantity || 0;
+                            baitCatch += qty;
+                            baitStats[b.name].totalCatch += qty;
+                            if (c.fishType) {
+                                baitStats[b.name].fishTypes[c.fishType] = 
+                                    (baitStats[b.name].fishTypes[c.fishType] || 0) + qty;
+                            }
+                        });
+                    }
+                    
+                    baitStats[b.name].tripsData.push({
+                        tripTotalCatch: tripTotalCatch,
+                        baitCatch: baitCatch
+                    });
+                    baitStats[b.name].tripsCount += 1;
+                });
+            }
         });
-        
-        // Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100
-        const efficiency = totalCatchOnTripsWithBait > 0 
-            ? (stats.totalCatch / totalCatchOnTripsWithBait * 100) 
-            : 0;
-        
-        return {
-            name: name,
-            totalCatch: stats.totalCatch,
-            tripsCount: stats.tripsCount,
-            efficiency: efficiency,
-            fishTypes: stats.fishTypes,
-            totalCatchOnTripsWithBait: totalCatchOnTripsWithBait,
-            emoji: getBaitEmoji(name)
-        };
-    }).sort((a, b) => b.efficiency - a.efficiency);
 
-    const maxEfficiency = Math.max(...baitEfficiency.map(b => b.efficiency), 1);
-
-    container.innerHTML = `
-        <div style="margin-bottom:14px;color:#6a8a9a;font-size:13px;">
-            <span>🎯 Всего приманок: <strong style="color:#e8f0f0;">${baitNames.length}</strong></span>
-            <span style="margin-left:16px;">📊 Расчет: % от улова на рыбалках с этой приманкой</span>
-        </div>
-        ${baitEfficiency.map(b => {
-            let effClass = 'high';
-            if (b.efficiency < 15) effClass = 'low';
-            else if (b.efficiency < 40) effClass = 'medium';
-            
-            return `
-                <div class="bait-stats-item">
-                    <span class="bait-name">${b.emoji} ${b.name}</span>
-                    <div class="bait-bar-wrap">
-                        <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:#4a9e9e;"></div>
-                    </div>
-                    <div class="bait-stats">
-                        <span class="catch-count">${b.totalCatch} шт.</span>
-                        <span class="efficiency ${effClass}">${b.efficiency.toFixed(1)}%</span>
-                    </div>
+        const baitNames = Object.keys(baitStats);
+        if (baitNames.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i>🎯</i>
+                    Нет данных о приманках.<br>
+                    Добавьте рыбалки с приманками!
                 </div>
             `;
-        }).join('')}
-        <div style="margin-top:12px;padding:10px 14px;background:rgba(15,26,46,0.3);border-radius:10px;font-size:12px;color:#6a8a9a;">
-            <span class="gold-text">●</span> Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100%
-        </div>
-    `;
-}
+            return;
+        }
+
+        const baitEfficiency = baitNames.map(name => {
+            const stats = baitStats[name];
+            let totalCatchOnTripsWithBait = 0;
+            stats.tripsData.forEach(data => {
+                totalCatchOnTripsWithBait += data.tripTotalCatch;
+            });
+            
+            const efficiency = totalCatchOnTripsWithBait > 0 
+                ? (stats.totalCatch / totalCatchOnTripsWithBait * 100) 
+                : 0;
+            
+            return {
+                name: name,
+                totalCatch: stats.totalCatch,
+                tripsCount: stats.tripsCount,
+                efficiency: efficiency,
+                fishTypes: stats.fishTypes,
+                totalCatchOnTripsWithBait: totalCatchOnTripsWithBait,
+                emoji: getBaitEmoji(name)
+            };
+        }).sort((a, b) => b.efficiency - a.efficiency);
+
+        const maxEfficiency = Math.max(...baitEfficiency.map(b => b.efficiency), 1);
+
+        container.innerHTML = `
+            <div style="margin-bottom:14px;color:#6a8a9a;font-size:13px;">
+                <span>🎯 Всего приманок: <strong style="color:#e8f0f0;">${baitNames.length}</strong></span>
+                <span style="margin-left:16px;">📊 % от улова на рыбалках с этой приманкой</span>
+            </div>
+            ${baitEfficiency.map(b => {
+                let effClass = 'high';
+                if (b.efficiency < 15) effClass = 'low';
+                else if (b.efficiency < 40) effClass = 'medium';
+                
+                return `
+                    <div class="bait-stats-item">
+                        <span class="bait-name">${b.emoji} ${b.name}</span>
+                        <div class="bait-bar-wrap">
+                            <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:#4a9e9e;"></div>
+                        </div>
+                        <div class="bait-stats">
+                            <span class="catch-count">${b.totalCatch} шт.</span>
+                            <span class="efficiency ${effClass}">${b.efficiency.toFixed(1)}%</span>
+                        </div>
+                    </div>
+                `;
+            }).join('')}
+            <div style="margin-top:12px;padding:10px 14px;background:rgba(15,26,46,0.3);border-radius:10px;font-size:12px;color:#6a8a9a;">
+                <span class="gold-text">●</span> Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100%
+            </div>
+        `;
+    }
 
     // ============================================================
     // 10. УВЕДОМЛЕНИЯ
@@ -1905,7 +1822,7 @@ function renderBaitEfficiency() {
         renderList();
         renderStats();
         renderBaitEfficiency();
-        setTimeout(updateLineChart, 300);
+        setTimeout(updateLineChart, 200);
         
         document.addEventListener('click', function(e) {
             if (e.target.closest('.baitNameInput')) {
@@ -1917,3 +1834,5 @@ function renderBaitEfficiency() {
 
 </body>
 </html>
+
+//Добавлена офлайн-версия
