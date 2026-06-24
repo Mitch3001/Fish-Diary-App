@@ -64,6 +64,7 @@
             border-radius: 16px;
             padding: 4px;
             border: 1px solid rgba(74, 158, 158, 0.08);
+            flex-wrap: wrap;
         }
         .tabs button {
             flex: 1;
@@ -71,11 +72,12 @@
             border: none;
             border-radius: 13px;
             background: transparent;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 600;
             color: #6a8a9a;
             cursor: pointer;
             transition: all 0.3s;
+            min-width: 50px;
         }
         .tabs button.active {
             background: #4a9e9e;
@@ -337,6 +339,15 @@
         .trip-item .delete-btn { background: none; border: none; color: #4a6a7a; cursor: pointer; font-size: 15px; padding: 4px; }
         .trip-item .delete-btn:hover { color: #e87060; }
         .trip-item .no-catch-label { color: #d4a04a; font-size: 12px; font-weight: 600; }
+        .trip-notes {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #8aa8b8;
+            background: rgba(15,26,46,0.3);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border-left: 2px solid #d4a04a;
+        }
 
         .filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
         .filters input, .filters select {
@@ -408,7 +419,6 @@
         }
         .chart-controls button:hover { background: #5ab0b0; }
 
-        /* ===== ЛИНЕЙНАЯ ДИАГРАММА (SVG) ===== */
         .line-chart-container {
             position: relative;
             height: 220px;
@@ -472,8 +482,10 @@
             border-radius: 12px;
             margin-bottom: 8px;
             border: 1px solid rgba(74,158,158,0.06);
+            cursor: pointer;
+            transition: all 0.3s;
         }
-        .bait-stats-item:hover { background: rgba(15,26,46,0.5); }
+        .bait-stats-item:hover { background: rgba(15,26,46,0.6); border-color: rgba(74,158,158,0.2); }
         .bait-stats-item .bait-name { flex: 1; font-weight: 600; color: #d0e0e8; font-size: 14px; }
         .bait-stats-item .bait-stats { display: flex; gap: 16px; font-size: 13px; color: #8aa8b8; }
         .bait-stats-item .bait-stats .catch-count { color: #6ab0b0; font-weight: 600; }
@@ -518,7 +530,7 @@
             .bait-group .catches-for-bait .catch-row { grid-template-columns: 1fr 0.7fr 0.7fr 32px; gap: 4px; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .header h1 { font-size: 16px; }
-            .tabs button { font-size: 11px; padding: 8px 4px; }
+            .tabs button { font-size: 9px; padding: 8px 2px; min-width: 40px; }
             .bait-stats-item { flex-wrap: wrap; gap: 6px; }
             .bait-stats-item .bait-bar-wrap { width: 100%; }
             .line-chart-svg .label-x { font-size: 7px; }
@@ -539,7 +551,6 @@
         .gold-text { color: #d4a04a; }
         .chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
         
-        /* Стили для списка приманок в режиме "Рыба" */
         .bait-result-item {
             display: flex;
             justify-content: space-between;
@@ -570,6 +581,398 @@
             margin: 8px 0 6px 0;
             font-weight: 600;
         }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: rgba(26,42,58,0.95);
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(74,158,158,0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-content h2 {
+            color: #e8f0f0;
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-content h2 i { color: #4a9e9e; }
+        .modal-close {
+            background: rgba(232,112,96,0.10);
+            border: none;
+            color: #e87060;
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+        }
+        .modal-close:hover { background: rgba(232,112,96,0.25); }
+        .modal-fish-item {
+            background: rgba(15,26,46,0.4);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-left: 3px solid #4a9e9e;
+        }
+        .modal-fish-item .fish-name { font-weight: 700; color: #d0e0e8; font-size: 16px; }
+        .modal-fish-item .fish-details { color: #8aa8b8; font-size: 13px; margin-top: 4px; }
+        .modal-fish-item .fish-details span { margin-right: 16px; }
+        .modal-fish-item .fish-details .max-weight { color: #d4a04a; font-weight: 600; }
+        .modal-fish-item .fish-details .total-count { color: #6ab0b0; font-weight: 600; }
+        .modal-empty { color: #5a7a8a; text-align: center; padding: 20px; }
+
+        /* ========== НОВЫЕ СТИЛИ ========== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .calendar-grid .day-name {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: #5a7a8a;
+            padding: 4px 0;
+            text-transform: uppercase;
+        }
+        .calendar-grid .day-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: rgba(15,26,46,0.3);
+            color: #6a8a9a;
+            border: 1px solid rgba(74,158,158,0.04);
+            min-height: 40px;
+            padding: 2px;
+            position: relative;
+        }
+        .calendar-grid .day-cell.has-trip {
+            color: #e8f0f0;
+            border-color: rgba(74,158,158,0.15);
+        }
+        .calendar-grid .day-cell .day-number {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .calendar-grid .day-cell .day-catch {
+            font-size: 8px;
+            font-weight: 500;
+            opacity: 0.8;
+            margin-top: 1px;
+        }
+        .calendar-grid .day-cell .day-bite {
+            font-size: 8px;
+            margin-top: 1px;
+        }
+        .calendar-grid .day-cell.other-month {
+            opacity: 0.2;
+        }
+        .calendar-grid .day-cell.today {
+            border-color: #4a9e9e;
+            box-shadow: 0 0 12px rgba(74,158,158,0.2);
+        }
+        .calendar-grid .day-cell:hover {
+            transform: scale(1.05);
+            z-index: 2;
+            border-color: #4a9e9e;
+        }
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .calendar-nav .month-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #e8f0f0;
+        }
+        .calendar-nav button {
+            background: rgba(74,158,158,0.10);
+            border: 1px solid rgba(74,158,158,0.12);
+            border-radius: 10px;
+            padding: 6px 14px;
+            color: #8aa8b8;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .calendar-nav button:hover { background: rgba(74,158,158,0.20); }
+
+        .trophy-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: rgba(15,26,46,0.3);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(212,160,74,0.15);
+            border-left: 3px solid #d4a04a;
+            transition: all 0.3s;
+        }
+        .trophy-item:hover { background: rgba(15,26,46,0.5); border-color: rgba(212,160,74,0.25); }
+        .trophy-item .trophy-rank {
+            font-size: 24px;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: center;
+        }
+        .trophy-item .trophy-info { flex: 1; }
+        .trophy-item .trophy-info .trophy-fish { font-weight: 700; color: #d0e0e8; font-size: 15px; }
+        .trophy-item .trophy-info .trophy-details { font-size: 12px; color: #8aa8b8; }
+        .trophy-item .trophy-weight { font-size: 16px; font-weight: 700; color: #d4a04a; }
+        .trophy-item .trophy-date { font-size: 11px; color: #5a7a8a; }
+        .trophy-settings {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(15,26,46,0.3);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .trophy-settings label { font-size: 13px; color: #8aa8b8; }
+        .trophy-settings input {
+            width: 70px;
+            padding: 6px 10px;
+            border: 1px solid rgba(74,158,158,0.12);
+            border-radius: 8px;
+            background: rgba(30,50,70,0.6);
+            color: #e8f0f0;
+            font-size: 14px;
+        }
+        .trophy-settings input:focus { border-color: #4a9e9e; outline: none; }
+
+        .time-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .time-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .time-row .time-label {
+            font-size: 11px;
+            color: #8aa8b8;
+            min-width: 55px;
+            font-weight: 500;
+        }
+        .time-row .time-bar-wrap {
+            flex: 1;
+            height: 22px;
+            background: rgba(74,158,158,0.06);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .time-row .time-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #0f1a2e;
+        }
+        .time-row .time-count {
+            font-size: 11px;
+            color: #6ab0b0;
+            min-width: 45px;
+            text-align: right;
+            font-weight: 600;
+        }
+        .time-best {
+            padding: 10px 14px;
+            background: rgba(74,158,158,0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(74,158,158,0.12);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .time-best .best-label { font-size: 12px; color: #8aa8b8; }
+        .time-best .best-time { font-size: 20px; font-weight: 700; color: #4a9e9e; }
+        .time-best .best-catch { font-size: 13px; color: #6ab0b0; }
+
+        .depth-card {
+            background: rgba(15,26,46,0.3);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border-left: 3px solid #4a9e9e;
+        }
+        .depth-card .depth-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #d0e0e8;
+            font-weight: 600;
+        }
+        .depth-card .depth-details {
+            font-size: 12px;
+            color: #8aa8b8;
+            margin-top: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+        }
+        .depth-card .depth-details span { color: #6ab0b0; }
+        .depth-card .depth-bait-rec {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #d4a04a;
+            background: rgba(212,160,74,0.06);
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .template-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: rgba(15,26,46,0.3);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            border-left: 3px solid #4a9e9e;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .template-item:hover { background: rgba(15,26,46,0.5); }
+        .template-item .template-name { font-weight: 600; color: #d0e0e8; font-size: 14px; }
+        .template-item .template-details { font-size: 11px; color: #8aa8b8; }
+        .template-item .template-use {
+            padding: 4px 12px;
+            background: rgba(74,158,158,0.10);
+            border-radius: 8px;
+            font-size: 11px;
+            color: #4a9e9e;
+            border: none;
+            cursor: pointer;
+        }
+        .template-item .template-use:hover { background: rgba(74,158,158,0.20); }
+        .template-item .template-del {
+            background: none;
+            border: none;
+            color: #4a6a7a;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+        .template-item .template-del:hover { color: #e87060; }
+
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .export-btn {
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(74,158,158,0.12);
+            background: rgba(15,26,46,0.3);
+            color: #8aa8b8;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .export-btn:hover { background: rgba(74,158,158,0.10); border-color: #4a9e9e; color: #e8f0f0; }
+        .export-btn .export-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+
+        .template-form {
+            background: rgba(15,26,46,0.3);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid rgba(74,158,158,0.06);
+        }
+        .template-form .form-row-sm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .template-form input, .template-form select {
+            padding: 8px 12px;
+            border: 1px solid rgba(74,158,158,0.12);
+            border-radius: 8px;
+            background: rgba(30,50,70,0.6);
+            color: #e8f0f0;
+            width: 100%;
+            font-size: 13px;
+        }
+        .template-form input:focus, .template-form select:focus { border-color: #4a9e9e; outline: none; }
+
+        .export-select {
+            padding: 10px 14px;
+            border: 1px solid rgba(74,158,158,0.12);
+            border-radius: 12px;
+            background: rgba(30,50,70,0.6);
+            color: #e8f0f0;
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .export-select:focus { border-color: #4a9e9e; outline: none; }
+        .export-select option { background: #1a2a3a; color: #e8f0f0; }
+        .export-mode {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .export-mode label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #8aa8b8;
+            cursor: pointer;
+        }
+        .export-mode input[type="radio"] {
+            accent-color: #4a9e9e;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -586,6 +989,12 @@
         <button onclick="switchTab('list')"><i>📋</i> Список</button>
         <button onclick="switchTab('stats')"><i>📊</i> Отчеты</button>
         <button onclick="switchTab('baits')"><i>🎯</i> Приманки</button>
+        <button onclick="switchTab('calendar')"><i>📅</i> Календарь</button>
+        <button onclick="switchTab('trophies')"><i>🏆</i> Трофеи</button>
+        <button onclick="switchTab('templates')"><i>📝</i> Шаблоны</button>
+        <button onclick="switchTab('depth')"><i>🌊</i> Глубина</button>
+        <button onclick="switchTab('time')"><i>🕐</i> Время</button>
+        <button onclick="switchTab('export')"><i>📤</i> Экспорт</button>
     </div>
 
     <!-- Вкладка Добавить -->
@@ -651,6 +1060,34 @@
                         </div>
                         <input type="hidden" id="biteLevel" required>
                     </div>
+                </div>
+
+                <!-- Глубина и рельеф -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>🌊 Глубина (м)</label>
+                        <input type="number" id="depth" step="0.1" placeholder="2.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Тип дна</label>
+                        <select id="bottomType">
+                            <option value="">Выберите...</option>
+                            <option value="Песок">Песок</option>
+                            <option value="Камни">Камни</option>
+                            <option value="Ил">Ил</option>
+                            <option value="Трава">Трава</option>
+                            <option value="Коряги">Коряги</option>
+                            <option value="Глина">Глина</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Шаблоны снаряжения -->
+                <div class="form-group">
+                    <label>📝 Шаблон снаряжения</label>
+                    <select id="templateSelect" onchange="applyTemplate()">
+                        <option value="">Выберите шаблон...</option>
+                    </select>
                 </div>
 
                 <div class="form-section">
@@ -746,7 +1183,7 @@
         <div class="card">
             <h2><i>📋</i> Мои рыбалки</h2>
             <div class="filters">
-                <input type="text" id="searchInput" placeholder="🔍 Поиск по месту..." oninput="renderList()">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск по месту и заметкам..." oninput="renderList()">
                 <select id="filterFish" onchange="renderList()">
                     <option value="">Все рыбы</option>
                     <option value="Щука">Щука</option>
@@ -847,11 +1284,120 @@
         </div>
     </div>
 
+    <!-- Вкладка Календарь -->
+    <div id="tab-calendar" class="tab-content">
+        <div class="card">
+            <h2><i>📅</i> Календарь активности</h2>
+            <div id="calendarContainer"></div>
+            <div id="calendarTrips" style="margin-top:14px;"></div>
+        </div>
+    </div>
+
+    <!-- Вкладка Трофеи -->
+    <div id="tab-trophies" class="tab-content">
+        <div class="card">
+            <h2><i>🏆</i> Трофейный альбом</h2>
+            <div class="trophy-settings">
+                <label>🏅 Минимальный вес трофея:</label>
+                <input type="number" id="trophyWeight" value="500" step="50" onchange="renderTrophies()">
+                <span style="font-size:11px;color:#5a7a8a;">г</span>
+            </div>
+            <div id="trophiesContainer">
+                <div class="empty-state"><i>🏆</i>Нет трофеев</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка Шаблоны -->
+    <div id="tab-templates" class="tab-content">
+        <div class="card">
+            <h2><i>📝</i> Шаблоны снаряжения</h2>
+            <div id="templatesContainer">
+                <div class="empty-state"><i>📝</i>Нет шаблонов</div>
+            </div>
+            <button class="btn-secondary" onclick="showTemplateForm()" style="width:100%;margin-top:10px;">
+                <i>➕</i> Создать шаблон
+            </button>
+            <div id="templateFormContainer" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- Вкладка Глубина -->
+    <div id="tab-depth" class="tab-content">
+        <div class="card">
+            <h2><i>🌊</i> Анализ глубины и рельефа</h2>
+            <div id="depthContainer">
+                <div class="empty-state"><i>🌊</i>Нет данных о глубине</div>
+            </div>
+            <div id="depthRecommendation" style="margin-top:12px;"></div>
+        </div>
+    </div>
+
+    <!-- Вкладка Время клёва -->
+    <div id="tab-time" class="tab-content">
+        <div class="card">
+            <h2><i>🕐</i> Анализ времени клёва</h2>
+            <div id="timeContainer">
+                <div class="empty-state"><i>🕐</i>Нет данных</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Вкладка Экспорт -->
+    <div id="tab-export" class="tab-content">
+        <div class="card">
+            <h2><i>📤</i> Экспорт данных</h2>
+            <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                Выберите, что экспортировать:
+            </div>
+            
+            <div class="export-mode">
+                <label><input type="radio" name="exportMode" value="all" checked> 📊 Все рыбалки</label>
+                <label><input type="radio" name="exportMode" value="single"> 🎣 Одну рыбалку</label>
+            </div>
+            
+            <select id="exportTripSelect" class="export-select" style="display:none;">
+                <option value="">Выберите рыбалку...</option>
+            </select>
+            
+            <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                Выберите формат:
+            </div>
+            <div class="export-buttons">
+                <button class="export-btn" onclick="exportCSV()">
+                    <span class="export-icon">📊</span>
+                    CSV (Excel)
+                </button>
+                <button class="export-btn" onclick="exportHTML()">
+                    <span class="export-icon">📄</span>
+                    HTML (Отчёт)
+                </button>
+                <button class="export-btn" onclick="exportJSON()">
+                    <span class="export-icon">📦</span>
+                    JSON (Резерв)
+                </button>
+                <button class="export-btn" onclick="exportText()">
+                    <span class="export-icon">📝</span>
+                    Текст
+                </button>
+            </div>
+            <div id="exportResult" style="margin-top:14px;"></div>
+        </div>
+    </div>
+
     <div id="toast" class="toast"></div>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="baitModal">
+        <div class="modal-content">
+            <h2><i>🎯</i> <span id="modalBaitName">Приманка</span> <button class="modal-close" onclick="closeBaitModal()">✕ Закрыть</button></h2>
+            <div id="modalBaitDetails"></div>
+        </div>
+    </div>
 
     <script>
         // ============================================================
-        // 0. БАЗОВЫЙ СПИСОК ПРИМАНОК - ПУСТОЙ
+        // 0. БАЗОВЫЙ СПИСОК ПРИМАНОК
         // ============================================================
         const DEFAULT_BAITS = [];
 
@@ -864,6 +1410,14 @@
         }
         function saveTrips(trips) {
             localStorage.setItem('fishingTripsV2', JSON.stringify(trips));
+        }
+
+        function getTemplates() {
+            const data = localStorage.getItem('fishingTemplates');
+            return data ? JSON.parse(data) : [];
+        }
+        function saveTemplates(templates) {
+            localStorage.setItem('fishingTemplates', JSON.stringify(templates));
         }
 
         // ============================================================
@@ -924,6 +1478,47 @@
             return '🎯';
         }
 
+        function getSeason(month) {
+            if (month >= 11 || month <= 1) return 'winter';
+            if (month >= 2 && month <= 4) return 'spring';
+            if (month >= 5 && month <= 7) return 'summer';
+            return 'autumn';
+        }
+
+        function getSeasonLabel(season) {
+            const map = { winter: 'Зима', spring: 'Весна', summer: 'Лето', autumn: 'Осень' };
+            return map[season] || '';
+        }
+
+        function getTimeOfDay(hour) {
+            if (hour >= 4 && hour < 10) return 'morning';
+            if (hour >= 10 && hour < 17) return 'day';
+            if (hour >= 17 && hour < 22) return 'evening';
+            return 'night';
+        }
+
+        function getTimeLabel(time) {
+            const map = { morning: '🌅 Утро', day: '☀️ День', evening: '🌆 Вечер', night: '🌙 Ночь' };
+            return map[time] || '';
+        }
+
+        function getTimeEmoji(time) {
+            const map = { morning: '🌅', day: '☀️', evening: '🌆', night: '🌙' };
+            return map[time] || '';
+        }
+
+        function getBottomTypeEmoji(type) {
+            const map = {
+                'Песок': '🏖️',
+                'Камни': '🪨',
+                'Ил': '🟫',
+                'Трава': '🌿',
+                'Коряги': '🌳',
+                'Глина': '🧱'
+            };
+            return map[type] || '';
+        }
+
         function updateBaitDatalist() {
             const datalist = document.getElementById('baitDatalist');
             const baits = getAllUsedBaits();
@@ -944,10 +1539,10 @@
             });
             
             updateChartSelects();
+            updateTemplateSelects();
         }
 
         function updateChartSelects() {
-            // Обновляем select приманок
             const baitSelect = document.getElementById('chartBaitSelect');
             const baits = getAllUsedBaits();
             let html = '<option value="">Выберите приманку...</option>';
@@ -957,7 +1552,6 @@
             });
             baitSelect.innerHTML = html;
 
-            // Обновляем select рыб
             const fishSelect = document.getElementById('chartFishSelect');
             const fish = getAllFishTypes();
             let fishHtml = '<option value="">Выберите рыбу...</option>';
@@ -965,6 +1559,16 @@
                 fishHtml += `<option value="${f}">🐟 ${f}</option>`;
             });
             fishSelect.innerHTML = fishHtml;
+        }
+
+        function updateTemplateSelects() {
+            const select = document.getElementById('templateSelect');
+            const templates = getTemplates();
+            let html = '<option value="">Выберите шаблон...</option>';
+            templates.forEach(t => {
+                html += `<option value="${t.name}">📝 ${t.name}</option>`;
+            });
+            select.innerHTML = html;
         }
 
         function addBaitGroup(name = '', type = '') {
@@ -1061,7 +1665,158 @@
         }
 
         // ============================================================
-        // 4. СОХРАНЕНИЕ РЫБАЛКИ
+        // 4. ШАБЛОНЫ
+        // ============================================================
+        function applyTemplate() {
+            const select = document.getElementById('templateSelect');
+            const templates = getTemplates();
+            const template = templates.find(t => t.name === select.value);
+            if (!template) return;
+            
+            document.getElementById('equipmentType').value = template.equipmentType || '';
+            document.getElementById('tackleType').value = template.tackleType || '';
+            
+            const container = document.getElementById('baitsWithCatchesContainer');
+            const firstGroup = container.querySelector('.bait-group');
+            container.innerHTML = firstGroup.outerHTML;
+            
+            template.baits.forEach((bait, index) => {
+                if (index > 0) {
+                    const group = container.querySelector('.bait-group');
+                    const clone = group.cloneNode(true);
+                    container.appendChild(clone);
+                }
+                const groups = container.querySelectorAll('.bait-group');
+                const group = groups[index] || groups[0];
+                const nameInput = group.querySelector('.baitNameInput');
+                const typeSelect = group.querySelector('.baitTypeSelect');
+                nameInput.value = bait.name;
+                const baitsList = getAllUsedBaits();
+                if (baitsList.includes(bait.name)) {
+                    typeSelect.value = bait.name;
+                }
+            });
+            
+            showToast('✅ Шаблон "' + template.name + '" применён', 'success');
+        }
+
+        function showTemplateForm() {
+            const container = document.getElementById('templateFormContainer');
+            container.style.display = 'block';
+            container.innerHTML = `
+                <div class="template-form">
+                    <h4 style="color:#d0e0e8;font-size:14px;margin-bottom:10px;">📝 Новый шаблон</h4>
+                    <div class="form-row-sm">
+                        <input type="text" id="templateName" placeholder="Название шаблона">
+                        <select id="templateEquipment">
+                            <option value="">Тип снасти</option>
+                            <option value="Спиннинг">Спиннинг</option>
+                            <option value="Удочка">Удочка</option>
+                            <option value="Донка">Донка</option>
+                            <option value="Зимняя удочка">❄️ Зимняя удочка</option>
+                        </select>
+                    </div>
+                    <div class="form-row-sm">
+                        <select id="templateTackle">
+                            <option value="">Класс снасти</option>
+                            <option value="Ультралайт">Ультралайт</option>
+                            <option value="Лайт">Лайт</option>
+                            <option value="Медиум">Медиум</option>
+                            <option value="Хеви">Хеви</option>
+                            <option value="Экстра-Хеви">Экстра-Хеви</option>
+                        </select>
+                        <input type="text" id="templateBaits" placeholder="Приманки (через запятую)">
+                    </div>
+                    <div style="display:flex;gap:8px;margin-top:8px;">
+                        <button class="btn-primary" onclick="saveTemplate()" style="flex:1;">💾 Сохранить</button>
+                        <button class="btn-secondary" onclick="document.getElementById('templateFormContainer').style.display='none';">✕ Отмена</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function saveTemplate() {
+            const name = document.getElementById('templateName').value.trim();
+            const equipmentType = document.getElementById('templateEquipment').value;
+            const tackleType = document.getElementById('templateTackle').value;
+            const baitsText = document.getElementById('templateBaits').value.trim();
+            
+            if (!name) {
+                showToast('Введите название шаблона', 'error');
+                return;
+            }
+            
+            const baits = baitsText ? baitsText.split(',').map(b => b.trim()).filter(b => b) : [];
+            if (baits.length === 0) {
+                showToast('Добавьте хотя бы одну приманку', 'error');
+                return;
+            }
+            
+            const templates = getTemplates();
+            if (templates.find(t => t.name === name)) {
+                showToast('Шаблон с таким именем уже существует', 'error');
+                return;
+            }
+            
+            templates.push({
+                name: name,
+                equipmentType: equipmentType,
+                tackleType: tackleType,
+                baits: baits.map(b => ({ name: b }))
+            });
+            saveTemplates(templates);
+            
+            document.getElementById('templateFormContainer').style.display = 'none';
+            updateTemplateSelects();
+            renderTemplates();
+            showToast('✅ Шаблон "' + name + '" сохранён', 'success');
+        }
+
+        function deleteTemplate(name) {
+            if (!confirm('Удалить шаблон "' + name + '"?')) return;
+            let templates = getTemplates();
+            templates = templates.filter(t => t.name !== name);
+            saveTemplates(templates);
+            updateTemplateSelects();
+            renderTemplates();
+            showToast('🗑️ Шаблон удалён', 'success');
+        }
+
+        function useTemplate(name) {
+            const select = document.getElementById('templateSelect');
+            select.value = name;
+            applyTemplate();
+            switchTab('add');
+        }
+
+        function renderTemplates() {
+            const container = document.getElementById('templatesContainer');
+            const templates = getTemplates();
+            
+            if (templates.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>📝</i>Нет шаблонов</div>`;
+                return;
+            }
+            
+            container.innerHTML = templates.map(t => `
+                <div class="template-item">
+                    <div>
+                        <div class="template-name">📝 ${t.name}</div>
+                        <div class="template-details">
+                            ${t.equipmentType || ''} ${t.tackleType ? ' ('+t.tackleType+')' : ''}
+                            ${t.baits ? ' | Приманки: ' + t.baits.map(b => b.name).join(', ') : ''}
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:4px;align-items:center;">
+                        <button class="template-use" onclick="useTemplate('${t.name}')">▶ Применить</button>
+                        <button class="template-del" onclick="deleteTemplate('${t.name}')">✕</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============================================================
+        // 5. СОХРАНЕНИЕ РЫБАЛКИ
         // ============================================================
         function saveTrip(e) {
             e.preventDefault();
@@ -1085,13 +1840,15 @@
                 date: document.getElementById('date').value,
                 timeStart: document.getElementById('timeStart').value,
                 timeEnd: document.getElementById('timeEnd').value || null,
-                location: document.getElementById('location').value,
+                location: document.getElementById('location').value.trim(),
                 temperature: parseFloat(document.getElementById('temperature').value) || null,
                 weather: document.getElementById('weather').value,
                 wind: document.getElementById('wind').value,
                 biteLevel: biteLevel,
                 equipmentType: document.getElementById('equipmentType').value,
                 tackleType: document.getElementById('tackleType').value,
+                depth: parseFloat(document.getElementById('depth').value) || null,
+                bottomType: document.getElementById('bottomType').value,
                 baits: baitsData,
                 notes: document.getElementById('notes').value,
                 createdAt: new Date().toISOString()
@@ -1135,27 +1892,47 @@
             renderStats();
             updateLineChart();
             renderBaitEfficiency();
+            renderCalendar();
+            renderTrophies();
+            renderTemplates();
+            renderDepthAnalysis();
+            renderTimeAnalysis();
+            updateExportSelect();
             switchTab('list');
         }
 
         // ============================================================
-        // 5. ВКЛАДКИ
+        // 6. ВКЛАДКИ
         // ============================================================
         function switchTab(tab) {
             document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             const btns = document.querySelectorAll('.tabs button');
-            const tabs = { 'add': 0, 'list': 1, 'stats': 2, 'baits': 3 };
-            btns[tabs[tab]].classList.add('active');
-            document.getElementById('tab-' + tab).classList.add('active');
+            const tabs = { 
+                'add': 0, 'list': 1, 'stats': 2, 'baits': 3, 
+                'calendar': 4, 'trophies': 5, 'templates': 6, 
+                'depth': 7, 'time': 8, 'export': 9 
+            };
+            if (tabs[tab] !== undefined && btns[tabs[tab]]) {
+                btns[tabs[tab]].classList.add('active');
+            }
+            const el = document.getElementById('tab-' + tab);
+            if (el) el.classList.add('active');
+            
             if (tab === 'list') renderList();
             if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 200); }
             if (tab === 'baits') renderBaitEfficiency();
-            if (tab === 'add') updateBaitDatalist();
+            if (tab === 'add') { updateBaitDatalist(); updateTemplateSelects(); }
+            if (tab === 'calendar') renderCalendar();
+            if (tab === 'trophies') renderTrophies();
+            if (tab === 'templates') { renderTemplates(); updateTemplateSelects(); }
+            if (tab === 'depth') renderDepthAnalysis();
+            if (tab === 'time') renderTimeAnalysis();
+            if (tab === 'export') updateExportSelect();
         }
 
         // ============================================================
-        // 6. СПИСОК РЫБАЛОК
+        // 7. СПИСОК РЫБАЛОК
         // ============================================================
         function renderList() {
             const container = document.getElementById('tripsList');
@@ -1183,15 +1960,19 @@
                 const biteEmoji = trip.biteLevel === 3 ? '🟢' : trip.biteLevel === 2 ? '🟠' : '🔴';
                 
                 let totalCatch = 0;
-                const allFish = [];
+                const fishCounts = {};
                 const allBaits = [];
+                
                 if (trip.baits) {
                     trip.baits.forEach(b => {
                         if (b.name) allBaits.push(b.name);
                         if (b.catches) {
                             b.catches.forEach(c => {
-                                totalCatch += c.quantity || 0;
-                                allFish.push(c.fishType);
+                                const qty = c.quantity || 0;
+                                totalCatch += qty;
+                                if (c.fishType) {
+                                    fishCounts[c.fishType] = (fishCounts[c.fishType] || 0) + qty;
+                                }
                             });
                         }
                     });
@@ -1199,7 +1980,8 @@
                 
                 const hasCatch = totalCatch > 0;
                 const fishTags = hasCatch ? 
-                    Object.entries(allFish.reduce((acc, f) => { acc[f] = (acc[f] || 0) + 1; return acc; }, {}))
+                    Object.entries(fishCounts)
+                        .sort((a, b) => b[1] - a[1])
                         .map(([name, count]) => `<span class="fish-tag">${name}${count > 1 ? ' ×'+count : ''}</span>`).join('') :
                     `<span class="no-catch-label">🌙 Без улова</span>`;
                 
@@ -1210,6 +1992,12 @@
                     }).join('') : '';
                 
                 const noCatchClass = !hasCatch ? 'no-catch' : '';
+                
+                const depthInfo = trip.depth ? `🌊 ${trip.depth}м` : '';
+                const bottomInfo = trip.bottomType ? getBottomTypeEmoji(trip.bottomType) + ' ' + trip.bottomType : '';
+                
+                const notesHtml = trip.notes && trip.notes.trim() ? 
+                    `<div class="trip-notes">📝 ${trip.notes}</div>` : '';
                 
                 return `<div class="trip-item ${noCatchClass}">
                     <div class="trip-header">
@@ -1222,9 +2010,12 @@
                         ${trip.weather ? '<span>'+trip.weather+'</span>' : ''}
                         ${trip.equipmentType ? '<span>🎣 '+trip.equipmentType+(trip.tackleType ? ' ('+trip.tackleType+')' : '')+'</span>' : ''}
                         ${hasCatch ? `<span>🐟 ${totalCatch} шт.</span>` : '<span>🐟 0 шт.</span>'}
+                        ${depthInfo ? '<span>'+depthInfo+'</span>' : ''}
+                        ${bottomInfo ? '<span>'+bottomInfo+'</span>' : ''}
                     </div>
                     ${baitTags ? '<div style="margin-top:4px;">'+baitTags+'</div>' : ''}
                     <div class="trip-fish">${fishTags}</div>
+                    ${notesHtml}
                     <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:11px;color:#5a7a8a;">
                             ${allBaits.length > 0 ? allBaits.length+' приманок' : 'Без приманок'}
@@ -1245,11 +2036,16 @@
             renderStats();
             updateLineChart();
             renderBaitEfficiency();
+            renderCalendar();
+            renderTrophies();
+            renderDepthAnalysis();
+            renderTimeAnalysis();
+            updateExportSelect();
             showToast('🗑️ Рыбалка удалена', 'success');
         }
 
         // ============================================================
-        // 7. СТАТИСТИКА
+        // 8. СТАТИСТИКА
         // ============================================================
         function renderStats() {
             const trips = getTrips();
@@ -1309,7 +2105,7 @@
         }
 
         // ============================================================
-        // 8. ЛИНЕЙНАЯ ДИАГРАММА (С ДАТАМИ, ЦВЕТНЫМИ ТОЧКАМИ И "РЫБА")
+        // 9. ЛИНЕЙНАЯ ДИАГРАММА
         // ============================================================
         function updateLineChart() {
             const container = document.getElementById('lineChartContent');
@@ -1323,11 +2119,18 @@
             const baitSelect = document.getElementById('chartBaitSelect');
             const fishSelect = document.getElementById('chartFishSelect');
             
-            // Показываем/скрываем выборы
             baitSelect.style.display = param === 'bait' ? 'block' : 'none';
             fishSelect.style.display = param === 'fish' ? 'block' : 'none';
             
-            if (param === 'bait') updateBaitSelectForChart();
+            if (param === 'bait') {
+                const baits = getAllUsedBaits();
+                let html = '<option value="">Выберите приманку...</option>';
+                baits.forEach(b => {
+                    const emoji = getBaitEmoji(b);
+                    html += `<option value="${b}">${emoji} ${b}</option>`;
+                });
+                baitSelect.innerHTML = html;
+            }
             if (param === 'fish') updateChartSelects();
             
             detailsContainer.innerHTML = '';
@@ -1356,7 +2159,6 @@
                 return;
             }
 
-            // Группируем по дням
             const groupedData = {};
             filteredTrips.forEach(t => {
                 const dateObj = new Date(t.date);
@@ -1407,7 +2209,6 @@
                 return;
             }
 
-            // Подготавливаем данные
             const dataPoints = [];
             let maxVal = 0;
             let labelText = '';
@@ -1470,7 +2271,6 @@
             document.getElementById('chartInfo').textContent = 
                 `📊 ${totalTrips} рыбалок, ${dataPoints.length} дней | ${labelText}`;
 
-            // Если выбран параметр "Рыба" — показываем детали по приманкам
             if (param === 'fish' && selectedFish) {
                 let detailsHtml = `<div class="bait-result-title">🎣 Приманки на которых ловилась "${selectedFish}":</div>`;
                 let hasData = false;
@@ -1501,7 +2301,6 @@
                 detailsContainer.innerHTML = '';
             }
 
-            // Строим SVG с ломаной линией
             const padding = { top: 25, right: 20, bottom: 30, left: 35 };
             const width = Math.max(dataPoints.length * 55, 350);
             const height = 220;
@@ -1510,13 +2309,11 @@
             
             let svg = `<svg class="line-chart-svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">`;
             
-            // Горизонтальные линии сетки
             for (let i = 0; i <= 4; i++) {
                 const yPos = padding.top + (chartHeight - (i / 4) * chartHeight);
                 svg += `<line class="grid-line" x1="${padding.left}" y1="${yPos}" x2="${width - padding.right}" y2="${yPos}" />`;
             }
             
-            // Значения на оси Y
             for (let i = 0; i <= 4; i++) {
                 const yPos = padding.top + (chartHeight - (i / 4) * chartHeight);
                 const val = Math.round((i / 4) * maxVal * 10) / 10;
@@ -1540,20 +2337,16 @@
                     return { x: xPos, y: yPos, value: p.value, label: p.label, fullLabel: p.fullLabel };
                 });
                 
-                // Цвет линии
                 let lineColor = '#4a9e9e';
                 if (param === 'bite') lineColor = '#4a9e9e';
                 
-                // Заливка под линией
                 const fillPath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ') + 
                     ` L ${points[points.length - 1].x} ${padding.top + chartHeight} L ${points[0].x} ${padding.top + chartHeight} Z`;
                 svg += `<path class="chart-line-fill" d="${fillPath}" fill="${lineColor}" />`;
                 
-                // Основная линия
                 const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
                 svg += `<path class="chart-line" d="${linePath}" stroke="${lineColor}" />`;
                 
-                // Точки и подписи
                 points.forEach((p, i) => {
                     let dotColor;
                     if (param === 'bite') {
@@ -1562,13 +2355,8 @@
                         dotColor = '#4a9e9e';
                     }
                     
-                    // Точка с обводкой
                     svg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${dotColor}" stroke="#0f1a2e" stroke-width="2" />`;
-                    
-                    // Значение над точкой
                     svg += `<text class="value-label" x="${p.x}" y="${p.y - 12}">${p.value}</text>`;
-                    
-                    // Подпись даты под точкой
                     svg += `<text class="label-x" x="${p.x}" y="${height - 5}">${p.label}</text>`;
                 });
             }
@@ -1577,19 +2365,8 @@
             container.innerHTML = svg;
         }
 
-        function updateBaitSelectForChart() {
-            const select = document.getElementById('chartBaitSelect');
-            const baits = getAllUsedBaits();
-            let html = '<option value="">Выберите приманку...</option>';
-            baits.forEach(b => {
-                const emoji = getBaitEmoji(b);
-                html += `<option value="${b}">${emoji} ${b}</option>`;
-            });
-            select.innerHTML = html;
-        }
-
         // ============================================================
-        // 9. УЛОВИСТОСТЬ ПРИМАНОК
+        // 10. УЛОВИСТОСТЬ ПРИМАНОК
         // ============================================================
         function renderBaitEfficiency() {
             const container = document.getElementById('baitEfficiencyContainer');
@@ -1616,7 +2393,8 @@
                                 totalCatch: 0,
                                 tripsCount: 0,
                                 tripsData: [],
-                                fishTypes: {}
+                                fishTypes: {},
+                                fishWeights: {}
                             };
                         }
                         
@@ -1624,11 +2402,28 @@
                         if (b.catches) {
                             b.catches.forEach(c => {
                                 const qty = c.quantity || 0;
+                                const weight = c.weight || 0;
                                 baitCatch += qty;
                                 baitStats[b.name].totalCatch += qty;
                                 if (c.fishType) {
                                     baitStats[b.name].fishTypes[c.fishType] = 
                                         (baitStats[b.name].fishTypes[c.fishType] || 0) + qty;
+                                    
+                                    if (!baitStats[b.name].fishWeights[c.fishType]) {
+                                        baitStats[b.name].fishWeights[c.fishType] = {
+                                            totalWeight: 0,
+                                            count: 0,
+                                            maxWeight: 0,
+                                            weights: []
+                                        };
+                                    }
+                                    if (weight > 0) {
+                                        const fw = baitStats[b.name].fishWeights[c.fishType];
+                                        fw.totalWeight += weight * qty;
+                                        fw.count += qty;
+                                        if (weight > fw.maxWeight) fw.maxWeight = weight;
+                                        fw.weights.push(weight);
+                                    }
                                 }
                             });
                         }
@@ -1671,6 +2466,7 @@
                     tripsCount: stats.tripsCount,
                     efficiency: efficiency,
                     fishTypes: stats.fishTypes,
+                    fishWeights: stats.fishWeights,
                     totalCatchOnTripsWithBait: totalCatchOnTripsWithBait,
                     emoji: getBaitEmoji(name)
                 };
@@ -1682,6 +2478,7 @@
                 <div style="margin-bottom:14px;color:#6a8a9a;font-size:13px;">
                     <span>🎯 Всего приманок: <strong style="color:#e8f0f0;">${baitNames.length}</strong></span>
                     <span style="margin-left:16px;">📊 % от улова на рыбалках с этой приманкой</span>
+                    <span style="margin-left:16px;color:#4a9e9e;">👆 Кликните для деталей</span>
                 </div>
                 ${baitEfficiency.map(b => {
                     let effClass = 'high';
@@ -1689,7 +2486,7 @@
                     else if (b.efficiency < 40) effClass = 'medium';
                     
                     return `
-                        <div class="bait-stats-item">
+                        <div class="bait-stats-item" onclick="showBaitDetails('${b.name}')">
                             <span class="bait-name">${b.emoji} ${b.name}</span>
                             <div class="bait-bar-wrap">
                                 <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:#4a9e9e;"></div>
@@ -1708,7 +2505,1062 @@
         }
 
         // ============================================================
-        // 10. УВЕДОМЛЕНИЯ
+        // 11. МОДАЛЬНОЕ ОКНО
+        // ============================================================
+        function showBaitDetails(baitName) {
+            const trips = getTrips();
+            const modal = document.getElementById('baitModal');
+            const modalTitle = document.getElementById('modalBaitName');
+            const modalDetails = document.getElementById('modalBaitDetails');
+            
+            modalTitle.textContent = `${getBaitEmoji(baitName)} ${baitName}`;
+            
+            const fishData = {};
+            let totalFish = 0;
+            
+            trips.forEach(t => {
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.name === baitName && b.catches) {
+                            b.catches.forEach(c => {
+                                const fishType = c.fishType;
+                                const qty = c.quantity || 0;
+                                const weight = c.weight || 0;
+                                
+                                if (!fishData[fishType]) {
+                                    fishData[fishType] = {
+                                        total: 0,
+                                        maxWeight: 0,
+                                        weights: [],
+                                        totalWeight: 0,
+                                        count: 0
+                                    };
+                                }
+                                
+                                fishData[fishType].total += qty;
+                                totalFish += qty;
+                                
+                                if (weight > 0) {
+                                    fishData[fishType].weights.push(weight);
+                                    fishData[fishType].totalWeight += weight * qty;
+                                    fishData[fishType].count += qty;
+                                    if (weight > fishData[fishType].maxWeight) {
+                                        fishData[fishType].maxWeight = weight;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            
+            const fishNames = Object.keys(fishData).sort();
+            
+            if (fishNames.length === 0) {
+                modalDetails.innerHTML = `<div class="modal-empty">На эту приманку пока не было улова</div>`;
+            } else {
+                modalDetails.innerHTML = `
+                    <div style="margin-bottom:12px;color:#6a8a9a;font-size:14px;">
+                        Всего рыбы на приманку: <strong style="color:#6ab0b0;">${totalFish} шт.</strong>
+                    </div>
+                    ${fishNames.map(fish => {
+                        const data = fishData[fish];
+                        const avgWeight = data.count > 0 ? (data.totalWeight / data.count).toFixed(1) : '—';
+                        return `
+                            <div class="modal-fish-item">
+                                <div class="fish-name">🐟 ${fish}</div>
+                                <div class="fish-details">
+                                    <span class="total-count">Всего: ${data.total} шт.</span>
+                                    ${data.maxWeight > 0 ? `<span class="max-weight">🏆 Макс. вес: ${data.maxWeight} г</span>` : ''}
+                                    ${data.count > 0 ? `<span>Средний вес: ${avgWeight} г</span>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                `;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeBaitModal() {
+            document.getElementById('baitModal').classList.remove('active');
+        }
+
+        document.getElementById('baitModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeBaitModal();
+            }
+        });
+
+        // ============================================================
+        // 12. КАЛЕНДАРЬ
+        // ============================================================
+        let calendarState = { year: new Date().getFullYear(), month: new Date().getMonth() };
+
+        function renderCalendar() {
+            const container = document.getElementById('calendarContainer');
+            const tripsContainer = document.getElementById('calendarTrips');
+            const trips = getTrips();
+            const { year, month } = calendarState;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            
+            const dayData = {};
+            trips.forEach(t => {
+                if (t.date) {
+                    const d = new Date(t.date);
+                    if (d.getFullYear() === year && d.getMonth() === month) {
+                        const key = t.date;
+                        if (!dayData[key]) {
+                            dayData[key] = { totalCatch: 0, trips: [] };
+                        }
+                        let catchCount = 0;
+                        if (t.baits) {
+                            t.baits.forEach(b => {
+                                if (b.catches) {
+                                    b.catches.forEach(c => { catchCount += c.quantity || 0; });
+                                }
+                            });
+                        }
+                        dayData[key].totalCatch += catchCount;
+                        dayData[key].trips.push(t);
+                    }
+                }
+            });
+            
+            const maxCatch = Math.max(1, ...Object.values(dayData).map(d => d.totalCatch));
+            
+            const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            const dayNames = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            
+            let html = `
+                <div class="calendar-nav">
+                    <button onclick="changeMonth(-1)">◀</button>
+                    <span class="month-label">${monthNames[month]} ${year}</span>
+                    <button onclick="changeMonth(1)">▶</button>
+                </div>
+                <div class="calendar-grid">
+            `;
+            
+            dayNames.forEach(d => {
+                html += `<div class="day-name">${d}</div>`;
+            });
+            
+            const startOffset = firstDay === 0 ? 6 : firstDay - 1;
+            for (let i = 0; i < startOffset; i++) {
+                html += `<div class="day-cell other-month"></div>`;
+            }
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const data = dayData[dateStr];
+                const isToday = dateStr === todayStr;
+                const hasTrip = !!data && data.trips.length > 0;
+                
+                let color = 'rgba(15,26,46,0.3)';
+                let catchText = '';
+                let biteEmoji = '';
+                
+                if (hasTrip) {
+                    const intensity = Math.min(data.totalCatch / maxCatch, 1);
+                    const r = Math.round(74 + (74 * intensity));
+                    const g = Math.round(158 - (80 * intensity));
+                    const b = Math.round(158 - (80 * intensity));
+                    color = `rgba(${r}, ${g}, ${b}, 0.3)`;
+                    catchText = `🐟${data.totalCatch}`;
+                    
+                    const avgBite = data.trips.reduce((s, t) => s + t.biteLevel, 0) / data.trips.length;
+                    if (avgBite >= 2.5) biteEmoji = '🟢';
+                    else if (avgBite >= 1.5) biteEmoji = '🟠';
+                    else biteEmoji = '🔴';
+                }
+                
+                html += `
+                    <div class="day-cell ${hasTrip ? 'has-trip' : ''} ${isToday ? 'today' : ''}" 
+                         style="background:${color};"
+                         onclick="${hasTrip ? `showDayTrips('${dateStr}')` : ''}"
+                         title="${hasTrip ? data.trips.length + ' рыбалок, ' + data.totalCatch + ' шт.' : ''}">
+                        <span class="day-number">${day}</span>
+                        ${catchText ? `<span class="day-catch">${catchText}</span>` : ''}
+                        ${biteEmoji ? `<span class="day-bite">${biteEmoji}</span>` : ''}
+                    </div>
+                `;
+            }
+            
+            html += `</div>`;
+            container.innerHTML = html;
+            tripsContainer.innerHTML = '';
+        }
+
+        function changeMonth(delta) {
+            calendarState.month += delta;
+            if (calendarState.month < 0) {
+                calendarState.month = 11;
+                calendarState.year--;
+            } else if (calendarState.month > 11) {
+                calendarState.month = 0;
+                calendarState.year++;
+            }
+            renderCalendar();
+        }
+
+        function showDayTrips(dateStr) {
+            const container = document.getElementById('calendarTrips');
+            const trips = getTrips();
+            const dayTrips = trips.filter(t => t.date === dateStr);
+            
+            if (dayTrips.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            const date = new Date(dateStr).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+            let totalCatch = 0;
+            dayTrips.forEach(t => {
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => { totalCatch += c.quantity || 0; });
+                        }
+                    });
+                }
+            });
+            
+            let html = `
+                <div style="background:rgba(15,26,46,0.3);border-radius:12px;padding:14px;border-left:3px solid #4a9e9e;">
+                    <div style="font-weight:700;color:#e8f0f0;font-size:15px;">📅 ${date}</div>
+                    <div style="color:#6a8a9a;font-size:13px;margin-top:4px;">🐟 Всего рыбы: <strong style="color:#6ab0b0;">${totalCatch} шт.</strong> (${dayTrips.length} рыбалок)</div>
+                </div>
+            `;
+            
+            dayTrips.forEach(trip => {
+                const timeStart = (trip.timeStart || '').slice(0,5);
+                const timeEnd = (trip.timeEnd || '').slice(0,5);
+                const biteEmoji = trip.biteLevel === 3 ? '🟢' : trip.biteLevel === 2 ? '🟠' : '🔴';
+                let catchCount = 0;
+                const fishList = [];
+                if (trip.baits) {
+                    trip.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                catchCount += c.quantity || 0;
+                                if (c.fishType) fishList.push(c.fishType);
+                            });
+                        }
+                    });
+                }
+                const uniqueFish = [...new Set(fishList)];
+                
+                html += `
+                    <div style="margin-top:8px;padding:10px 14px;background:rgba(15,26,46,0.2);border-radius:10px;border-left:2px solid ${trip.biteLevel >= 3 ? '#4a9e9e' : trip.biteLevel >= 2 ? '#d4a04a' : '#e87060'};">
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-weight:600;color:#d0e0e8;font-size:13px;">
+                                ${timeStart}${timeEnd ? '-'+timeEnd : ''}
+                                ${trip.location ? '📍 '+trip.location : ''}
+                            </span>
+                            <span>${biteEmoji}</span>
+                        </div>
+                        <div style="font-size:12px;color:#8aa8b8;margin-top:2px;">
+                            ${catchCount > 0 ? `🐟 ${catchCount} шт.` : '🐟 0 шт.'}
+                            ${uniqueFish.length > 0 ? ' | ' + uniqueFish.join(', ') : ''}
+                        </div>
+                        ${trip.notes ? `<div style="font-size:11px;color:#6a8a9a;margin-top:3px;">📝 ${trip.notes}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // 13. ТРОФЕЙНЫЙ АЛЬБОМ
+        // ============================================================
+        function renderTrophies() {
+            const container = document.getElementById('trophiesContainer');
+            const trips = getTrips();
+            const minWeight = parseInt(document.getElementById('trophyWeight').value) || 500;
+            
+            const trophies = [];
+            trips.forEach(t => {
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                const weight = c.weight || 0;
+                                if (weight >= minWeight && c.fishType) {
+                                    trophies.push({
+                                        fish: c.fishType,
+                                        weight: weight,
+                                        quantity: c.quantity || 1,
+                                        date: t.date,
+                                        location: t.location,
+                                        bait: b.name,
+                                        tripId: t.id
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            
+            trophies.sort((a, b) => b.weight - a.weight);
+            
+            if (trophies.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>🏆</i>
+                        Нет трофеев весом ≥ ${minWeight} г.<br>
+                        Поймайте больше крупной рыбы!
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = trophies.map((t, index) => {
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index+1}`;
+                const date = new Date(t.date).toLocaleDateString('ru-RU');
+                
+                return `
+                    <div class="trophy-item">
+                        <span class="trophy-rank">${medal}</span>
+                        <div class="trophy-info">
+                            <div class="trophy-fish">🐟 ${t.fish}</div>
+                            <div class="trophy-details">
+                                ${t.location ? '📍 '+t.location : ''}
+                                ${t.bait ? ' | 🎯 '+t.bait : ''}
+                                ${t.quantity > 1 ? ' | ×'+t.quantity : ''}
+                            </div>
+                            <div class="trophy-date">${date}</div>
+                        </div>
+                        <div class="trophy-weight">${t.weight} г</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ============================================================
+        // 14. АНАЛИЗ ГЛУБИНЫ
+        // ============================================================
+        function renderDepthAnalysis() {
+            const container = document.getElementById('depthContainer');
+            const recContainer = document.getElementById('depthRecommendation');
+            const trips = getTrips();
+            
+            const depthData = trips.filter(t => t.depth && t.depth > 0);
+            
+            if (depthData.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>🌊</i>Нет данных о глубине</div>`;
+                recContainer.innerHTML = '';
+                return;
+            }
+            
+            const depthRanges = {};
+            depthData.forEach(t => {
+                const depth = t.depth;
+                const range = Math.floor(depth / 0.5) * 0.5;
+                const key = `${range.toFixed(1)}-${(range + 0.5).toFixed(1)}м`;
+                if (!depthRanges[key]) {
+                    depthRanges[key] = { totalCatch: 0, count: 0, bites: [], bottomTypes: [], baits: [] };
+                }
+                let catchCount = 0;
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => { catchCount += c.quantity || 0; });
+                            if (b.name) depthRanges[key].baits.push(b.name);
+                        }
+                    });
+                }
+                depthRanges[key].totalCatch += catchCount;
+                depthRanges[key].count++;
+                depthRanges[key].bites.push(t.biteLevel || 0);
+                if (t.bottomType) depthRanges[key].bottomTypes.push(t.bottomType);
+            });
+            
+            let bestDepth = null;
+            let bestScore = -1;
+            Object.entries(depthRanges).forEach(([range, data]) => {
+                const avgCatch = data.count > 0 ? data.totalCatch / data.count : 0;
+                const avgBite = data.count > 0 ? data.bites.reduce((s, b) => s + b, 0) / data.bites.length : 0;
+                const score = avgCatch * 0.6 + avgBite * 0.4;
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestDepth = range;
+                }
+            });
+            
+            const sorted = Object.entries(depthRanges).sort((a, b) => (b[1].totalCatch / b[1].count) - (a[1].totalCatch / a[1].count));
+            const maxCatch = Math.max(1, ...sorted.map(([, data]) => data.totalCatch / data.count));
+            
+            container.innerHTML = `
+                <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                    📊 ${depthData.length} рыбалок с указанием глубины
+                </div>
+                ${sorted.map(([range, data]) => {
+                    const avgCatch = data.count > 0 ? (data.totalCatch / data.count).toFixed(1) : 0;
+                    const avgBite = data.count > 0 ? (data.bites.reduce((s, b) => s + b, 0) / data.bites.length).toFixed(1) : 0;
+                    const isBest = range === bestDepth;
+                    const bottomTypes = [...new Set(data.bottomTypes)];
+                    
+                    const baitCounts = {};
+                    data.baits.forEach(b => {
+                        if (b) baitCounts[b] = (baitCounts[b] || 0) + 1;
+                    });
+                    const topBait = Object.entries(baitCounts).sort((a, b) => b[1] - a[1])[0];
+                    
+                    return `
+                        <div class="depth-card" style="${isBest ? 'border-color:#d4a04a;background:rgba(74,158,158,0.06);' : ''}">
+                            <div class="depth-header">
+                                <span>🌊 ${range}</span>
+                                <span>🐟 ${data.totalCatch} шт. (${avgCatch} ср.)</span>
+                            </div>
+                            <div class="depth-details">
+                                <span>🎣 ${data.count} рыбалок</span>
+                                <span>Клёв: ${avgBite}</span>
+                                ${bottomTypes.length > 0 ? `<span>${bottomTypes.map(t => getBottomTypeEmoji(t)+' '+t).join(', ')}</span>` : ''}
+                                ${topBait ? `<span style="color:#d4a04a;">🎯 Рек. приманка: ${topBait[0]}</span>` : ''}
+                            </div>
+                            <div style="margin-top:6px;height:4px;background:rgba(74,158,158,0.10);border-radius:2px;overflow:hidden;">
+                                <div style="height:100%;width:${(avgCatch / maxCatch * 100)}%;background:#4a9e9e;border-radius:2px;"></div>
+                            </div>
+                            ${isBest ? '<div style="margin-top:4px;font-size:11px;color:#d4a04a;">🏆 Лучшая глубина</div>' : ''}
+                        </div>
+                    `;
+                }).join('')}
+            `;
+            
+            if (bestDepth) {
+                const bestData = depthRanges[bestDepth];
+                const baitCounts = {};
+                bestData.baits.forEach(b => {
+                    if (b) baitCounts[b] = (baitCounts[b] || 0) + 1;
+                });
+                const topBaits = Object.entries(baitCounts).sort((a, b) => b[1] - a[1]).slice(0, 3);
+                const bottomTypes = [...new Set(bestData.bottomTypes)];
+                
+                recContainer.innerHTML = `
+                    <div style="background:rgba(74,158,158,0.06);border-radius:12px;padding:14px;border:1px solid rgba(74,158,158,0.10);">
+                        <div style="font-weight:700;color:#e8f0f0;font-size:14px;">🎯 Рекомендация для глубины ${bestDepth}</div>
+                        <div style="font-size:13px;color:#8aa8b8;margin-top:4px;">
+                            ${topBaits.length > 0 ? 'Лучшие приманки: ' + topBaits.map(b => getBaitEmoji(b[0]) + ' ' + b[0]).join(', ') : ''}
+                            ${bottomTypes.length > 0 ? ' | Дно: ' + bottomTypes.map(t => t).join(', ') : ''}
+                        </div>
+                        <div style="font-size:12px;color:#6a8a9a;margin-top:4px;">
+                            Средний улов: ${(bestData.totalCatch / bestData.count).toFixed(1)} шт. | Клёв: ${(bestData.bites.reduce((s,b) => s + b, 0) / bestData.bites.length).toFixed(1)}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================================
+        // 15. АНАЛИЗ ВРЕМЕНИ КЛЁВА
+        // ============================================================
+        function renderTimeAnalysis() {
+            const container = document.getElementById('timeContainer');
+            const trips = getTrips();
+            
+            const tripsWithTime = trips.filter(t => t.timeStart);
+            
+            if (tripsWithTime.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>🕐</i>Нет данных о времени</div>`;
+                return;
+            }
+            
+            const hourData = {};
+            for (let i = 0; i < 24; i++) {
+                hourData[i] = { totalCatch: 0, count: 0, bites: [] };
+            }
+            
+            tripsWithTime.forEach(t => {
+                const hour = parseInt(t.timeStart.split(':')[0]);
+                if (hour >= 0 && hour < 24) {
+                    let catchCount = 0;
+                    if (t.baits) {
+                        t.baits.forEach(b => {
+                            if (b.catches) {
+                                b.catches.forEach(c => { catchCount += c.quantity || 0; });
+                            }
+                        });
+                    }
+                    hourData[hour].totalCatch += catchCount;
+                    hourData[hour].count++;
+                    hourData[hour].bites.push(t.biteLevel || 0);
+                }
+            });
+            
+            const hoursWithData = Object.entries(hourData)
+                .filter(([, data]) => data.count > 0)
+                .map(([hour, data]) => ({
+                    hour: parseInt(hour),
+                    avgCatch: data.totalCatch / data.count,
+                    count: data.count,
+                    totalCatch: data.totalCatch,
+                    avgBite: data.bites.reduce((s, b) => s + b, 0) / data.bites.length
+                }))
+                .sort((a, b) => b.avgCatch - a.avgCatch);
+            
+            if (hoursWithData.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>🕐</i>Нет данных</div>`;
+                return;
+            }
+            
+            const maxCatch = Math.max(1, ...hoursWithData.map(h => h.avgCatch));
+            const bestHour = hoursWithData[0];
+            
+            const timeOfDayData = {};
+            hoursWithData.forEach(h => {
+                const tod = getTimeOfDay(h.hour);
+                if (!timeOfDayData[tod]) {
+                    timeOfDayData[tod] = { totalCatch: 0, count: 0, hours: [] };
+                }
+                timeOfDayData[tod].totalCatch += h.totalCatch;
+                timeOfDayData[tod].count += h.count;
+                timeOfDayData[tod].hours.push(h);
+            });
+            
+            let html = `
+                <div class="time-best">
+                    <div class="best-label">🏆 Лучшее время для рыбалки</div>
+                    <div class="best-time">${String(bestHour.hour).padStart(2, '0')}:00 - ${String(bestHour.hour + 1).padStart(2, '0')}:00</div>
+                    <div class="best-catch">Средний улов: ${bestHour.avgCatch.toFixed(1)} шт. (${bestHour.count} рыбалок)</div>
+                </div>
+            `;
+            
+            html += `
+                <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                    📊 По времени суток
+                </div>
+                <div class="weather-analytics" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    ${Object.entries(timeOfDayData).sort((a, b) => (b[1].totalCatch / b[1].count) - (a[1].totalCatch / a[1].count)).map(([tod, data]) => {
+                        const avg = data.totalCatch / data.count;
+                        const isBest = tod === getTimeOfDay(bestHour.hour);
+                        return `
+                            <div class="weather-card" style="background:rgba(15,26,46,0.4);border-radius:12px;padding:12px 14px;border:1px solid ${isBest ? 'rgba(74,158,158,0.3)' : 'rgba(74,158,158,0.06)'};text-align:center;">
+                                <span style="font-size:24px;display:block;">${getTimeEmoji(tod)}</span>
+                                <div style="font-size:20px;font-weight:700;color:#e8f0f0;">${data.totalCatch}</div>
+                                <div style="font-size:12px;color:#6ab0b0;">${avg.toFixed(1)} шт./рыбалка</div>
+                                <div style="font-size:11px;color:#6a8a9a;margin-top:2px;">${getTimeLabel(tod)} (${data.count})</div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            html += `
+                <hr style="border:none;border-top:1px solid rgba(74,158,158,0.06);margin:14px 0;">
+                <div style="font-size:13px;font-weight:600;color:#8aa8b8;margin-bottom:10px;">📈 По часам</div>
+                <div class="time-chart">
+                    ${hoursWithData.map(h => {
+                        const percent = (h.avgCatch / maxCatch * 100);
+                        const color = h.avgCatch >= maxCatch * 0.7 ? '#4a9e9e' : h.avgCatch >= maxCatch * 0.3 ? '#d4a04a' : '#e87060';
+                        const timeLabel = String(h.hour).padStart(2, '0') + ':00';
+                        return `
+                            <div class="time-row">
+                                <span class="time-label">${timeLabel}</span>
+                                <div class="time-bar-wrap">
+                                    <div class="time-bar-fill" style="width:${percent}%;background:${color};">
+                                        ${percent > 15 ? h.avgCatch.toFixed(1) : ''}
+                                    </div>
+                                </div>
+                                <span class="time-count">${h.count}</span>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            const bestTimeOfDay = getTimeOfDay(bestHour.hour);
+            html += `
+                <hr style="border:none;border-top:1px solid rgba(74,158,158,0.06);margin:14px 0;">
+                <div style="font-size:13px;color:#8aa8b8;padding:8px 4px;">
+                    💡 <strong>Рекомендация:</strong> 
+                    Лучше всего рыбачить в <strong style="color:#4a9e9e;">${getTimeLabel(bestTimeOfDay)}</strong> 
+                    (${String(bestHour.hour).padStart(2, '0')}:00-${String(bestHour.hour + 1).padStart(2, '0')}:00).
+                    Средний улов в это время — ${bestHour.avgCatch.toFixed(1)} шт.
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        // 16. ЭКСПОРТ
+        // ============================================================
+        function updateExportSelect() {
+            const trips = getTrips();
+            const select = document.getElementById('exportTripSelect');
+            
+            let html = '<option value="">Выберите рыбалку...</option>';
+            trips.sort((a, b) => new Date(b.date) - new Date(a.date));
+            trips.forEach(t => {
+                const date = new Date(t.date).toLocaleDateString('ru-RU');
+                const time = (t.timeStart || '').slice(0,5);
+                let catchCount = 0;
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => { catchCount += c.quantity || 0; });
+                        }
+                    });
+                }
+                const label = `${date} ${time}${t.location ? ' 📍'+t.location : ''} (${catchCount} шт.)`;
+                html += `<option value="${t.id}">${label}</option>`;
+            });
+            select.innerHTML = html;
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.name === 'exportMode') {
+                const select = document.getElementById('exportTripSelect');
+                select.style.display = e.target.value === 'single' ? 'block' : 'none';
+            }
+        });
+
+        function getExportData() {
+            const mode = document.querySelector('input[name="exportMode"]:checked').value;
+            const trips = getTrips();
+            
+            if (mode === 'single') {
+                const id = parseInt(document.getElementById('exportTripSelect').value);
+                if (!id) {
+                    showToast('Выберите рыбалку для экспорта', 'error');
+                    return null;
+                }
+                const trip = trips.find(t => t.id === id);
+                if (!trip) {
+                    showToast('Рыбалка не найдена', 'error');
+                    return null;
+                }
+                return [trip];
+            }
+            return trips;
+        }
+
+        function exportCSV() {
+            const data = getExportData();
+            if (!data || data.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+            
+            const headers = [
+                'Дата', 'Время начала', 'Время окончания', 'Место', 'Температура',
+                'Погода', 'Ветер', 'Клёв', 'Глубина', 'Тип дна',
+                'Снасть', 'Класс', 'Рыба', 'Количество', 'Вес (г)',
+                'Приманка', 'Заметки'
+            ];
+            
+            let csv = '\uFEFF' + headers.join(';') + '\n';
+            
+            data.forEach(t => {
+                if (t.baits && t.baits.length > 0) {
+                    t.baits.forEach(b => {
+                        if (b.catches && b.catches.length > 0) {
+                            b.catches.forEach(c => {
+                                const row = [
+                                    t.date || '',
+                                    t.timeStart || '',
+                                    t.timeEnd || '',
+                                    (t.location || '').replace(/;/g, ','),
+                                    t.temperature || '',
+                                    t.weather || '',
+                                    t.wind || '',
+                                    t.biteLevel || '',
+                                    t.depth || '',
+                                    t.bottomType || '',
+                                    t.equipmentType || '',
+                                    t.tackleType || '',
+                                    c.fishType || '',
+                                    c.quantity || 0,
+                                    c.weight || '',
+                                    (b.name || '').replace(/;/g, ','),
+                                    (t.notes || '').replace(/;/g, ',').replace(/\n/g, ' ')
+                                ];
+                                csv += row.join(';') + '\n';
+                            });
+                        } else {
+                            const row = [
+                                t.date || '',
+                                t.timeStart || '',
+                                t.timeEnd || '',
+                                (t.location || '').replace(/;/g, ','),
+                                t.temperature || '',
+                                t.weather || '',
+                                t.wind || '',
+                                t.biteLevel || '',
+                                t.depth || '',
+                                t.bottomType || '',
+                                t.equipmentType || '',
+                                t.tackleType || '',
+                                '',
+                                0,
+                                '',
+                                (b.name || '').replace(/;/g, ','),
+                                (t.notes || '').replace(/;/g, ',').replace(/\n/g, ' ')
+                            ];
+                            csv += row.join(';') + '\n';
+                        }
+                    });
+                } else {
+                    const row = [
+                        t.date || '',
+                        t.timeStart || '',
+                        t.timeEnd || '',
+                        (t.location || '').replace(/;/g, ','),
+                        t.temperature || '',
+                        t.weather || '',
+                        t.wind || '',
+                        t.biteLevel || '',
+                        t.depth || '',
+                        t.bottomType || '',
+                        t.equipmentType || '',
+                        t.tackleType || '',
+                        '',
+                        0,
+                        '',
+                        '',
+                        (t.notes || '').replace(/;/g, ',').replace(/\n/g, ' ')
+                    ];
+                    csv += row.join(';') + '\n';
+                }
+            });
+            
+            downloadFile(csv, 'рыбалки.csv', 'text/csv;charset=utf-8');
+            showToast('📊 CSV экспортирован (' + data.length + ' рыбалок)', 'success');
+        }
+
+        function exportHTML() {
+            const data = getExportData();
+            if (!data || data.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+            
+            const mode = document.querySelector('input[name="exportMode"]:checked').value;
+            const title = mode === 'single' ? '🌙 Отчёт о рыбалке' : '🌙 Отчёт о всех рыбалках';
+            
+            let html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>${title}</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body { 
+                            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+                            background: #0f1a2e; 
+                            color: #c8d6e5; 
+                            padding: 30px 20px; 
+                            max-width: 900px; 
+                            margin: 0 auto; 
+                        }
+                        h1 { color: #4a9e9e; margin-bottom: 8px; font-size: 28px; }
+                        .subtitle { color: #6a8a9a; margin-bottom: 24px; font-size: 14px; }
+                        .stats-row { 
+                            display: flex; 
+                            gap: 16px; 
+                            flex-wrap: wrap; 
+                            margin-bottom: 24px; 
+                            background: rgba(26,42,58,0.5); 
+                            padding: 16px 20px; 
+                            border-radius: 14px; 
+                            border: 1px solid rgba(74,158,158,0.08);
+                        }
+                        .stats-row .stat { 
+                            display: flex; 
+                            align-items: baseline; 
+                            gap: 6px; 
+                            font-size: 14px; 
+                            color: #8aa8b8; 
+                        }
+                        .stats-row .stat .num { 
+                            font-size: 22px; 
+                            font-weight: 700; 
+                            color: #e8f0f0; 
+                        }
+                        .stats-row .stat .num.gold { color: #d4a04a; }
+                        .stats-row .stat .num.green { color: #6ab0b0; }
+                        
+                        .trip { 
+                            background: rgba(26,42,58,0.6); 
+                            border-radius: 14px; 
+                            padding: 18px 20px; 
+                            margin-bottom: 14px; 
+                            border-left: 4px solid #4a9e9e;
+                            border: 1px solid rgba(74,158,158,0.06);
+                        }
+                        .trip .trip-header { 
+                            display: flex; 
+                            justify-content: space-between; 
+                            align-items: center; 
+                            flex-wrap: wrap;
+                            gap: 8px;
+                        }
+                        .trip .trip-header .date { 
+                            font-weight: 700; 
+                            font-size: 16px; 
+                            color: #d0e0e8; 
+                        }
+                        .trip .trip-header .bite { font-size: 22px; }
+                        .trip .trip-details { 
+                            font-size: 13px; 
+                            color: #6a8a9a; 
+                            margin: 6px 0; 
+                            display: flex; 
+                            flex-wrap: wrap; 
+                            gap: 4px 16px; 
+                        }
+                        .trip .trip-details span { color: #8aa8b8; }
+                        .trip .trip-details .catch-count { color: #6ab0b0; font-weight: 600; }
+                        .trip .trip-details .depth-info { color: #4a9e9e; }
+                        .trip .trip-details .bottom-info { color: #d4a04a; }
+                        
+                        .trip .fish-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+                        .trip .fish-list .fish-tag {
+                            background: rgba(74,158,158,0.10);
+                            padding: 2px 12px;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: #6ab0b0;
+                            border: 1px solid rgba(74,158,158,0.08);
+                        }
+                        .trip .bait-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+                        .trip .bait-list .bait-tag {
+                            background: rgba(212,160,74,0.08);
+                            padding: 2px 10px;
+                            border-radius: 20px;
+                            font-size: 11px;
+                            color: #d4a04a;
+                            border: 1px solid rgba(212,160,74,0.08);
+                        }
+                        .trip .notes {
+                            margin-top: 8px;
+                            font-size: 13px;
+                            color: #8aa8b8;
+                            background: rgba(15,26,46,0.3);
+                            padding: 8px 12px;
+                            border-radius: 8px;
+                            border-left: 2px solid #d4a04a;
+                        }
+                        .trip .trip-footer {
+                            margin-top: 8px;
+                            font-size: 11px;
+                            color: #5a7a8a;
+                            display: flex;
+                            justify-content: space-between;
+                        }
+                        
+                        @media print {
+                            body { background: white; color: #222; }
+                            .stats-row { background: #f0f4f8; border-color: #d0d8e0; }
+                            .stats-row .stat .num { color: #1a2a3a; }
+                            .trip { background: #f5f8fa; border-color: #d0d8e0; }
+                            .trip .trip-header .date { color: #1a2a3a; }
+                            .trip .trip-details span { color: #4a6a7a; }
+                            .trip .fish-list .fish-tag { background: #e8f0f0; color: #2a6a6a; }
+                            .trip .bait-list .bait-tag { background: #f5ece0; color: #8a6a2a; }
+                            .trip .notes { background: #f5f5f0; color: #4a4a4a; }
+                            .trip .trip-footer { color: #8a8a8a; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>${title}</h1>
+                    <div class="subtitle">Дата отчёта: ${new Date().toLocaleDateString('ru-RU')}</div>
+            `;
+            
+            let totalCatch = 0;
+            let totalFish = 0;
+            const allFish = {};
+            const allBaits = {};
+            
+            data.forEach(t => {
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.name) allBaits[b.name] = (allBaits[b.name] || 0) + 1;
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                totalCatch += c.quantity || 0;
+                                totalFish++;
+                                if (c.fishType) allFish[c.fishType] = (allFish[c.fishType] || 0) + (c.quantity || 0);
+                            });
+                        }
+                    });
+                }
+            });
+            
+            html += `
+                <div class="stats-row">
+                    <div class="stat">🎣 Рыбалок: <span class="num">${data.length}</span></div>
+                    <div class="stat">🐟 Всего рыбы: <span class="num green">${totalCatch}</span></div>
+                    <div class="stat">🏆 Видов рыб: <span class="num gold">${Object.keys(allFish).length}</span></div>
+                    <div class="stat">🎯 Приманок: <span class="num">${Object.keys(allBaits).length}</span></div>
+                </div>
+            `;
+            
+            data.sort((a, b) => new Date(b.date) - new Date(a.date));
+            data.forEach(t => {
+                const date = new Date(t.date).toLocaleDateString('ru-RU');
+                const timeStart = (t.timeStart || '').slice(0,5);
+                const timeEnd = (t.timeEnd || '').slice(0,5);
+                const biteEmoji = t.biteLevel === 3 ? '🟢' : t.biteLevel === 2 ? '🟠' : '🔴';
+                
+                let tripCatch = 0;
+                const fishCounts = {};
+                const baits = [];
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.name) baits.push(b.name);
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                tripCatch += c.quantity || 0;
+                                fishCounts[c.fishType] = (fishCounts[c.fishType] || 0) + (c.quantity || 0);
+                            });
+                        }
+                    });
+                }
+                
+                const fishTags = Object.entries(fishCounts)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([name, count]) => `<span class="fish-tag">${name}${count > 1 ? ' ×'+count : ''}</span>`).join('');
+                
+                const baitTags = baits.map(b => `<span class="bait-tag">${getBaitEmoji(b)} ${b}</span>`).join('');
+                
+                html += `
+                    <div class="trip">
+                        <div class="trip-header">
+                            <span class="date">${date} ${timeStart}${timeEnd ? '-'+timeEnd : ''}</span>
+                            <span class="bite">${biteEmoji}</span>
+                        </div>
+                        <div class="trip-details">
+                            ${t.location ? '<span>📍 '+t.location+'</span>' : ''}
+                            ${t.temperature ? '<span>🌡️ '+t.temperature+'°C</span>' : ''}
+                            ${t.weather ? '<span>'+t.weather+'</span>' : ''}
+                            ${t.equipmentType ? '<span>🎣 '+t.equipmentType+(t.tackleType ? ' ('+t.tackleType+')' : '')+'</span>' : ''}
+                            ${tripCatch > 0 ? `<span class="catch-count">🐟 ${tripCatch} шт.</span>` : '<span>🐟 0 шт.</span>'}
+                            ${t.depth ? `<span class="depth-info">🌊 ${t.depth}м</span>` : ''}
+                            ${t.bottomType ? `<span class="bottom-info">${t.bottomType}</span>` : ''}
+                        </div>
+                        ${baitTags ? '<div class="bait-list">'+baitTags+'</div>' : ''}
+                        ${fishTags ? '<div class="fish-list">'+fishTags+'</div>' : ''}
+                        ${t.notes ? `<div class="notes">📝 ${t.notes}</div>` : ''}
+                        <div class="trip-footer">
+                            <span>${baits.length > 0 ? baits.length+' приманок' : 'Без приманок'}</span>
+                            <span>${t.id ? '#'+t.id.toString().slice(-6) : ''}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `
+                </body>
+                </html>
+            `;
+            
+            downloadFile(html, 'отчёт_рыбалки.html', 'text/html;charset=utf-8');
+            showToast('📄 HTML отчёт экспортирован (' + data.length + ' рыбалок)', 'success');
+        }
+
+        function exportJSON() {
+            const data = getExportData();
+            if (!data || data.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+            
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, 'рыбалки.json', 'application/json;charset=utf-8');
+            showToast('📦 JSON экспортирован (' + data.length + ' рыбалок)', 'success');
+        }
+
+        function exportText() {
+            const data = getExportData();
+            if (!data || data.length === 0) {
+                showToast('Нет данных для экспорта', 'error');
+                return;
+            }
+            
+            const mode = document.querySelector('input[name="exportMode"]:checked').value;
+            const title = mode === 'single' ? 'МОЯ РЫБАЛКА' : 'МОИ РЫБАЛКИ';
+            
+            let text = '🌙 ' + title + '\n';
+            text += '='.repeat(40) + '\n\n';
+            
+            data.sort((a, b) => new Date(b.date) - new Date(a.date));
+            data.forEach((t, i) => {
+                const date = new Date(t.date).toLocaleDateString('ru-RU');
+                const timeStart = (t.timeStart || '').slice(0,5);
+                const timeEnd = (t.timeEnd || '').slice(0,5);
+                
+                let totalCatch = 0;
+                const fishList = [];
+                const baitList = [];
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.name) baitList.push(b.name);
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                totalCatch += c.quantity || 0;
+                                const fishStr = c.fishType + (c.quantity > 1 ? ' ×'+c.quantity : '') + (c.weight ? ' ('+c.weight+'г)' : '');
+                                fishList.push(fishStr);
+                            });
+                        }
+                    });
+                }
+                
+                text += `🎣 Рыбалка #${i+1}\n`;
+                text += `📅 ${date} ${timeStart}${timeEnd ? '-'+timeEnd : ''}\n`;
+                if (t.location) text += `📍 ${t.location}\n`;
+                if (t.temperature) text += `🌡️ ${t.temperature}°C\n`;
+                if (t.weather) text += `${t.weather}\n`;
+                if (t.wind) text += `💨 ${t.wind}\n`;
+                if (t.depth) text += `🌊 Глубина: ${t.depth}м\n`;
+                if (t.bottomType) text += `🪨 Дно: ${t.bottomType}\n`;
+                if (t.equipmentType) text += `🎣 Снасть: ${t.equipmentType}${t.tackleType ? ' ('+t.tackleType+')' : ''}\n`;
+                text += `🐟 Улов: ${totalCatch} шт.\n`;
+                if (fishList.length > 0) text += `   Рыба: ${fishList.join(', ')}\n`;
+                if (baitList.length > 0) text += `   Приманки: ${baitList.join(', ')}\n`;
+                if (t.notes) text += `📝 ${t.notes}\n`;
+                text += '─'.repeat(30) + '\n\n';
+            });
+            
+            text += `📊 Итого: ${data.length} рыбалок, ${data.reduce((s, t) => {
+                let c = 0;
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(f => { c += f.quantity || 0; });
+                        }
+                    });
+                }
+                return s + c;
+            }, 0)} шт. рыбы\n`;
+            
+            downloadFile(text, 'рыбалки.txt', 'text/plain;charset=utf-8');
+            showToast('📝 Текст экспортирован (' + data.length + ' рыбалок)', 'success');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType + ';charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        // ============================================================
+        // 17. УВЕДОМЛЕНИЯ
         // ============================================================
         function showToast(msg, type = 'info') {
             const toast = document.getElementById('toast');
@@ -1719,22 +3571,29 @@
         }
 
         // ============================================================
-        // 11. СБРОС
+        // 18. СБРОС
         // ============================================================
         function clearAllData() {
-            if (confirm('Удалить ВСЕ данные о рыбалках?')) {
+            if (confirm('Удалить ВСЕ данные о рыбалках и шаблоны?')) {
                 localStorage.removeItem('fishingTripsV2');
+                localStorage.removeItem('fishingTemplates');
                 updateBaitDatalist();
                 renderList();
                 renderStats();
                 updateLineChart();
                 renderBaitEfficiency();
+                renderCalendar();
+                renderTrophies();
+                renderTemplates();
+                renderDepthAnalysis();
+                renderTimeAnalysis();
+                updateExportSelect();
                 showToast('Все данные удалены', 'error');
             }
         }
 
         // ============================================================
-        // 12. ЗАПУСК
+        // 19. ЗАПУСК
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
@@ -1746,6 +3605,12 @@
             renderList();
             renderStats();
             renderBaitEfficiency();
+            renderCalendar();
+            renderTrophies();
+            renderTemplates();
+            renderDepthAnalysis();
+            renderTimeAnalysis();
+            updateExportSelect();
             setTimeout(updateLineChart, 300);
             
             document.getElementById('chartParam').addEventListener('change', function() {
