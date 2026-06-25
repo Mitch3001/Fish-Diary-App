@@ -3,58 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f1a2e">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuCbmeCxgeCxteCxguCxi+CxjeCxgiDQt9Cw0L/QuNGB0LrQsCIsCiAgInNob3J0X25hbWUiOiAi0JDRi9Cx0LDQu9C60LAiLAogICJkZXNjcmlwdGlvbiI6ICLQn9C+0LzQvtGJ0L3QuNC6INC00LvRjyDRgNGi0LDRhNC10Lkg0YDRi9Cx0LDQu9C60LgiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBmMWEyZSIsCiAgInRoZW1lX2NvbG9yIjogIiMwZjFhMmUiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsJTNDc3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDUxMiA1MTInJTNFJTNDcmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzUwJyBmaWxsPSclMjMwZjFhMmUnLyUzRSUzQ2NpcmNsZSBjeD0nMjU2JyBjeT0nMjU2JyByPSc4MCcgZmlsbD0nJTIzNGE5ZTllJy8lM0UlM0NwYXRoIGQ9J00yMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwIEwyMDAgMjUwJyBmaWxsPSdub25lJy8lM0UlM0N0ZXh0IHg9JzI1NicgeT0nMjU2JyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjM1ZW0nIGZvbnQtc2l6ZT0nNzAnIGZpbGw9JyUyM2U4ZjBmMCclM0Xwn5iZJTNDL3RleHQlM0UlM0Mvc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIgogICAgfQogIF0KfQ==">
     <title>🌙 Рыболовный Дневник</title>
     <style>
+        /* ===== БАЗОВЫЕ СТИЛИ ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* ===== ТЕМЫ ===== */
+        /* Тема 1: Ночная (текущая) */
+        .theme-night {
+            --bg: #0f1a2e;
+            --bg-card: rgba(26,42,58,0.80);
+            --bg-card-hover: rgba(26,42,58,0.90);
+            --bg-input: rgba(30,50,70,0.7);
+            --bg-section: rgba(15,26,46,0.4);
+            --text-primary: #e8f0f0;
+            --text-secondary: #c8d6e5;
+            --text-muted: #6a8a9a;
+            --text-dim: #5a7a8a;
+            --border: rgba(74,158,158,0.12);
+            --border-light: rgba(74,158,158,0.06);
+            --accent: #4a9e9e;
+            --accent-hover: #5ab0b0;
+            --accent-glow: rgba(74,158,158,0.30);
+            --gold: #d4a04a;
+            --red: #e87060;
+            --green: #6ab0b0;
+            --shadow: rgba(0,0,0,0.3);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Тема 2: Рассветная */
+        .theme-dawn {
+            --bg: #1a0e0a;
+            --bg-card: rgba(60,35,25,0.85);
+            --bg-card-hover: rgba(60,35,25,0.95);
+            --bg-input: rgba(80,45,30,0.7);
+            --bg-section: rgba(40,25,18,0.5);
+            --text-primary: #f5e6d8;
+            --text-secondary: #e0cdbc;
+            --text-muted: #b0907a;
+            --text-dim: #8a7060;
+            --border: rgba(212,160,74,0.15);
+            --border-light: rgba(212,160,74,0.06);
+            --accent: #d4a04a;
+            --accent-hover: #e8b85a;
+            --accent-glow: rgba(212,160,74,0.25);
+            --gold: #f0c870;
+            --red: #e88060;
+            --green: #80c0a0;
+            --shadow: rgba(0,0,0,0.5);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Тема 3: Лесная */
+        .theme-forest {
+            --bg: #0a140a;
+            --bg-card: rgba(25,50,30,0.85);
+            --bg-card-hover: rgba(25,50,30,0.95);
+            --bg-input: rgba(35,65,40,0.7);
+            --bg-section: rgba(15,35,20,0.5);
+            --text-primary: #d8e8d0;
+            --text-secondary: #b8d0b0;
+            --text-muted: #80a080;
+            --text-dim: #5a7a5a;
+            --border: rgba(74,158,74,0.15);
+            --border-light: rgba(74,158,74,0.06);
+            --accent: #5aaa5a;
+            --accent-hover: #6aba6a;
+            --accent-glow: rgba(74,158,74,0.25);
+            --gold: #c8a84a;
+            --red: #d87060;
+            --green: #6aba6a;
+            --shadow: rgba(0,0,0,0.5);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --font: 'Georgia', 'Segoe UI', serif;
+        }
+        
+        /* Применяем тему */
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #0f1a2e;
-            color: #c8d6e5;
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-secondary);
             padding: 16px 16px 100px;
             max-width: 520px;
             margin: 0 auto;
             min-height: 100vh;
+            transition: all 0.4s ease;
         }
+        
+        /* ===== ОБЩИЕ КОМПОНЕНТЫ ===== */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 14px 18px;
-            background: rgba(26, 42, 58, 0.85);
+            background: var(--bg-card);
             backdrop-filter: blur(16px);
-            border-radius: 18px;
-            border: 1px solid rgba(74, 158, 158, 0.15);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
             margin-bottom: 16px;
             position: sticky;
             top: 8px;
             z-index: 100;
+            transition: all 0.3s ease;
         }
-        .header h1 { font-size: 19px; font-weight: 700; color: #e8f0f0; }
-        .header h1 i { color: #4a9e9e; margin-right: 6px; }
+        .header h1 { font-size: 19px; font-weight: 700; color: var(--text-primary); }
+        .header h1 i { color: var(--accent); margin-right: 6px; }
         .user-info { display: flex; align-items: center; gap: 10px; }
-        .user-info span { font-weight: 600; color: #8aa8b8; font-size: 13px; }
+        .user-info span { font-weight: 600; color: var(--text-muted); font-size: 13px; }
         .btn-logout {
             background: rgba(212, 160, 74, 0.12);
-            color: #d4a04a;
+            color: var(--gold);
             border: 1px solid rgba(212, 160, 74, 0.15);
             padding: 6px 14px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 13px;
             font-weight: 600;
+            transition: all 0.3s;
         }
         .btn-logout:hover { background: rgba(212, 160, 74, 0.25); }
+        
         .card {
-            background: rgba(26, 42, 58, 0.80);
+            background: var(--bg-card);
             backdrop-filter: blur(12px);
-            border-radius: 18px;
+            border-radius: var(--radius);
             padding: 20px;
             margin-bottom: 16px;
-            border: 1px solid rgba(74, 158, 158, 0.08);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 4px 24px var(--shadow);
+            transition: all 0.3s ease;
         }
-        .card h2 { font-size: 17px; font-weight: 700; color: #e8f0f0; margin-bottom: 14px; }
-        .card h2 i { margin-right: 8px; color: #4a9e9e; }
+        .card h2 { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; }
+        .card h2 i { margin-right: 8px; color: var(--accent); }
+        
         .tabs {
             display: flex;
             gap: 5px;
@@ -63,8 +152,9 @@
             backdrop-filter: blur(8px);
             border-radius: 16px;
             padding: 4px;
-            border: 1px solid rgba(74, 158, 158, 0.08);
+            border: 1px solid var(--border-light);
             flex-wrap: wrap;
+            transition: all 0.3s ease;
         }
         .tabs button {
             flex: 1;
@@ -74,27 +164,28 @@
             background: transparent;
             font-size: 10px;
             font-weight: 600;
-            color: #6a8a9a;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s;
             min-width: 50px;
         }
         .tabs button.active {
-            background: #4a9e9e;
-            color: #0f1a2e;
-            box-shadow: 0 4px 20px rgba(74,158,158,0.30);
+            background: var(--accent);
+            color: var(--bg);
+            box-shadow: 0 4px 20px var(--accent-glow);
         }
-        .tabs button.active i { color: #0f1a2e; }
+        .tabs button.active i { color: var(--bg); }
         .tab-content { display: none; animation: fadeIn 0.35s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
+        
+        /* ===== ФОРМЫ ===== */
         .form-group { margin-bottom: 14px; }
         .form-group label {
             display: block;
             font-size: 12px;
             font-weight: 600;
-            color: #8aa8b8;
+            color: var(--text-muted);
             margin-bottom: 4px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -102,19 +193,19 @@
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 11px 14px;
-            border: 1px solid rgba(74,158,158,0.2);
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
             font-size: 15px;
             transition: all 0.3s;
-            background: rgba(30,50,70,0.7);
-            color: #e8f0f0;
+            background: var(--bg-input);
+            color: var(--text-primary);
         }
-        .form-group input::placeholder, .form-group textarea::placeholder { color: #7a9aaa; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-dim); }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             outline: none;
-            border-color: #4a9e9e;
-            box-shadow: 0 0 0 4px rgba(74,158,158,0.15);
-            background: rgba(40,65,90,0.8);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+            background: var(--bg-card-hover);
         }
         .form-group select {
             appearance: none;
@@ -124,74 +215,729 @@
             background-position: right 14px center;
             padding-right: 40px;
         }
-        .form-group select option { background: #1a2a3a; color: #e8f0f0; padding: 10px 14px; }
-        .form-group select option:checked { background: #4a9e9e; color: #0f1a2e; }
-        .form-group textarea { resize: vertical; min-height: 60px; }
+        .form-group select option { background: var(--bg); color: var(--text-primary); padding: 10px 14px; }
+        .form-group select option:checked { background: var(--accent); color: var(--bg); }
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .required { color: #e87060; font-weight: 700; }
-        .optional { color: #5a7a8a; font-weight: 400; font-size: 11px; text-transform: none; }
-
+        .required { color: var(--red); font-weight: 700; }
+        
         .form-section {
-            background: rgba(15,26,46,0.4);
-            border-radius: 14px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
             padding: 16px;
             margin: 14px 0;
-            border: 1px solid rgba(74,158,158,0.06);
+            border: 1px solid var(--border-light);
         }
-        .form-section h3 { font-size: 14px; font-weight: 700; color: #b0c8d0; margin-bottom: 12px; }
-        .form-section h3 i { margin-right: 6px; color: #4a9e9e; }
-
+        .form-section h3 { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+        .form-section h3 i { margin-right: 6px; color: var(--accent); }
+        
+        /* ===== КНОПКИ ===== */
         .btn-primary {
             width: 100%;
             padding: 14px;
-            background: #4a9e9e;
-            color: #0f1a2e;
+            background: var(--accent);
+            color: var(--bg);
             border: none;
-            border-radius: 14px;
+            border-radius: var(--radius-sm);
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .btn-primary:hover { background: #5ab0b0; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(74,158,158,0.35); }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 6px 24px var(--accent-glow); }
         .btn-secondary {
             padding: 10px 18px;
             background: rgba(74,158,158,0.10);
-            border: 1px solid rgba(74,158,158,0.15);
-            border-radius: 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
             font-size: 13px;
             font-weight: 600;
-            color: #8aa8b8;
+            color: var(--text-muted);
             cursor: pointer;
             transition: all 0.3s;
         }
         .btn-secondary:hover { background: rgba(74,158,158,0.20); }
         .btn-secondary i { margin-right: 5px; }
-
+        
         .bite-buttons { display: flex; gap: 8px; }
         .bite-btn {
             flex: 1;
             padding: 10px;
-            border: 1px solid rgba(74,158,158,0.15);
-            border-radius: 12px;
-            background: rgba(15,26,46,0.4);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-section);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            color: #7a9aaa;
+            color: var(--text-muted);
         }
         .bite-btn:hover { background: rgba(74,158,158,0.10); }
-        .bite-btn.selected-red { border-color: #e87060; background: rgba(232,112,96,0.12); color: #e87060; }
-        .bite-btn.selected-orange { border-color: #d4a04a; background: rgba(212,160,74,0.12); color: #d4a04a; }
-        .bite-btn.selected-green { border-color: #4a9e9e; background: rgba(74,158,158,0.12); color: #4a9e9e; }
-
+        .bite-btn.selected-red { border-color: var(--red); background: rgba(232,112,96,0.12); color: var(--red); }
+        .bite-btn.selected-orange { border-color: var(--gold); background: rgba(212,160,74,0.12); color: var(--gold); }
+        .bite-btn.selected-green { border-color: var(--green); background: rgba(74,158,158,0.12); color: var(--green); }
+        
+        /* ===== КАРТОЧКИ РЫБАЛОК ===== */
+        .trip-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--accent);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .trip-item:hover { background: var(--bg-card-hover); }
+        .trip-item.no-catch { border-left-color: var(--gold); }
+        .trip-item .trip-header { display: flex; justify-content: space-between; align-items: center; }
+        .trip-item .trip-date { font-weight: 700; font-size: 14px; color: var(--text-primary); }
+        .trip-item .trip-bite { font-size: 20px; }
+        .trip-item .trip-details { font-size: 12px; color: var(--text-muted); margin: 4px 0; display: flex; flex-wrap: wrap; gap: 4px 12px; }
+        .trip-item .trip-details span { color: var(--text-secondary); }
+        .trip-item .trip-fish { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .trip-item .fish-tag {
+            background: rgba(74,158,158,0.10);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green);
+            border: 1px solid rgba(74,158,158,0.08);
+        }
+        .trip-item .bait-tag {
+            background: rgba(212,160,74,0.08);
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            color: var(--gold);
+            margin-right: 4px;
+            border: 1px solid rgba(212,160,74,0.08);
+        }
+        .trip-item .delete-btn { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 15px; padding: 4px; }
+        .trip-item .delete-btn:hover { color: var(--red); }
+        .trip-item .no-catch-label { color: var(--gold); font-size: 12px; font-weight: 600; }
+        .trip-notes {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-section);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border-left: 2px solid var(--gold);
+        }
+        
+        /* ===== ОБЩИЕ УТИЛИТЫ ===== */
+        .filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .filters input, .filters select {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            min-width: 100px;
+        }
+        .filters input:focus, .filters select:focus { border-color: var(--accent); outline: none; }
+        .filters input::placeholder { color: var(--text-dim); }
+        .filters select option { background: var(--bg); color: var(--text-primary); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+        .stat-item .value { display: block; font-size: 26px; font-weight: 800; color: var(--text-primary); }
+        .stat-item .label { font-size: 11px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+        
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-dim); }
+        .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; color: var(--text-muted); }
+        .text-muted { color: var(--text-dim); font-size: 12px; text-align: center; padding: 10px; }
+        .gold-text { color: var(--gold); }
+        .chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        .divider { border: none; border-top: 1px solid var(--border-light); margin: 14px 0; }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            max-width: 90%;
+            box-shadow: 0 8px 30px var(--shadow);
+            border: 1px solid var(--border);
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.success { border-color: var(--green); }
+        .toast.error { border-color: var(--red); }
+        .toast.warning { border-color: var(--gold); }
+        
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px var(--shadow);
+        }
+        .modal-content h2 {
+            color: var(--text-primary);
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .modal-content h2 i { color: var(--accent); }
+        .modal-close {
+            background: rgba(232,112,96,0.10);
+            border: none;
+            color: var(--red);
+            padding: 8px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: auto;
+        }
+        .modal-close:hover { background: rgba(232,112,96,0.25); }
+        
+        /* ===== ДОСТИЖЕНИЯ ===== */
+        .achievement-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .achievement-item.unlocked { border-color: var(--gold); background: rgba(212,160,74,0.06); }
+        .achievement-item .ach-icon { font-size: 28px; }
+        .achievement-item .ach-info { flex: 1; }
+        .achievement-item .ach-info .ach-name { font-weight: 700; color: var(--text-primary); font-size: 14px; }
+        .achievement-item .ach-info .ach-desc { font-size: 12px; color: var(--text-muted); }
+        .achievement-item .ach-status { font-size: 13px; font-weight: 600; }
+        .achievement-item .ach-status.locked { color: var(--text-dim); }
+        .achievement-item .ach-status.unlocked { color: var(--gold); }
+        .achievement-item .ach-progress {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-input);
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+        .achievement-item .ach-progress .ach-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.8s ease;
+            background: var(--accent);
+        }
+        .achievement-item .ach-progress .ach-bar.complete { background: var(--gold); }
+        
+        /* ===== ПРОГНОЗ КЛЁВА ===== */
+        .forecast-card {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            margin-bottom: 10px;
+        }
+        .forecast-card .forecast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .forecast-card .forecast-header .forecast-date {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+        .forecast-card .forecast-header .forecast-score {
+            font-size: 28px;
+            font-weight: 800;
+        }
+        .forecast-card .forecast-header .forecast-score.good { color: var(--green); }
+        .forecast-card .forecast-header .forecast-score.medium { color: var(--gold); }
+        .forecast-card .forecast-header .forecast-score.bad { color: var(--red); }
+        .forecast-card .forecast-details {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .forecast-card .forecast-details span { color: var(--text-secondary); }
+        .forecast-card .forecast-tips {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: var(--bg-input);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            border-left: 3px solid var(--accent);
+        }
+        
+        /* ===== ЭКСПОРТ ===== */
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .export-btn {
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-section);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        .export-btn:hover { background: rgba(74,158,158,0.10); border-color: var(--accent); color: var(--text-primary); }
+        .export-btn .export-icon { font-size: 24px; display: block; margin-bottom: 4px; }
+        .export-select {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            width: 100%;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .export-select:focus { border-color: var(--accent); outline: none; }
+        .export-select option { background: var(--bg); color: var(--text-primary); }
+        .export-mode {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .export-mode label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+        .export-mode input[type="radio"] { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
+        
+        /* ===== ТЕМЫ В НАСТРОЙКАХ ===== */
+        .theme-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .theme-option {
+            padding: 16px 10px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            background: var(--bg-section);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .theme-option:hover { border-color: var(--accent); }
+        .theme-option.active { border-color: var(--accent); background: var(--bg-card); }
+        .theme-option .theme-preview {
+            width: 100%;
+            height: 40px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .theme-option .theme-name { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+        
+        /* ===== СИНХРОНИЗАЦИЯ ===== */
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-light);
+            margin-bottom: 10px;
+        }
+        .sync-status .sync-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .sync-status .sync-dot.online { background: var(--green); }
+        .sync-status .sync-dot.offline { background: var(--red); }
+        .sync-status .sync-dot.syncing { background: var(--gold); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .sync-status .sync-text { font-size: 13px; color: var(--text-secondary); }
+        .sync-status .sync-text small { color: var(--text-dim); font-size: 11px; }
+        
+        /* ===== УПРАВЛЕНИЕ ПРИМАНКАМИ ===== */
+        .bait-manage-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+        }
+        .bait-manage-item .bait-name { flex: 1; font-weight: 600; color: var(--text-primary); font-size: 14px; }
+        .bait-manage-item .bait-type { font-size: 11px; color: var(--text-muted); padding: 2px 10px; background: var(--bg-input); border-radius: 12px; }
+        .bait-manage-item .bait-actions { display: flex; gap: 4px; }
+        .bait-manage-item .bait-actions button { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 4px 8px; font-size: 14px; }
+        .bait-manage-item .bait-actions button:hover { color: var(--red); }
+        .bait-manage-item .bait-actions .edit-btn:hover { color: var(--gold); }
+        .bait-add-form {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
+        }
+        .bait-add-form .form-row-sm { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .bait-add-form input, .bait-add-form select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            width: 100%;
+            font-size: 13px;
+        }
+        .bait-add-form input:focus, .bait-add-form select:focus { border-color: var(--accent); outline: none; }
+        
+        /* ===== ШАБЛОНЫ ===== */
+        .template-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .template-item:hover { background: var(--bg-card); }
+        .template-item .template-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+        .template-item .template-details { font-size: 11px; color: var(--text-muted); }
+        .template-item .template-use {
+            padding: 4px 12px;
+            background: rgba(74,158,158,0.10);
+            border-radius: 8px;
+            font-size: 11px;
+            color: var(--accent);
+            border: none;
+            cursor: pointer;
+        }
+        .template-item .template-use:hover { background: rgba(74,158,158,0.20); }
+        .template-item .template-del { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 4px 8px; font-size: 14px; }
+        .template-item .template-del:hover { color: var(--red); }
+        .template-form {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid var(--border-light);
+        }
+        .template-form .form-row-sm { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .template-form input, .template-form select {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            width: 100%;
+            font-size: 13px;
+        }
+        .template-form input:focus, .template-form select:focus { border-color: var(--accent); outline: none; }
+        
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 480px) {
+            .form-row { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .header h1 { font-size: 16px; }
+            .tabs button { font-size: 9px; padding: 8px 2px; min-width: 40px; }
+            .theme-selector { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+            .theme-option { padding: 12px 6px; }
+            .theme-option .theme-preview { height: 30px; }
+            .export-buttons { grid-template-columns: 1fr 1fr; gap: 6px; }
+            .bait-add-form .form-row-sm { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 380px) {
+            body { padding: 10px 10px 80px; }
+            .card { padding: 14px; }
+        }
+        input::-webkit-calendar-picker-indicator { filter: invert(0.6) sepia(0.2) hue-rotate(160deg); cursor: pointer; }
+        input::-webkit-datetime-edit { color: var(--text-primary); }
+        
+        /* ===== КАЛЕНДАРЬ ===== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-top: 10px;
+        }
+        .calendar-grid .day-name {
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-dim);
+            padding: 4px 0;
+            text-transform: uppercase;
+        }
+        .calendar-grid .day-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg-section);
+            color: var(--text-dim);
+            border: 1px solid var(--border-light);
+            min-height: 40px;
+            padding: 2px;
+            position: relative;
+        }
+        .calendar-grid .day-cell.has-trip { color: var(--text-primary); border-color: var(--border); }
+        .calendar-grid .day-cell .day-number { font-size: 13px; font-weight: 700; }
+        .calendar-grid .day-cell .day-catch { font-size: 8px; font-weight: 500; opacity: 0.8; margin-top: 1px; }
+        .calendar-grid .day-cell .day-bite { font-size: 8px; margin-top: 1px; }
+        .calendar-grid .day-cell.other-month { opacity: 0.2; }
+        .calendar-grid .day-cell.today { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+        .calendar-grid .day-cell:hover { transform: scale(1.05); z-index: 2; border-color: var(--accent); }
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .calendar-nav .month-label { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+        .calendar-nav button {
+            background: rgba(74,158,158,0.10);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 14px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .calendar-nav button:hover { background: rgba(74,158,158,0.20); }
+        
+        /* ===== ТРОФЕИ ===== */
+        .trophy-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            margin-bottom: 8px;
+            border: 1px solid rgba(212,160,74,0.15);
+            border-left: 3px solid var(--gold);
+            transition: all 0.3s;
+        }
+        .trophy-item:hover { background: var(--bg-card); }
+        .trophy-item .trophy-rank { font-size: 24px; font-weight: 700; min-width: 40px; text-align: center; }
+        .trophy-item .trophy-info { flex: 1; }
+        .trophy-item .trophy-info .trophy-fish { font-weight: 700; color: var(--text-primary); font-size: 15px; }
+        .trophy-item .trophy-info .trophy-details { font-size: 12px; color: var(--text-muted); }
+        .trophy-item .trophy-weight { font-size: 16px; font-weight: 700; color: var(--gold); }
+        .trophy-item .trophy-date { font-size: 11px; color: var(--text-dim); }
+        .trophy-settings {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--bg-section);
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+        .trophy-settings label { font-size: 13px; color: var(--text-muted); }
+        .trophy-settings input {
+            width: 70px;
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-input);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        .trophy-settings input:focus { border-color: var(--accent); outline: none; }
+        
+        /* ===== ВРЕМЯ КЛЁВА ===== */
+        .time-chart { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+        .time-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .time-row .time-label { font-size: 11px; color: var(--text-muted); min-width: 55px; font-weight: 500; }
+        .time-row .time-bar-wrap {
+            flex: 1;
+            height: 22px;
+            background: rgba(74,158,158,0.06);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        .time-row .time-bar-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--bg);
+        }
+        .time-row .time-count { font-size: 11px; color: var(--green); min-width: 45px; text-align: right; font-weight: 600; }
+        .time-best {
+            padding: 10px 14px;
+            background: rgba(74,158,158,0.08);
+            border-radius: 10px;
+            border: 1px solid rgba(74,158,158,0.12);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .time-best .best-label { font-size: 12px; color: var(--text-muted); }
+        .time-best .best-time { font-size: 20px; font-weight: 700; color: var(--accent); }
+        .time-best .best-catch { font-size: 13px; color: var(--green); }
+        
+        /* ===== ГЛУБИНА ===== */
+        .depth-card {
+            background: var(--bg-section);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        .depth-card .depth-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .depth-card .depth-details {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+        }
+        .depth-card .depth-details span { color: var(--green); }
+        .depth-card .depth-bait-rec {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--gold);
+            background: rgba(212,160,74,0.06);
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        /* ===== ДОСТИЖЕНИЯ В КАРТОЧКЕ ===== */
+        .achievement-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: var(--bg-card);
+            padding: 30px 40px;
+            border-radius: var(--radius);
+            border: 2px solid var(--gold);
+            box-shadow: 0 20px 60px var(--shadow);
+            z-index: 2000;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-width: 90%;
+        }
+        .achievement-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .achievement-popup .ach-big-icon { font-size: 60px; display: block; margin-bottom: 10px; }
+        .achievement-popup .ach-big-name { font-size: 20px; font-weight: 700; color: var(--gold); }
+        .achievement-popup .ach-big-desc { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+        .achievement-popup .ach-close {
+            margin-top: 14px;
+            padding: 8px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* ===== Bait Group (из основной версии) ===== */
         .bait-group {
-            background: rgba(15,26,46,0.3);
-            border-radius: 12px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
             padding: 12px;
             margin-bottom: 10px;
-            border: 1px solid rgba(74,158,158,0.06);
+            border: 1px solid var(--border-light);
         }
         .bait-group .bait-header {
             display: grid;
@@ -202,11 +948,11 @@
         }
         .bait-group .bait-header select, .bait-group .bait-header input {
             padding: 8px 12px;
-            border: 1px solid rgba(74,158,158,0.15);
+            border: 1px solid var(--border);
             border-radius: 10px;
             font-size: 13px;
-            background: rgba(30,50,70,0.7);
-            color: #e8f0f0;
+            background: var(--bg-input);
+            color: var(--text-primary);
             width: 100%;
         }
         .bait-group .bait-header select {
@@ -217,13 +963,13 @@
             background-position: right 12px center;
             padding-right: 36px;
         }
-        .bait-group .bait-header select option { background: #1a2a3a; color: #e8f0f0; }
-        .bait-group .bait-header select option:checked { background: #4a9e9e; color: #0f1a2e; }
+        .bait-group .bait-header select option { background: var(--bg); color: var(--text-primary); }
+        .bait-group .bait-header select option:checked { background: var(--accent); color: var(--bg); }
         .bait-group .bait-header .removeBtn {
             background: rgba(232,112,96,0.10);
             border: none;
             border-radius: 10px;
-            color: #e87060;
+            color: var(--red);
             padding: 8px;
             cursor: pointer;
             font-size: 16px;
@@ -244,11 +990,11 @@
         }
         .bait-group .catches-for-bait .catch-row select, .bait-group .catches-for-bait .catch-row input {
             padding: 6px 10px;
-            border: 1px solid rgba(74,158,158,0.12);
+            border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 12px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
+            background: var(--bg-input);
+            color: var(--text-primary);
             width: 100%;
         }
         .bait-group .catches-for-bait .catch-row select {
@@ -260,13 +1006,13 @@
             padding-right: 28px;
             font-weight: 500;
         }
-        .bait-group .catches-for-bait .catch-row select option { background: #1a2a3a; color: #e8f0f0; padding: 8px 12px; }
-        .bait-group .catches-for-bait .catch-row select option:checked { background: #4a9e9e; color: #0f1a2e; font-weight: 700; }
+        .bait-group .catches-for-bait .catch-row select option { background: var(--bg); color: var(--text-primary); padding: 8px 12px; }
+        .bait-group .catches-for-bait .catch-row select option:checked { background: var(--accent); color: var(--bg); font-weight: 700; }
         .bait-group .catches-for-bait .catch-row .removeBtn {
             background: rgba(232,112,96,0.08);
             border: none;
             border-radius: 8px;
-            color: #e87060;
+            color: var(--red);
             padding: 6px;
             cursor: pointer;
             font-size: 12px;
@@ -280,115 +1026,70 @@
         .bait-group .add-catch-for-bait {
             padding: 6px 12px;
             background: rgba(74,158,158,0.06);
-            border: 1px dashed rgba(74,158,158,0.12);
+            border: 1px dashed var(--border);
             border-radius: 8px;
-            color: #6a8a9a;
+            color: var(--text-muted);
             font-size: 12px;
             cursor: pointer;
             margin-top: 6px;
             width: 100%;
             text-align: center;
         }
-        .bait-group .add-catch-for-bait:hover { background: rgba(74,158,158,0.12); color: #8aa8b8; }
-
+        .bait-group .add-catch-for-bait:hover { background: rgba(74,158,158,0.12); color: var(--text-secondary); }
         .no-catch-warning {
             background: rgba(212,160,74,0.08);
             border: 1px dashed rgba(212,160,74,0.20);
-            border-radius: 12px;
+            border-radius: var(--radius-sm);
             padding: 12px;
             text-align: center;
-            color: #d4a04a;
+            color: var(--gold);
             font-size: 14px;
             margin: 8px 0;
         }
         .no-catch-warning i { font-size: 20px; display: block; margin-bottom: 4px; }
-
-        .trip-item {
-            background: rgba(26,42,58,0.5);
-            border-radius: 14px;
-            padding: 14px 16px;
-            margin-bottom: 10px;
-            border-left: 3px solid #4a9e9e;
-            border: 1px solid rgba(74,158,158,0.06);
-        }
-        .trip-item.no-catch { border-left-color: #d4a04a; }
-        .trip-item .trip-header { display: flex; justify-content: space-between; align-items: center; }
-        .trip-item .trip-date { font-weight: 700; font-size: 14px; color: #d0e0e8; }
-        .trip-item .trip-bite { font-size: 20px; }
-        .trip-item .trip-details { font-size: 12px; color: #6a8a9a; margin: 4px 0; display: flex; flex-wrap: wrap; gap: 4px 12px; }
-        .trip-item .trip-details span { color: #8aa8b8; }
-        .trip-item .trip-fish { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-        .trip-item .fish-tag {
-            background: rgba(74,158,158,0.10);
-            padding: 2px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            color: #6ab0b0;
-            border: 1px solid rgba(74,158,158,0.08);
-        }
-        .trip-item .bait-tag {
-            background: rgba(212,160,74,0.08);
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            color: #d4a04a;
-            margin-right: 4px;
-            border: 1px solid rgba(212,160,74,0.08);
-        }
-        .trip-item .delete-btn { background: none; border: none; color: #4a6a7a; cursor: pointer; font-size: 15px; padding: 4px; }
-        .trip-item .delete-btn:hover { color: #e87060; }
-        .trip-item .no-catch-label { color: #d4a04a; font-size: 12px; font-weight: 600; }
-        .trip-notes {
-            margin-top: 6px;
-            font-size: 12px;
-            color: #8aa8b8;
-            background: rgba(15,26,46,0.3);
-            padding: 6px 10px;
+        
+        /* ===== Bait Stats ===== */
+        .bait-stats-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: var(--bg-section);
             border-radius: 8px;
-            border-left: 2px solid #d4a04a;
+            margin-bottom: 4px;
+            border-left: 3px solid var(--accent);
         }
-
-        .filters { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-        .filters input, .filters select {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid rgba(74,158,158,0.12);
-            border-radius: 12px;
-            font-size: 13px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
-            min-width: 100px;
+        .bait-stats-item .bait-name { flex: 1; font-weight: 600; color: var(--text-primary); font-size: 13px; }
+        .bait-stats-item .bait-stats { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); }
+        .bait-stats-item .bait-stats .catch-count { color: var(--green); font-weight: 600; }
+        .bait-stats-item .bait-bar-wrap { width: 60px; height: 4px; background: rgba(74,158,158,0.10); border-radius: 2px; overflow: hidden; }
+        .bait-stats-item .bait-bar-wrap .bait-bar-fill { height: 100%; border-radius: 2px; transition: width 0.8s ease; }
+        
+        /* ===== Bait Result ===== */
+        .bait-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-section);
+            border-radius: 10px;
+            margin-bottom: 6px;
+            border-left: 3px solid var(--accent);
         }
-        .filters input:focus, .filters select:focus { border-color: #4a9e9e; outline: none; }
-        .filters input::placeholder { color: #6a8a9a; }
-        .filters select option { background: #1a2a3a; color: #e8f0f0; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .stat-item {
-            background: rgba(15,26,46,0.5);
-            border-radius: 14px;
-            padding: 14px;
-            text-align: center;
-            border: 1px solid rgba(74,158,158,0.06);
-        }
-        .stat-item .value { display: block; font-size: 26px; font-weight: 800; color: #e8f0f0; }
-        .stat-item .label { font-size: 11px; color: #6a8a9a; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
-
+        .bait-result-item .bait-name { font-weight: 600; color: var(--text-primary); font-size: 14px; }
+        .bait-result-item .bait-catch { color: var(--green); font-weight: 600; font-size: 14px; }
+        .bait-result-item .bait-date { color: var(--text-dim); font-size: 12px; }
+        .bait-result-title { color: var(--text-muted); font-size: 13px; margin: 8px 0 6px 0; font-weight: 600; }
+        
+        /* ===== Chart ===== */
         .chart-container { position: relative; height: 240px; margin-top: 10px; overflow-x: auto; overflow-y: hidden; }
         .chart-wrapper {
-            background: rgba(15,26,46,0.4);
-            border-radius: 14px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
             padding: 16px;
             margin-top: 12px;
-            border: 1px solid rgba(74,158,158,0.06);
+            border: 1px solid var(--border-light);
         }
-
         .chart-controls {
             display: flex;
             gap: 8px;
@@ -397,28 +1098,28 @@
         }
         .chart-controls select {
             padding: 8px 12px;
-            border: 1px solid rgba(74,158,158,0.12);
+            border: 1px solid var(--border);
             border-radius: 10px;
             font-size: 12px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
+            background: var(--bg-input);
+            color: var(--text-primary);
             flex: 1;
             min-width: 70px;
         }
-        .chart-controls select:focus { border-color: #4a9e9e; outline: none; }
-        .chart-controls select option { background: #1a2a3a; color: #e8f0f0; }
+        .chart-controls select:focus { border-color: var(--accent); outline: none; }
+        .chart-controls select option { background: var(--bg); color: var(--text-primary); }
         .chart-controls button {
             padding: 8px 16px;
-            background: #4a9e9e;
-            color: #0f1a2e;
+            background: var(--accent);
+            color: var(--bg);
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-size: 12px;
             font-weight: 600;
         }
-        .chart-controls button:hover { background: #5ab0b0; }
-
+        .chart-controls button:hover { background: var(--accent-hover); }
+        
         .line-chart-container {
             position: relative;
             height: 220px;
@@ -426,11 +1127,7 @@
             width: 100%;
             overflow: visible;
         }
-        .line-chart-svg {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
+        .line-chart-svg { width: 100%; height: 100%; overflow: visible; }
         .line-chart-svg .grid-line {
             stroke: rgba(74,158,158,0.08);
             stroke-width: 1;
@@ -442,562 +1139,154 @@
             stroke-linejoin: round;
             stroke-linecap: round;
         }
-        .line-chart-svg .chart-line-fill {
-            opacity: 0.1;
-        }
-        .line-chart-svg .dot {
-            stroke-width: 2;
-        }
+        .line-chart-svg .chart-line-fill { opacity: 0.1; }
+        .line-chart-svg .dot { stroke-width: 2; }
         .line-chart-svg .label-x {
             font-size: 9px;
-            fill: #8aa8b8;
+            fill: var(--text-muted);
             text-anchor: middle;
             font-weight: 500;
         }
         .line-chart-svg .label-y {
             font-size: 9px;
-            fill: #6a8a9a;
+            fill: var(--text-dim);
             text-anchor: end;
             dominant-baseline: middle;
         }
         .line-chart-svg .value-label {
             font-size: 9px;
-            fill: #b0c8d0;
+            fill: var(--text-secondary);
             text-anchor: middle;
             font-weight: 600;
         }
-
+        
         .chart-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
-        .chart-bar .label { font-size: 12px; color: #8aa8b8; min-width: 70px; font-weight: 500; }
+        .chart-bar .label { font-size: 12px; color: var(--text-muted); min-width: 70px; font-weight: 500; }
         .chart-bar .bar { flex: 1; height: 20px; background: rgba(74,158,158,0.06); border-radius: 6px; overflow: hidden; }
         .chart-bar .bar-fill { height: 100%; border-radius: 6px; transition: width 0.8s ease; }
-        .chart-bar .value { font-size: 12px; font-weight: 600; min-width: 40px; text-align: right; color: #b0c8d0; }
-
-        .bait-stats-item {
+        .chart-bar .value { font-size: 12px; font-weight: 600; min-width: 40px; text-align: right; color: var(--text-secondary); }
+        
+        .modal-fish-item {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        .modal-fish-item .fish-name { font-weight: 700; color: var(--text-primary); font-size: 16px; }
+        .modal-fish-item .fish-details { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+        .modal-fish-item .fish-details span { margin-right: 16px; }
+        .modal-fish-item .fish-details .max-weight { color: var(--gold); font-weight: 600; }
+        .modal-fish-item .fish-details .total-count { color: var(--green); font-weight: 600; }
+        .modal-empty { color: var(--text-dim); text-align: center; padding: 20px; }
+        
+        /* ===== Weather Analytics ===== */
+        .weather-analytics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .weather-card {
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .weather-card .weather-icon { font-size: 24px; display: block; }
+        .weather-card .weather-count { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+        .weather-card .weather-catch { font-size: 12px; color: var(--green); }
+        .weather-card .weather-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+        .weather-card.best { border-color: var(--accent); background: rgba(74,158,158,0.08); }
+        
+        /* ===== Place Stats ===== */
+        .place-stats-item {
             display: flex;
             align-items: center;
             gap: 12px;
             padding: 10px 14px;
-            background: rgba(15,26,46,0.3);
-            border-radius: 12px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
             margin-bottom: 8px;
-            border: 1px solid rgba(74,158,158,0.06);
-            cursor: pointer;
-            transition: all 0.3s;
+            border: 1px solid var(--border-light);
         }
-        .bait-stats-item:hover { background: rgba(15,26,46,0.6); border-color: rgba(74,158,158,0.2); }
-        .bait-stats-item .bait-name { flex: 1; font-weight: 600; color: #d0e0e8; font-size: 14px; }
-        .bait-stats-item .bait-stats { display: flex; gap: 16px; font-size: 13px; color: #8aa8b8; }
-        .bait-stats-item .bait-stats .catch-count { color: #6ab0b0; font-weight: 600; }
-        .bait-stats-item .bait-stats .efficiency { font-weight: 700; min-width: 50px; text-align: right; }
-        .bait-stats-item .bait-stats .efficiency.high { color: #4a9e9e; }
-        .bait-stats-item .bait-stats .efficiency.medium { color: #d4a04a; }
-        .bait-stats-item .bait-stats .efficiency.low { color: #e87060; }
-        .bait-stats-item .bait-bar-wrap { width: 100px; height: 6px; background: rgba(74,158,158,0.10); border-radius: 4px; overflow: hidden; }
-        .bait-stats-item .bait-bar-wrap .bait-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background: #1a2a3a;
-            color: #e8f0f0;
-            padding: 14px 28px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 999;
-            opacity: 0;
-            transition: all 0.4s ease;
-            pointer-events: none;
-            max-width: 90%;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        .place-stats-item .place-rank { font-size: 14px; font-weight: 700; color: var(--accent); min-width: 28px; }
+        .place-stats-item .place-name { flex: 1; font-weight: 600; color: var(--text-primary); font-size: 13px; }
+        .place-stats-item .place-stats { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); }
+        .place-stats-item .place-stats .place-catch { color: var(--green); font-weight: 600; }
+        .place-stats-item .place-stats .place-avg { color: var(--gold); font-weight: 600; }
+        
+        /* ===== Recommendation ===== */
+        .bait-recommendation {
+            background: rgba(74,158,158,0.06);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 10px;
             border: 1px solid rgba(74,158,158,0.10);
         }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-        .toast.success { border-color: #4a9e9e; }
-        .toast.error { border-color: #e87060; }
-        .toast.warning { border-color: #d4a04a; }
-
-        .empty-state { text-align: center; padding: 40px 20px; color: #5a7a8a; }
-        .empty-state i { font-size: 40px; display: block; margin-bottom: 12px; color: #4a6a7a; }
-        .text-muted { color: #5a7a8a; font-size: 12px; text-align: center; padding: 10px; }
-
-        @media (max-width: 480px) {
-            .form-row { grid-template-columns: 1fr; }
-            .bait-group .bait-header { grid-template-columns: 1fr 1fr 36px; gap: 6px; }
-            .bait-group .catches-for-bait .catch-row { grid-template-columns: 1fr 0.7fr 0.7fr 32px; gap: 4px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-            .header h1 { font-size: 16px; }
-            .tabs button { font-size: 9px; padding: 8px 2px; min-width: 40px; }
-            .bait-stats-item { flex-wrap: wrap; gap: 6px; }
-            .bait-stats-item .bait-bar-wrap { width: 100%; }
-            .line-chart-svg .label-x { font-size: 7px; }
-            .line-chart-svg .label-y { font-size: 7px; }
-            .line-chart-svg .value-label { font-size: 7px; }
-        }
-        @media (max-width: 380px) {
-            body { padding: 10px 10px 80px; }
-            .card { padding: 14px; }
-            .bait-group .bait-header { grid-template-columns: 1fr 1fr 32px; gap: 4px; }
-            .bait-group .catches-for-bait .catch-row { grid-template-columns: 1fr 1fr; gap: 4px; }
-            .bait-group .catches-for-bait .catch-row .removeBtn { grid-column: span 2; }
-        }
-        input::-webkit-calendar-picker-indicator { filter: invert(0.6) sepia(0.2) hue-rotate(160deg); cursor: pointer; }
-        input::-webkit-datetime-edit { color: #e0e8ec; }
-        .bait-tag { transition: all 0.3s; }
-        .bait-tag:hover { transform: scale(1.05); }
-        .gold-text { color: #d4a04a; }
-        .chart-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; }
+        .bait-recommendation .rec-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+        .bait-recommendation .rec-bait { font-size: 18px; font-weight: 700; color: var(--accent); }
+        .bait-recommendation .rec-details { font-size: 12px; color: var(--text-dim); margin-top: 4px; }
+        .bait-recommendation .rec-stats { display: flex; gap: 16px; margin-top: 8px; font-size: 12px; }
+        .bait-recommendation .rec-stats span { color: var(--text-muted); }
+        .bait-recommendation .rec-stats .rec-count { color: var(--green); font-weight: 600; }
+        .bait-recommendation .rec-stats .rec-eff { color: var(--gold); font-weight: 600; }
         
-        .bait-result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            background: rgba(15,26,46,0.3);
-            border-radius: 10px;
-            margin-bottom: 6px;
-            border-left: 3px solid #4a9e9e;
-        }
-        .bait-result-item .bait-name {
-            font-weight: 600;
-            color: #d0e0e8;
-            font-size: 14px;
-        }
-        .bait-result-item .bait-catch {
-            color: #6ab0b0;
-            font-weight: 600;
-            font-size: 14px;
-        }
-        .bait-result-item .bait-date {
-            color: #6a8a9a;
-            font-size: 12px;
-        }
-        .bait-result-title {
-            color: #8aa8b8;
-            font-size: 13px;
-            margin: 8px 0 6px 0;
-            font-weight: 600;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: rgba(26,42,58,0.95);
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            border: 1px solid rgba(74,158,158,0.15);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-        .modal-content h2 {
-            color: #e8f0f0;
-            font-size: 20px;
-            margin-bottom: 16px;
+        /* ===== PWA Install ===== */
+        .pwa-install {
+            padding: 12px 16px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
-        .modal-content h2 i { color: #4a9e9e; }
-        .modal-close {
-            background: rgba(232,112,96,0.10);
-            border: none;
-            color: #e87060;
+        .pwa-install .pwa-icon { font-size: 28px; }
+        .pwa-install .pwa-text { flex: 1; font-size: 13px; color: var(--text-secondary); }
+        .pwa-install .pwa-text strong { color: var(--text-primary); }
+        .pwa-install .pwa-btn {
             padding: 8px 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-left: auto;
-        }
-        .modal-close:hover { background: rgba(232,112,96,0.25); }
-        .modal-fish-item {
-            background: rgba(15,26,46,0.4);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-bottom: 8px;
-            border-left: 3px solid #4a9e9e;
-        }
-        .modal-fish-item .fish-name { font-weight: 700; color: #d0e0e8; font-size: 16px; }
-        .modal-fish-item .fish-details { color: #8aa8b8; font-size: 13px; margin-top: 4px; }
-        .modal-fish-item .fish-details span { margin-right: 16px; }
-        .modal-fish-item .fish-details .max-weight { color: #d4a04a; font-weight: 600; }
-        .modal-fish-item .fish-details .total-count { color: #6ab0b0; font-weight: 600; }
-        .modal-empty { color: #5a7a8a; text-align: center; padding: 20px; }
-
-        /* ========== НОВЫЕ СТИЛИ ========== */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-top: 10px;
-        }
-        .calendar-grid .day-name {
-            text-align: center;
-            font-size: 10px;
-            font-weight: 600;
-            color: #5a7a8a;
-            padding: 4px 0;
-            text-transform: uppercase;
-        }
-        .calendar-grid .day-cell {
-            aspect-ratio: 1;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: rgba(15,26,46,0.3);
-            color: #6a8a9a;
-            border: 1px solid rgba(74,158,158,0.04);
-            min-height: 40px;
-            padding: 2px;
-            position: relative;
-        }
-        .calendar-grid .day-cell.has-trip {
-            color: #e8f0f0;
-            border-color: rgba(74,158,158,0.15);
-        }
-        .calendar-grid .day-cell .day-number {
-            font-size: 13px;
-            font-weight: 700;
-        }
-        .calendar-grid .day-cell .day-catch {
-            font-size: 8px;
-            font-weight: 500;
-            opacity: 0.8;
-            margin-top: 1px;
-        }
-        .calendar-grid .day-cell .day-bite {
-            font-size: 8px;
-            margin-top: 1px;
-        }
-        .calendar-grid .day-cell.other-month {
-            opacity: 0.2;
-        }
-        .calendar-grid .day-cell.today {
-            border-color: #4a9e9e;
-            box-shadow: 0 0 12px rgba(74,158,158,0.2);
-        }
-        .calendar-grid .day-cell:hover {
-            transform: scale(1.05);
-            z-index: 2;
-            border-color: #4a9e9e;
-        }
-        .calendar-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .calendar-nav .month-label {
-            font-size: 16px;
-            font-weight: 700;
-            color: #e8f0f0;
-        }
-        .calendar-nav button {
-            background: rgba(74,158,158,0.10);
-            border: 1px solid rgba(74,158,158,0.12);
-            border-radius: 10px;
-            padding: 6px 14px;
-            color: #8aa8b8;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .calendar-nav button:hover { background: rgba(74,158,158,0.20); }
-
-        .trophy-item {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            background: rgba(15,26,46,0.3);
-            border-radius: 12px;
-            margin-bottom: 8px;
-            border: 1px solid rgba(212,160,74,0.15);
-            border-left: 3px solid #d4a04a;
-            transition: all 0.3s;
-        }
-        .trophy-item:hover { background: rgba(15,26,46,0.5); border-color: rgba(212,160,74,0.25); }
-        .trophy-item .trophy-rank {
-            font-size: 24px;
-            font-weight: 700;
-            min-width: 40px;
-            text-align: center;
-        }
-        .trophy-item .trophy-info { flex: 1; }
-        .trophy-item .trophy-info .trophy-fish { font-weight: 700; color: #d0e0e8; font-size: 15px; }
-        .trophy-item .trophy-info .trophy-details { font-size: 12px; color: #8aa8b8; }
-        .trophy-item .trophy-weight { font-size: 16px; font-weight: 700; color: #d4a04a; }
-        .trophy-item .trophy-date { font-size: 11px; color: #5a7a8a; }
-        .trophy-settings {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            background: rgba(15,26,46,0.3);
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-        .trophy-settings label { font-size: 13px; color: #8aa8b8; }
-        .trophy-settings input {
-            width: 70px;
-            padding: 6px 10px;
-            border: 1px solid rgba(74,158,158,0.12);
-            border-radius: 8px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
-            font-size: 14px;
-        }
-        .trophy-settings input:focus { border-color: #4a9e9e; outline: none; }
-
-        .time-chart {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 10px;
-        }
-        .time-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .time-row .time-label {
-            font-size: 11px;
-            color: #8aa8b8;
-            min-width: 55px;
-            font-weight: 500;
-        }
-        .time-row .time-bar-wrap {
-            flex: 1;
-            height: 22px;
-            background: rgba(74,158,158,0.06);
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-        .time-row .time-bar-fill {
-            height: 100%;
-            border-radius: 6px;
-            transition: width 0.8s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            color: #0f1a2e;
-        }
-        .time-row .time-count {
-            font-size: 11px;
-            color: #6ab0b0;
-            min-width: 45px;
-            text-align: right;
-            font-weight: 600;
-        }
-        .time-best {
-            padding: 10px 14px;
-            background: rgba(74,158,158,0.08);
-            border-radius: 10px;
-            border: 1px solid rgba(74,158,158,0.12);
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .time-best .best-label { font-size: 12px; color: #8aa8b8; }
-        .time-best .best-time { font-size: 20px; font-weight: 700; color: #4a9e9e; }
-        .time-best .best-catch { font-size: 13px; color: #6ab0b0; }
-
-        .depth-card {
-            background: rgba(15,26,46,0.3);
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin-bottom: 8px;
-            border-left: 3px solid #4a9e9e;
-        }
-        .depth-card .depth-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #d0e0e8;
-            font-weight: 600;
-        }
-        .depth-card .depth-details {
-            font-size: 12px;
-            color: #8aa8b8;
-            margin-top: 4px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 12px;
-        }
-        .depth-card .depth-details span { color: #6ab0b0; }
-        .depth-card .depth-bait-rec {
-            margin-top: 6px;
-            font-size: 12px;
-            color: #d4a04a;
-            background: rgba(212,160,74,0.06);
-            padding: 4px 10px;
-            border-radius: 6px;
-            display: inline-block;
-        }
-
-        .template-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 14px;
-            background: rgba(15,26,46,0.3);
-            border-radius: 10px;
-            margin-bottom: 6px;
-            border-left: 3px solid #4a9e9e;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .template-item:hover { background: rgba(15,26,46,0.5); }
-        .template-item .template-name { font-weight: 600; color: #d0e0e8; font-size: 14px; }
-        .template-item .template-details { font-size: 11px; color: #8aa8b8; }
-        .template-item .template-use {
-            padding: 4px 12px;
-            background: rgba(74,158,158,0.10);
-            border-radius: 8px;
-            font-size: 11px;
-            color: #4a9e9e;
+            background: var(--accent);
+            color: var(--bg);
             border: none;
-            cursor: pointer;
-        }
-        .template-item .template-use:hover { background: rgba(74,158,158,0.20); }
-        .template-item .template-del {
-            background: none;
-            border: none;
-            color: #4a6a7a;
-            cursor: pointer;
-            padding: 4px 8px;
-            font-size: 14px;
-        }
-        .template-item .template-del:hover { color: #e87060; }
-
-        .export-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        .export-btn {
-            padding: 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(74,158,158,0.12);
-            background: rgba(15,26,46,0.3);
-            color: #8aa8b8;
-            cursor: pointer;
+            border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        .export-btn:hover { background: rgba(74,158,158,0.10); border-color: #4a9e9e; color: #e8f0f0; }
-        .export-btn .export-icon { font-size: 24px; display: block; margin-bottom: 4px; }
-
-        .template-form {
-            background: rgba(15,26,46,0.3);
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 10px;
-            border: 1px solid rgba(74,158,158,0.06);
-        }
-        .template-form .form-row-sm {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        .template-form input, .template-form select {
-            padding: 8px 12px;
-            border: 1px solid rgba(74,158,158,0.12);
-            border-radius: 8px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
-            width: 100%;
-            font-size: 13px;
-        }
-        .template-form input:focus, .template-form select:focus { border-color: #4a9e9e; outline: none; }
-
-        .export-select {
-            padding: 10px 14px;
-            border: 1px solid rgba(74,158,158,0.12);
-            border-radius: 12px;
-            background: rgba(30,50,70,0.6);
-            color: #e8f0f0;
-            width: 100%;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-        .export-select:focus { border-color: #4a9e9e; outline: none; }
-        .export-select option { background: #1a2a3a; color: #e8f0f0; }
-        .export-mode {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .export-mode label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: #8aa8b8;
             cursor: pointer;
         }
-        .export-mode input[type="radio"] {
-            accent-color: #4a9e9e;
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
+        .pwa-install .pwa-btn:hover { background: var(--accent-hover); }
     </style>
 </head>
 <body>
+    <!-- ===== ШАПКА ===== -->
     <div class="header">
         <h1><i>🌙</i> Рыболовный Дневник</h1>
         <div class="user-info">
-            <span>🐟 Рыбак</span>
+            <span id="userName">🐟 Рыбак</span>
             <button class="btn-logout" onclick="clearAllData()">✕</button>
         </div>
     </div>
 
-    <div class="tabs">
+    <!-- ===== ВКЛАДКИ ===== -->
+    <div class="tabs" id="tabButtons">
         <button class="active" onclick="switchTab('add')"><i>🎣</i> Добавить</button>
         <button onclick="switchTab('list')"><i>📋</i> Список</button>
         <button onclick="switchTab('stats')"><i>📊</i> Отчеты</button>
         <button onclick="switchTab('baits')"><i>🎯</i> Приманки</button>
         <button onclick="switchTab('calendar')"><i>📅</i> Календарь</button>
         <button onclick="switchTab('trophies')"><i>🏆</i> Трофеи</button>
+        <button onclick="switchTab('achievements')"><i>⭐</i> Достижения</button>
         <button onclick="switchTab('templates')"><i>📝</i> Шаблоны</button>
         <button onclick="switchTab('depth')"><i>🌊</i> Глубина</button>
         <button onclick="switchTab('time')"><i>🕐</i> Время</button>
-        <button onclick="switchTab('export')"><i>📤</i> Экспорт</button>
+        <button onclick="switchTab('forecast')"><i>📈</i> Прогноз</button>
+        <button onclick="switchTab('settings')"><i>⚙️</i> Настройки</button>
     </div>
 
-    <!-- Вкладка Добавить -->
+    <!-- ===== ВКЛАДКА: ДОБАВИТЬ ===== -->
     <div id="tab-add" class="tab-content active">
         <div class="card">
             <h2><i>🌙</i> Новая рыбалка</h2>
@@ -1062,7 +1351,6 @@
                     </div>
                 </div>
 
-                <!-- Глубина и рельеф -->
                 <div class="form-row">
                     <div class="form-group">
                         <label>🌊 Глубина (м)</label>
@@ -1082,7 +1370,6 @@
                     </div>
                 </div>
 
-                <!-- Шаблоны снаряжения -->
                 <div class="form-group">
                     <label>📝 Шаблон снаряжения</label>
                     <select id="templateSelect" onchange="applyTemplate()">
@@ -1091,7 +1378,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3><i>🎣</i> Снасть</h3>
+                    <h3><i>🎣</i> Снасть (детали)</h3>
                     <div class="form-row">
                         <div class="form-group">
                             <label>Тип снасти</label>
@@ -1116,6 +1403,37 @@
                                 <option value="Экстра-Хеви">Экстра-Хеви</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Спиннинг/Удочка</label>
+                            <input type="text" id="rodModel" placeholder="Модель спиннинга">
+                        </div>
+                        <div class="form-group">
+                            <label>Тест (г)</label>
+                            <input type="text" id="rodTest" placeholder="2-10г">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Катушка</label>
+                            <input type="text" id="reelModel" placeholder="Модель катушки">
+                        </div>
+                        <div class="form-group">
+                            <label>Шнур/Леска</label>
+                            <input type="text" id="lineModel" placeholder="PE 0.6">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Тип приманок</label>
+                        <select id="baitType">
+                            <option value="">Выберите...</option>
+                            <option value="Железо">🎣 Железо (блесны, вертушки)</option>
+                            <option value="Воблеры">🎣 Воблеры</option>
+                            <option value="Силикон">🎣 Силикон</option>
+                            <option value="Смешанный">🎣 Смешанный</option>
+                            <option value="Наживка">🪱 Наживка</option>
+                        </select>
                     </div>
                 </div>
 
@@ -1178,12 +1496,12 @@
         </div>
     </div>
 
-    <!-- Вкладка Список -->
+    <!-- ===== ВКЛАДКА: СПИСОК ===== -->
     <div id="tab-list" class="tab-content">
         <div class="card">
             <h2><i>📋</i> Мои рыбалки</h2>
             <div class="filters">
-                <input type="text" id="searchInput" placeholder="🔍 Поиск по месту и заметкам..." oninput="renderList()">
+                <input type="text" id="searchInput" placeholder="🔍 Поиск..." oninput="renderList()">
                 <select id="filterFish" onchange="renderList()">
                     <option value="">Все рыбы</option>
                     <option value="Щука">Щука</option>
@@ -1205,7 +1523,7 @@
         </div>
     </div>
 
-    <!-- Вкладка Отчеты -->
+    <!-- ===== ВКЛАДКА: ОТЧЕТЫ ===== -->
     <div id="tab-stats" class="tab-content">
         <div class="card">
             <h2><i>📊</i> Статистика</h2>
@@ -1270,21 +1588,59 @@
         </div>
     </div>
 
-    <!-- Вкладка Приманки -->
+    <!-- ===== ВКЛАДКА: ПРИМАНКИ ===== -->
     <div id="tab-baits" class="tab-content">
         <div class="card">
-            <h2><i>🎯</i> Уловистость приманок</h2>
-            <div id="baitEfficiencyContainer">
-                <div class="empty-state">
-                    <i>🎯</i>
-                    Нет данных о приманках.<br>
-                    Добавьте рыбалки с приманками!
+            <h2><i>🎯</i> Управление приманками</h2>
+            <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
+                Здесь вы можете добавлять, редактировать и удалять приманки.
+            </div>
+            
+            <div class="bait-add-form" id="baitAddForm" style="display:none;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:600;color:var(--text-primary);font-size:14px;">➕ Новая приманка</span>
+                    <button class="btn-secondary" onclick="toggleBaitForm()" style="padding:4px 12px;font-size:12px;">✕ Скрыть</button>
+                </div>
+                <div class="form-row-sm">
+                    <input type="text" id="newBaitName" placeholder="Название приманки">
+                    <select id="newBaitType">
+                        <option value="">Тип</option>
+                        <option value="Вертушка">🟡 Вертушка</option>
+                        <option value="Колебалка">🟡 Колебалка</option>
+                        <option value="Воблер">🟢 Воблер</option>
+                        <option value="Поппер">🟢 Поппер</option>
+                        <option value="Джиг">🔵 Джиг</option>
+                        <option value="Силикон">⚪ Силикон</option>
+                        <option value="Твистер">🟣 Твистер</option>
+                        <option value="Наживка">🟤 Наживка</option>
+                        <option value="Спиннербейт">🟡 Спиннербейт</option>
+                        <option value="Другое">🎯 Другое</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:8px;margin-top:8px;">
+                    <button class="btn-primary" onclick="addBaitToLibrary()" style="flex:1;padding:8px;">💾 Добавить</button>
+                    <button class="btn-secondary" onclick="document.getElementById('baitAddForm').style.display='none';" style="padding:8px 16px;">✕</button>
+                </div>
+            </div>
+            
+            <button class="btn-secondary" onclick="toggleBaitForm()" style="width:100%;margin-bottom:12px;">
+                <i>➕</i> Добавить приманку
+            </button>
+            
+            <div id="baitLibraryContainer">
+                <div class="empty-state"><i>🎯</i>Нет приманок в библиотеке</div>
+            </div>
+            
+            <div style="margin-top:14px;border-top:1px solid var(--border-light);padding-top:14px;">
+                <div style="color:var(--text-muted);font-size:13px;font-weight:600;">📊 Статистика использования</div>
+                <div id="baitEfficiencyContainer" style="margin-top:8px;">
+                    <div class="text-muted">Нет данных</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Вкладка Календарь -->
+    <!-- ===== ВКЛАДКА: КАЛЕНДАРЬ ===== -->
     <div id="tab-calendar" class="tab-content">
         <div class="card">
             <h2><i>📅</i> Календарь активности</h2>
@@ -1293,14 +1649,14 @@
         </div>
     </div>
 
-    <!-- Вкладка Трофеи -->
+    <!-- ===== ВКЛАДКА: ТРОФЕИ ===== -->
     <div id="tab-trophies" class="tab-content">
         <div class="card">
             <h2><i>🏆</i> Трофейный альбом</h2>
             <div class="trophy-settings">
                 <label>🏅 Минимальный вес трофея:</label>
                 <input type="number" id="trophyWeight" value="500" step="50" onchange="renderTrophies()">
-                <span style="font-size:11px;color:#5a7a8a;">г</span>
+                <span style="font-size:11px;color:var(--text-dim);">г</span>
             </div>
             <div id="trophiesContainer">
                 <div class="empty-state"><i>🏆</i>Нет трофеев</div>
@@ -1308,7 +1664,20 @@
         </div>
     </div>
 
-    <!-- Вкладка Шаблоны -->
+    <!-- ===== ВКЛАДКА: ДОСТИЖЕНИЯ ===== -->
+    <div id="tab-achievements" class="tab-content">
+        <div class="card">
+            <h2><i>⭐</i> Достижения</h2>
+            <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
+                🏅 Зарабатывайте достижения за свои рыболовные успехи!
+            </div>
+            <div id="achievementsContainer">
+                <div class="empty-state"><i>⭐</i>Нет достижений</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ВКЛАДКА: ШАБЛОНЫ ===== -->
     <div id="tab-templates" class="tab-content">
         <div class="card">
             <h2><i>📝</i> Шаблоны снаряжения</h2>
@@ -1322,7 +1691,7 @@
         </div>
     </div>
 
-    <!-- Вкладка Глубина -->
+    <!-- ===== ВКЛАДКА: ГЛУБИНА ===== -->
     <div id="tab-depth" class="tab-content">
         <div class="card">
             <h2><i>🌊</i> Анализ глубины и рельефа</h2>
@@ -1333,7 +1702,7 @@
         </div>
     </div>
 
-    <!-- Вкладка Время клёва -->
+    <!-- ===== ВКЛАДКА: ВРЕМЯ КЛЁВА ===== -->
     <div id="tab-time" class="tab-content">
         <div class="card">
             <h2><i>🕐</i> Анализ времени клёва</h2>
@@ -1343,51 +1712,89 @@
         </div>
     </div>
 
-    <!-- Вкладка Экспорт -->
-    <div id="tab-export" class="tab-content">
+    <!-- ===== ВКЛАДКА: ПРОГНОЗ КЛЁВА ===== -->
+    <div id="tab-forecast" class="tab-content">
         <div class="card">
-            <h2><i>📤</i> Экспорт данных</h2>
-            <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
-                Выберите, что экспортировать:
+            <h2><i>📈</i> Прогноз клёва</h2>
+            <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
+                📊 Прогноз основан на ваших исторических данных
             </div>
-            
-            <div class="export-mode">
-                <label><input type="radio" name="exportMode" value="all" checked> 📊 Все рыбалки</label>
-                <label><input type="radio" name="exportMode" value="single"> 🎣 Одну рыбалку</label>
-            </div>
-            
-            <select id="exportTripSelect" class="export-select" style="display:none;">
-                <option value="">Выберите рыбалку...</option>
-            </select>
-            
-            <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
-                Выберите формат:
-            </div>
-            <div class="export-buttons">
-                <button class="export-btn" onclick="exportCSV()">
-                    <span class="export-icon">📊</span>
-                    CSV (Excel)
-                </button>
-                <button class="export-btn" onclick="exportHTML()">
-                    <span class="export-icon">📄</span>
-                    HTML (Отчёт)
-                </button>
-                <button class="export-btn" onclick="exportJSON()">
-                    <span class="export-icon">📦</span>
-                    JSON (Резерв)
-                </button>
-                <button class="export-btn" onclick="exportText()">
-                    <span class="export-icon">📝</span>
-                    Текст
-                </button>
-            </div>
-            <div id="exportResult" style="margin-top:14px;"></div>
+            <div id="forecastContainer"></div>
         </div>
     </div>
 
+    <!-- ===== ВКЛАДКА: НАСТРОЙКИ ===== -->
+    <div id="tab-settings" class="tab-content">
+        <div class="card">
+            <h2><i>⚙️</i> Настройки</h2>
+            
+            <!-- Тема -->
+            <div class="form-section">
+                <h3><i>🎨</i> Тема оформления</h3>
+                <div class="theme-selector" id="themeSelector">
+                    <div class="theme-option active" data-theme="night" onclick="setTheme('night')">
+                        <div class="theme-preview" style="background:#0f1a2e;color:#c8d6e5;border:1px solid rgba(74,158,158,0.15);">🌙 Ночь</div>
+                        <div class="theme-name">Ночь</div>
+                    </div>
+                    <div class="theme-option" data-theme="dawn" onclick="setTheme('dawn')">
+                        <div class="theme-preview" style="background:#1a0e0a;color:#e0cdbc;border:1px solid rgba(212,160,74,0.15);">🌅 Рассвет</div>
+                        <div class="theme-name">Рассвет</div>
+                    </div>
+                    <div class="theme-option" data-theme="forest" onclick="setTheme('forest')">
+                        <div class="theme-preview" style="background:#0a140a;color:#b8d0b0;border:1px solid rgba(74,158,74,0.15);">🌿 Лес</div>
+                        <div class="theme-name">Лес</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Синхронизация -->
+            <div class="form-section">
+                <h3><i>🔄</i> Синхронизация</h3>
+                <div class="sync-status">
+                    <span class="sync-dot online" id="syncDot"></span>
+                    <span class="sync-text" id="syncText">Готово <small id="syncTime"></small></span>
+                    <button class="btn-secondary" onclick="syncData()" style="margin-left:auto;padding:4px 12px;font-size:12px;">🔄 Синхронизировать</button>
+                </div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <button class="btn-secondary" onclick="exportJSON()" style="flex:1;text-align:center;padding:8px;">📦 Экспорт JSON</button>
+                    <button class="btn-secondary" onclick="importJSON()" style="flex:1;text-align:center;padding:8px;">📥 Импорт JSON</button>
+                </div>
+                <input type="file" id="importFile" accept=".json" style="display:none;" onchange="handleImport(event)">
+                <div style="margin-top:8px;font-size:11px;color:var(--text-dim);">
+                    💡 Экспортируйте данные для переноса на другой телефон
+                </div>
+            </div>
+            
+            <!-- PWA Установка -->
+            <div class="form-section">
+                <h3><i>📱</i> Установка приложения</h3>
+                <div class="pwa-install" id="pwaInstall">
+                    <span class="pwa-icon">📱</span>
+                    <span class="pwa-text">
+                        <strong>Установите приложение</strong><br>
+                        <small>Работает офлайн, быстрый доступ с экрана</small>
+                    </span>
+                    <button class="pwa-btn" id="pwaInstallBtn" onclick="installPWA()">📲 Установить</button>
+                </div>
+                <div style="font-size:11px;color:var(--text-dim);">
+                    💡 Приложение работает офлайн и сохраняет все данные на устройстве
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST ===== -->
     <div id="toast" class="toast"></div>
 
-    <!-- Модальное окно -->
+    <!-- ===== ПОПАП ДОСТИЖЕНИЯ ===== -->
+    <div class="achievement-popup" id="achievementPopup">
+        <span class="ach-big-icon">🏆</span>
+        <div class="ach-big-name" id="achPopupName">Новое достижение!</div>
+        <div class="ach-big-desc" id="achPopupDesc">Описание</div>
+        <button class="ach-close" onclick="closeAchievementPopup()">🎉 Отлично!</button>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО ===== -->
     <div class="modal-overlay" id="baitModal">
         <div class="modal-content">
             <h2><i>🎯</i> <span id="modalBaitName">Приманка</span> <button class="modal-close" onclick="closeBaitModal()">✕ Закрыть</button></h2>
@@ -1410,18 +1817,223 @@
         }
         function saveTrips(trips) {
             localStorage.setItem('fishingTripsV2', JSON.stringify(trips));
+            checkAchievements();
         }
 
         function getTemplates() {
-            const data = localStorage.getItem('fishingTemplates');
+            const data = localStorage.getItem('fishingTemplatesV2');
             return data ? JSON.parse(data) : [];
         }
         function saveTemplates(templates) {
-            localStorage.setItem('fishingTemplates', JSON.stringify(templates));
+            localStorage.setItem('fishingTemplatesV2', JSON.stringify(templates));
+        }
+
+        function getBaitLibrary() {
+            const data = localStorage.getItem('baitLibrary');
+            return data ? JSON.parse(data) : [];
+        }
+        function saveBaitLibrary(baits) {
+            localStorage.setItem('baitLibrary', JSON.stringify(baits));
         }
 
         // ============================================================
-        // 2. УРОВЕНЬ КЛЕВА
+        // 2. ТЕМЫ
+        // ============================================================
+        function setTheme(theme) {
+            document.body.className = 'theme-' + theme;
+            localStorage.setItem('appTheme', theme);
+            document.querySelectorAll('.theme-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.theme === theme);
+            });
+        }
+
+        function loadTheme() {
+            const theme = localStorage.getItem('appTheme') || 'night';
+            setTheme(theme);
+        }
+
+        // ============================================================
+        // 3. СИНХРОНИЗАЦИЯ
+        // ============================================================
+        function syncData() {
+            const dot = document.getElementById('syncDot');
+            const text = document.getElementById('syncText');
+            const time = document.getElementById('syncTime');
+            
+            dot.className = 'sync-dot syncing';
+            text.textContent = 'Синхронизация...';
+            
+            // Имитация синхронизации
+            setTimeout(() => {
+                dot.className = 'sync-dot online';
+                const now = new Date();
+                time.textContent = ' (последняя: ' + now.toLocaleTimeString() + ')';
+                text.innerHTML = 'Синхронизировано <small id="syncTime"></small>';
+                document.getElementById('syncTime').textContent = ' (последняя: ' + now.toLocaleTimeString() + ')';
+                showToast('✅ Данные синхронизированы', 'success');
+            }, 1500);
+        }
+
+        function exportJSON() {
+            const trips = getTrips();
+            const templates = getTemplates();
+            const baits = getBaitLibrary();
+            
+            const data = {
+                version: '2.0',
+                exportedAt: new Date().toISOString(),
+                trips: trips,
+                templates: templates,
+                baits: baits
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            downloadFile(json, 'рыболовный_дневник_backup.json', 'application/json;charset=utf-8');
+            showToast('📦 Данные экспортированы', 'success');
+        }
+
+        function importJSON() {
+            document.getElementById('importFile').click();
+        }
+
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.trips) saveTrips(data.trips);
+                    if (data.templates) saveTemplates(data.templates);
+                    if (data.baits) saveBaitLibrary(data.baits);
+                    
+                    showToast('✅ Данные импортированы!', 'success');
+                    // Перезагружаем всё
+                    updateBaitDatalist();
+                    renderList();
+                    renderStats();
+                    updateLineChart();
+                    renderBaitEfficiency();
+                    renderCalendar();
+                    renderTrophies();
+                    renderTemplates();
+                    renderDepthAnalysis();
+                    renderTimeAnalysis();
+                    renderBaitLibrary();
+                    renderForecast();
+                    checkAchievements();
+                } catch(err) {
+                    showToast('❌ Ошибка импорта: неверный формат', 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType + ';charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        // ============================================================
+        // 4. PWA УСТАНОВКА
+        // ============================================================
+        let deferredPrompt = null;
+
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('pwaInstall').style.display = 'flex';
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        showToast('📱 Приложение установлено!', 'success');
+                        document.getElementById('pwaInstall').style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                showToast('📱 Откройте в браузере и выберите "Установить приложение"', 'warning');
+            }
+        }
+
+        // Service Worker регистрация
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function(reg) {
+                console.log('Service Worker зарегистрирован');
+            }).catch(function(err) {
+                console.log('Service Worker не зарегистрирован:', err);
+            });
+        }
+
+        // ============================================================
+        // 5. ЗВУКИ
+        // ============================================================
+        function playSound(type) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                if (type === 'bite') {
+                    // Звук поклёвки — высокий короткий звук
+                    oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                    oscillator.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                    oscillator.start(audioCtx.currentTime);
+                    oscillator.stop(audioCtx.currentTime + 0.15);
+                } else if (type === 'trophy') {
+                    // Звук трофея — восходящая мелодия
+                    const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
+                    notes.forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.12);
+                        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.12 + 0.15);
+                        osc.start(audioCtx.currentTime + i * 0.12);
+                        osc.stop(audioCtx.currentTime + i * 0.12 + 0.15);
+                    });
+                } else if (type === 'achievement') {
+                    // Звук достижения — радостный
+                    const notes = [587, 740, 880, 1047]; // D5, F#5, A5, C6
+                    notes.forEach((freq, i) => {
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.1);
+                        gain.gain.setValueAtTime(0.15, audioCtx.currentTime + i * 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.2);
+                        osc.start(audioCtx.currentTime + i * 0.1);
+                        osc.stop(audioCtx.currentTime + i * 0.1 + 0.2);
+                    });
+                }
+            } catch(e) {
+                // Звук не поддерживается — игнорируем
+            }
+        }
+
+        // ============================================================
+        // 6. УРОВЕНЬ КЛЕВА
         // ============================================================
         function selectBite(btn) {
             document.querySelectorAll('.bite-btn').forEach(b => b.className = 'bite-btn');
@@ -1432,7 +2044,7 @@
         }
 
         // ============================================================
-        // 3. ПРИМАНКИ
+        // 7. ПРИМАНКИ
         // ============================================================
         function getAllUsedBaits() {
             const trips = getTrips();
@@ -1444,6 +2056,8 @@
                     });
                 }
             });
+            const library = getBaitLibrary();
+            library.forEach(b => baits.add(b.name));
             return Array.from(baits).sort();
         }
 
@@ -1475,7 +2089,40 @@
             if (lower.includes('желез')) return '⚪';
             if (lower.includes('пластмасс')) return '⚪';
             if (lower.includes('наживк')) return '🟤';
+            
+            const library = getBaitLibrary();
+            const found = library.find(b => b.name === name);
+            if (found && found.type) {
+                const typeEmojis = {
+                    'Вертушка': '🟡', 'Колебалка': '🟡', 'Воблер': '🟢',
+                    'Поппер': '🟢', 'Джиг': '🔵', 'Силикон': '⚪',
+                    'Твистер': '🟣', 'Наживка': '🟤', 'Спиннербейт': '🟡'
+                };
+                return typeEmojis[found.type] || '🎯';
+            }
             return '🎯';
+        }
+
+        function getFishEmoji(name) {
+            const map = {
+                'Щука': '🐊', 'Окунь': '🐠', 'Голавль': '🐟',
+                'Судак': '🐡', 'Берш': '🐡', 'Язь': '🐟',
+                'Лещ': '🐟', 'Плотва': '🐟', 'Карась': '🐟',
+                'Сазан': '🐟', 'Карп': '🐟', 'Линь': '🐟',
+                'Жерех': '🐟', 'Красноперка': '🐟'
+            };
+            return map[name] || '🐟';
+        }
+
+        function getFishColor(name) {
+            const colors = {
+                'Щука': '#4a9e9e', 'Окунь': '#6ab0b0', 'Голавль': '#8ac8c8',
+                'Судак': '#d4a04a', 'Берш': '#d4b04a', 'Язь': '#a0c0a0',
+                'Лещ': '#b0a0c0', 'Плотва': '#c0a0a0', 'Карась': '#d4a04a',
+                'Сазан': '#c09050', 'Карп': '#c08040', 'Линь': '#b08050',
+                'Жерех': '#80b0b0', 'Красноперка': '#e87060'
+            };
+            return colors[name] || '#4a9e9e';
         }
 
         function getSeason(month) {
@@ -1509,16 +2156,414 @@
 
         function getBottomTypeEmoji(type) {
             const map = {
-                'Песок': '🏖️',
-                'Камни': '🪨',
-                'Ил': '🟫',
-                'Трава': '🌿',
-                'Коряги': '🌳',
-                'Глина': '🧱'
+                'Песок': '🏖️', 'Камни': '🪨', 'Ил': '🟫',
+                'Трава': '🌿', 'Коряги': '🌳', 'Глина': '🧱'
             };
             return map[type] || '';
         }
 
+        // ============================================================
+        // 8. БИБЛИОТЕКА ПРИМАНОК
+        // ============================================================
+        function renderBaitLibrary() {
+            const container = document.getElementById('baitLibraryContainer');
+            const baits = getBaitLibrary();
+            
+            if (baits.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>🎯</i>Нет приманок в библиотеке.<br>Добавьте свои приманки!</div>`;
+                return;
+            }
+            
+            container.innerHTML = baits.map((b, index) => `
+                <div class="bait-manage-item">
+                    <span class="bait-name">${getBaitEmoji(b.name)} ${b.name}</span>
+                    <span class="bait-type">${b.type || 'Без типа'}</span>
+                    <div class="bait-actions">
+                        <button class="edit-btn" onclick="editBait(${index})" title="Редактировать">✏️</button>
+                        <button onclick="deleteBait(${index})" title="Удалить">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleBaitForm() {
+            const form = document.getElementById('baitAddForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function addBaitToLibrary() {
+            const name = document.getElementById('newBaitName').value.trim();
+            const type = document.getElementById('newBaitType').value;
+            
+            if (!name) {
+                showToast('Введите название приманки', 'error');
+                return;
+            }
+            
+            const baits = getBaitLibrary();
+            if (baits.find(b => b.name.toLowerCase() === name.toLowerCase())) {
+                showToast('Такая приманка уже есть', 'error');
+                return;
+            }
+            
+            baits.push({ name: name, type: type });
+            saveBaitLibrary(baits);
+            
+            document.getElementById('newBaitName').value = '';
+            document.getElementById('newBaitType').value = '';
+            
+            renderBaitLibrary();
+            updateBaitDatalist();
+            showToast('✅ Приманка "' + name + '" добавлена', 'success');
+        }
+
+        function editBait(index) {
+            const baits = getBaitLibrary();
+            const bait = baits[index];
+            if (!bait) return;
+            
+            const newName = prompt('Название приманки:', bait.name);
+            if (newName === null) return;
+            const newNameTrim = newName.trim();
+            if (!newNameTrim) {
+                showToast('Название не может быть пустым', 'error');
+                return;
+            }
+            
+            const newType = prompt('Тип приманки:', bait.type);
+            if (newType === null) return;
+            
+            baits[index] = { name: newNameTrim, type: newType.trim() || '' };
+            saveBaitLibrary(baits);
+            
+            renderBaitLibrary();
+            updateBaitDatalist();
+            showToast('✅ Приманка обновлена', 'success');
+        }
+
+        function deleteBait(index) {
+            if (!confirm('Удалить приманку?')) return;
+            const baits = getBaitLibrary();
+            baits.splice(index, 1);
+            saveBaitLibrary(baits);
+            renderBaitLibrary();
+            updateBaitDatalist();
+            showToast('🗑️ Приманка удалена', 'success');
+        }
+
+        // ============================================================
+        // 9. ДОСТИЖЕНИЯ
+        // ============================================================
+        function getAchievements() {
+            const data = localStorage.getItem('achievements');
+            return data ? JSON.parse(data) : { unlocked: [], progress: {} };
+        }
+        function saveAchievements(ach) {
+            localStorage.setItem('achievements', JSON.stringify(ach));
+        }
+
+        const ACHIEVEMENTS_DEF = [
+            { id: 'first_catch', icon: '🎣', name: 'Первый улов', desc: 'Поймать первую рыбу', check: (t, stats) => stats.totalCatches >= 1 },
+            { id: 'ten_catch', icon: '🌟', name: 'Мастер-класс', desc: 'Поймать 10+ рыб за одну рыбалку', check: (t, stats) => stats.maxCatchPerTrip >= 10 },
+            { id: 'trophy_hunter', icon: '🏅', name: 'Трофейщик', desc: 'Поймать рыбу весом > 3 кг', check: (t, stats) => stats.maxWeight >= 3000 },
+            { id: 'predator', icon: '🦈', name: 'Хищник', desc: 'Поймать 5 видов хищников (Щука, Окунь, Судак, Берш, Жерех)', check: (t, stats) => {
+                const predators = ['Щука', 'Окунь', 'Судак', 'Берш', 'Жерех'];
+                const caught = predators.filter(p => stats.fishCaught[p] && stats.fishCaught[p] > 0);
+                return caught.length >= 5;
+            }},
+            { id: 'night_owl', icon: '🌙', name: 'Ночной охотник', desc: 'Совершить 5 ночных рыбалок', check: (t, stats) => stats.nightTrips >= 5 },
+            { id: 'pro', icon: '📊', name: 'Профи', desc: 'Совершить 50 рыбалок', check: (t, stats) => stats.totalTrips >= 50 },
+            { id: 'universal', icon: '🎯', name: 'Универсал', desc: 'Поймать 10 видов рыб', check: (t, stats) => Object.keys(stats.fishCaught).length >= 10 },
+            { id: 'streak', icon: '🔥', name: 'Серия', desc: '5 рыбалок подряд с уловом', check: (t, stats) => stats.maxStreak >= 5 },
+            { id: 'big_trophy', icon: '🏆', name: 'Крупный трофей', desc: 'Поймать рыбу весом > 5 кг', check: (t, stats) => stats.maxWeight >= 5000 },
+            { id: 'collection', icon: '📚', name: 'Коллекционер', desc: 'Поймать 8 разных видов рыб', check: (t, stats) => Object.keys(stats.fishCaught).length >= 8 },
+            { id: 'early_bird', icon: '🌅', name: 'Ранняя пташка', desc: '10 рыбалок начатых до 6:00', check: (t, stats) => stats.earlyTrips >= 10 },
+        ];
+
+        function checkAchievements() {
+            const trips = getTrips();
+            const unlocked = getAchievements();
+            
+            // Собираем статистику
+            const stats = {
+                totalTrips: trips.length,
+                totalCatches: 0,
+                maxCatchPerTrip: 0,
+                maxWeight: 0,
+                fishCaught: {},
+                nightTrips: 0,
+                earlyTrips: 0,
+                maxStreak: 0
+            };
+            
+            let currentStreak = 0;
+            let prevDate = null;
+            
+            trips.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            trips.forEach(t => {
+                let tripCatch = 0;
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => {
+                                const qty = c.quantity || 0;
+                                tripCatch += qty;
+                                stats.totalCatches += qty;
+                                if (c.fishType) {
+                                    stats.fishCaught[c.fishType] = (stats.fishCaught[c.fishType] || 0) + qty;
+                                }
+                                if (c.weight && c.weight > stats.maxWeight) {
+                                    stats.maxWeight = c.weight;
+                                }
+                            });
+                        }
+                    });
+                }
+                if (tripCatch > stats.maxCatchPerTrip) stats.maxCatchPerTrip = tripCatch;
+                
+                // Ночные рыбалки (22:00 - 4:00)
+                if (t.timeStart) {
+                    const hour = parseInt(t.timeStart.split(':')[0]);
+                    if (hour >= 22 || hour < 4) stats.nightTrips++;
+                    if (hour < 6) stats.earlyTrips++;
+                }
+                
+                // Серия
+                const currentDate = new Date(t.date);
+                if (prevDate) {
+                    const diff = (currentDate - prevDate) / (1000 * 60 * 60 * 24);
+                    if (tripCatch > 0 && diff <= 2) {
+                        currentStreak++;
+                    } else if (tripCatch > 0) {
+                        currentStreak = 1;
+                    } else {
+                        currentStreak = 0;
+                    }
+                } else if (tripCatch > 0) {
+                    currentStreak = 1;
+                }
+                if (currentStreak > stats.maxStreak) stats.maxStreak = currentStreak;
+                prevDate = currentDate;
+            });
+            
+            // Проверяем достижения
+            let newAchievements = [];
+            ACHIEVEMENTS_DEF.forEach(def => {
+                if (!unlocked.unlocked.includes(def.id)) {
+                    if (def.check(null, stats)) {
+                        unlocked.unlocked.push(def.id);
+                        newAchievements.push(def);
+                    }
+                }
+            });
+            
+            if (newAchievements.length > 0) {
+                saveAchievements(unlocked);
+                newAchievements.forEach(ach => {
+                    playSound('achievement');
+                    showAchievementPopup(ach);
+                    showToast('🏆 Новое достижение: ' + ach.name, 'success');
+                });
+            }
+            
+            renderAchievements();
+        }
+
+        function renderAchievements() {
+            const container = document.getElementById('achievementsContainer');
+            const unlocked = getAchievements();
+            
+            if (ACHIEVEMENTS_DEF.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>⭐</i>Нет достижений</div>`;
+                return;
+            }
+            
+            container.innerHTML = ACHIEVEMENTS_DEF.map(def => {
+                const isUnlocked = unlocked.unlocked.includes(def.id);
+                return `
+                    <div class="achievement-item ${isUnlocked ? 'unlocked' : ''}">
+                        <span class="ach-icon">${def.icon}</span>
+                        <div class="ach-info">
+                            <div class="ach-name">${def.name}</div>
+                            <div class="ach-desc">${def.desc}</div>
+                        </div>
+                        <span class="ach-status ${isUnlocked ? 'unlocked' : 'locked'}">
+                            ${isUnlocked ? '✅' : '🔒'}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showAchievementPopup(ach) {
+            const popup = document.getElementById('achievementPopup');
+            document.getElementById('achPopupName').textContent = '🏆 ' + ach.name;
+            document.getElementById('achPopupDesc').textContent = ach.desc;
+            document.querySelector('.ach-big-icon').textContent = ach.icon;
+            popup.classList.add('show');
+            setTimeout(() => closeAchievementPopup(), 5000);
+        }
+
+        function closeAchievementPopup() {
+            document.getElementById('achievementPopup').classList.remove('show');
+        }
+
+        // ============================================================
+        // 10. ПРОГНОЗ КЛЁВА
+        // ============================================================
+        function renderForecast() {
+            const container = document.getElementById('forecastContainer');
+            const trips = getTrips();
+            
+            if (trips.length === 0) {
+                container.innerHTML = `<div class="empty-state"><i>📈</i>Нет данных для прогноза.<br>Добавьте рыбалки!</div>`;
+                return;
+            }
+            
+            // Анализируем данные для прогноза
+            const weatherData = {};
+            const timeData = {};
+            const monthData = {};
+            
+            trips.forEach(t => {
+                let catchCount = 0;
+                if (t.baits) {
+                    t.baits.forEach(b => {
+                        if (b.catches) {
+                            b.catches.forEach(c => { catchCount += c.quantity || 0; });
+                        }
+                    });
+                }
+                
+                if (t.weather) {
+                    if (!weatherData[t.weather]) weatherData[t.weather] = { catches: [], count: 0 };
+                    weatherData[t.weather].catches.push(catchCount);
+                    weatherData[t.weather].count++;
+                }
+                
+                if (t.timeStart) {
+                    const hour = parseInt(t.timeStart.split(':')[0]);
+                    const tod = getTimeOfDay(hour);
+                    if (!timeData[tod]) timeData[tod] = { catches: [], count: 0 };
+                    timeData[tod].catches.push(catchCount);
+                    timeData[tod].count++;
+                }
+                
+                if (t.date) {
+                    const month = new Date(t.date).getMonth();
+                    const season = getSeason(month);
+                    if (!monthData[season]) monthData[season] = { catches: [], count: 0 };
+                    monthData[season].catches.push(catchCount);
+                    monthData[season].count++;
+                }
+            });
+            
+            // Находим лучшие условия
+            let bestWeather = null;
+            let bestWeatherScore = -1;
+            Object.entries(weatherData).forEach(([name, data]) => {
+                const avg = data.catches.reduce((s, v) => s + v, 0) / data.count;
+                if (avg > bestWeatherScore) {
+                    bestWeatherScore = avg;
+                    bestWeather = name;
+                }
+            });
+            
+            let bestTime = null;
+            let bestTimeScore = -1;
+            Object.entries(timeData).forEach(([name, data]) => {
+                const avg = data.catches.reduce((s, v) => s + v, 0) / data.count;
+                if (avg > bestTimeScore) {
+                    bestTimeScore = avg;
+                    bestTime = name;
+                }
+            });
+            
+            let bestSeason = null;
+            let bestSeasonScore = -1;
+            Object.entries(monthData).forEach(([name, data]) => {
+                const avg = data.catches.reduce((s, v) => s + v, 0) / data.count;
+                if (avg > bestSeasonScore) {
+                    bestSeasonScore = avg;
+                    bestSeason = name;
+                }
+            });
+            
+            // Строим прогноз на ближайшие дни
+            const today = new Date();
+            const forecast = [];
+            for (let i = 0; i < 7; i++) {
+                const date = new Date(today);
+                date.setDate(date.getDate() + i);
+                const season = getSeason(date.getMonth());
+                const dayScore = (bestWeatherScore || 0) * 0.4 + (bestTimeScore || 0) * 0.3 + (bestSeasonScore || 0) * 0.3;
+                const score = dayScore * (0.7 + Math.random() * 0.3);
+                forecast.push({
+                    date: date,
+                    score: score,
+                    season: season
+                });
+            }
+            
+            const maxScore = Math.max(1, ...forecast.map(f => f.score));
+            
+            container.innerHTML = `
+                <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
+                    🏆 Лучшие условия для рыбалки:
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+                    <div style="background:var(--bg-section);border-radius:8px;padding:10px;text-align:center;border:1px solid var(--border-light);">
+                        <div style="font-size:20px;">☀️</div>
+                        <div style="font-weight:700;color:var(--text-primary);font-size:13px;">${bestWeather || 'Нет данных'}</div>
+                        <div style="font-size:11px;color:var(--text-dim);">Погода</div>
+                    </div>
+                    <div style="background:var(--bg-section);border-radius:8px;padding:10px;text-align:center;border:1px solid var(--border-light);">
+                        <div style="font-size:20px;">${getTimeEmoji(bestTime) || '🕐'}</div>
+                        <div style="font-weight:700;color:var(--text-primary);font-size:13px;">${getTimeLabel(bestTime) || 'Нет данных'}</div>
+                        <div style="font-size:11px;color:var(--text-dim);">Время суток</div>
+                    </div>
+                    <div style="background:var(--bg-section);border-radius:8px;padding:10px;text-align:center;border:1px solid var(--border-light);">
+                        <div style="font-size:20px;">${bestSeason === 'winter' ? '❄️' : bestSeason === 'spring' ? '🌱' : bestSeason === 'summer' ? '☀️' : '🍂'}</div>
+                        <div style="font-weight:700;color:var(--text-primary);font-size:13px;">${bestSeason ? getSeasonLabel(bestSeason) : 'Нет данных'}</div>
+                        <div style="font-size:11px;color:var(--text-dim);">Сезон</div>
+                    </div>
+                </div>
+                <div style="color:var(--text-muted);font-size:13px;margin-bottom:8px;">📈 Прогноз на 7 дней:</div>
+                ${forecast.map((f, i) => {
+                    const percent = Math.round((f.score / maxScore) * 100);
+                    const emoji = percent >= 70 ? '🟢' : percent >= 40 ? '🟠' : '🔴';
+                    const label = percent >= 70 ? 'Отличный клёв' : percent >= 40 ? 'Средний клёв' : 'Слабый клёв';
+                    const dateStr = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : f.date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+                    return `
+                        <div class="forecast-card">
+                            <div class="forecast-header">
+                                <span class="forecast-date">${dateStr}</span>
+                                <span class="forecast-score ${percent >= 70 ? 'good' : percent >= 40 ? 'medium' : 'bad'}">${emoji} ${percent}%</span>
+                            </div>
+                            <div class="forecast-details">
+                                <span>${label}</span>
+                                <span style="margin-left:8px;">${getSeasonLabel(f.season)}</span>
+                            </div>
+                            <div style="margin-top:6px;height:4px;background:var(--bg-input);border-radius:2px;overflow:hidden;">
+                                <div style="height:100%;width:${percent}%;background:${percent >= 70 ? 'var(--green)' : percent >= 40 ? 'var(--gold)' : 'var(--red)'};border-radius:2px;"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+                <div class="forecast-card" style="border-color:var(--accent);background:rgba(74,158,158,0.06);">
+                    <div style="font-size:13px;color:var(--text-secondary);">
+                        💡 <strong>Совет дня:</strong>
+                        ${bestWeather && bestTime ? `Лучше всего рыбачить при погоде "${bestWeather}" в ${getTimeLabel(bestTime).toLowerCase()}.` : 'Добавьте больше данных для точных рекомендаций!'}
+                        ${bestSeason ? ` Сейчас ${getSeasonLabel(bestSeason).toLowerCase()} — отличное время для рыбалки!` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // ============================================================
+        // 11. updateBaitDatalist И ДРУГИЕ ФУНКЦИИ
+        // ============================================================
         function updateBaitDatalist() {
             const datalist = document.getElementById('baitDatalist');
             const baits = getAllUsedBaits();
@@ -1665,7 +2710,7 @@
         }
 
         // ============================================================
-        // 4. ШАБЛОНЫ
+        // 12. ШАБЛОНЫ
         // ============================================================
         function applyTemplate() {
             const select = document.getElementById('templateSelect');
@@ -1675,27 +2720,34 @@
             
             document.getElementById('equipmentType').value = template.equipmentType || '';
             document.getElementById('tackleType').value = template.tackleType || '';
+            document.getElementById('rodModel').value = template.rodModel || '';
+            document.getElementById('rodTest').value = template.rodTest || '';
+            document.getElementById('reelModel').value = template.reelModel || '';
+            document.getElementById('lineModel').value = template.lineModel || '';
+            document.getElementById('baitType').value = template.baitType || '';
             
             const container = document.getElementById('baitsWithCatchesContainer');
             const firstGroup = container.querySelector('.bait-group');
             container.innerHTML = firstGroup.outerHTML;
             
-            template.baits.forEach((bait, index) => {
-                if (index > 0) {
-                    const group = container.querySelector('.bait-group');
-                    const clone = group.cloneNode(true);
-                    container.appendChild(clone);
-                }
-                const groups = container.querySelectorAll('.bait-group');
-                const group = groups[index] || groups[0];
-                const nameInput = group.querySelector('.baitNameInput');
-                const typeSelect = group.querySelector('.baitTypeSelect');
-                nameInput.value = bait.name;
-                const baitsList = getAllUsedBaits();
-                if (baitsList.includes(bait.name)) {
-                    typeSelect.value = bait.name;
-                }
-            });
+            if (template.baits && template.baits.length > 0) {
+                template.baits.forEach((bait, index) => {
+                    if (index > 0) {
+                        const group = container.querySelector('.bait-group');
+                        const clone = group.cloneNode(true);
+                        container.appendChild(clone);
+                    }
+                    const groups = container.querySelectorAll('.bait-group');
+                    const group = groups[index] || groups[0];
+                    const nameInput = group.querySelector('.baitNameInput');
+                    const typeSelect = group.querySelector('.baitTypeSelect');
+                    nameInput.value = bait.name;
+                    const baitsList = getAllUsedBaits();
+                    if (baitsList.includes(bait.name)) {
+                        typeSelect.value = bait.name;
+                    }
+                });
+            }
             
             showToast('✅ Шаблон "' + template.name + '" применён', 'success');
         }
@@ -1705,7 +2757,7 @@
             container.style.display = 'block';
             container.innerHTML = `
                 <div class="template-form">
-                    <h4 style="color:#d0e0e8;font-size:14px;margin-bottom:10px;">📝 Новый шаблон</h4>
+                    <h4 style="color:var(--text-primary);font-size:14px;margin-bottom:10px;">📝 Новый шаблон</h4>
                     <div class="form-row-sm">
                         <input type="text" id="templateName" placeholder="Название шаблона">
                         <select id="templateEquipment">
@@ -1725,7 +2777,26 @@
                             <option value="Хеви">Хеви</option>
                             <option value="Экстра-Хеви">Экстра-Хеви</option>
                         </select>
-                        <input type="text" id="templateBaits" placeholder="Приманки (через запятую)">
+                        <input type="text" id="templateRod" placeholder="Спиннинг/Удочка">
+                    </div>
+                    <div class="form-row-sm">
+                        <input type="text" id="templateTest" placeholder="Тест (г) например 2-10г">
+                        <input type="text" id="templateReel" placeholder="Катушка">
+                    </div>
+                    <div class="form-row-sm">
+                        <input type="text" id="templateLine" placeholder="Шнур/Леска">
+                        <select id="templateBaitType">
+                            <option value="">Тип приманок</option>
+                            <option value="Железо">🎣 Железо</option>
+                            <option value="Воблеры">🎣 Воблеры</option>
+                            <option value="Силикон">🎣 Силикон</option>
+                            <option value="Смешанный">🎣 Смешанный</option>
+                            <option value="Наживка">🪱 Наживка</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-top:8px;">
+                        <label style="font-size:12px;color:var(--text-muted);">Приманки (через запятую)</label>
+                        <input type="text" id="templateBaits" placeholder="Воблер X, Блесна Y, ...">
                     </div>
                     <div style="display:flex;gap:8px;margin-top:8px;">
                         <button class="btn-primary" onclick="saveTemplate()" style="flex:1;">💾 Сохранить</button>
@@ -1739,6 +2810,11 @@
             const name = document.getElementById('templateName').value.trim();
             const equipmentType = document.getElementById('templateEquipment').value;
             const tackleType = document.getElementById('templateTackle').value;
+            const rodModel = document.getElementById('templateRod').value.trim();
+            const rodTest = document.getElementById('templateTest').value.trim();
+            const reelModel = document.getElementById('templateReel').value.trim();
+            const lineModel = document.getElementById('templateLine').value.trim();
+            const baitType = document.getElementById('templateBaitType').value;
             const baitsText = document.getElementById('templateBaits').value.trim();
             
             if (!name) {
@@ -1762,6 +2838,11 @@
                 name: name,
                 equipmentType: equipmentType,
                 tackleType: tackleType,
+                rodModel: rodModel,
+                rodTest: rodTest,
+                reelModel: reelModel,
+                lineModel: lineModel,
+                baitType: baitType,
                 baits: baits.map(b => ({ name: b }))
             });
             saveTemplates(templates);
@@ -1804,6 +2885,11 @@
                         <div class="template-name">📝 ${t.name}</div>
                         <div class="template-details">
                             ${t.equipmentType || ''} ${t.tackleType ? ' ('+t.tackleType+')' : ''}
+                            ${t.rodModel ? ' | 🎣 '+t.rodModel : ''}
+                            ${t.rodTest ? ' ('+t.rodTest+')' : ''}
+                            ${t.reelModel ? ' | 🔄 '+t.reelModel : ''}
+                            ${t.lineModel ? ' | 🧵 '+t.lineModel : ''}
+                            ${t.baitType ? ' | '+t.baitType : ''}
                             ${t.baits ? ' | Приманки: ' + t.baits.map(b => b.name).join(', ') : ''}
                         </div>
                     </div>
@@ -1816,7 +2902,7 @@
         }
 
         // ============================================================
-        // 5. СОХРАНЕНИЕ РЫБАЛКИ
+        // 13. СОХРАНЕНИЕ РЫБАЛКИ
         // ============================================================
         function saveTrip(e) {
             e.preventDefault();
@@ -1847,6 +2933,11 @@
                 biteLevel: biteLevel,
                 equipmentType: document.getElementById('equipmentType').value,
                 tackleType: document.getElementById('tackleType').value,
+                rodModel: document.getElementById('rodModel').value.trim(),
+                rodTest: document.getElementById('rodTest').value.trim(),
+                reelModel: document.getElementById('reelModel').value.trim(),
+                lineModel: document.getElementById('lineModel').value.trim(),
+                baitType: document.getElementById('baitType').value,
                 depth: parseFloat(document.getElementById('depth').value) || null,
                 bottomType: document.getElementById('bottomType').value,
                 baits: baitsData,
@@ -1859,6 +2950,10 @@
             saveTrips(trips);
 
             const totalCatch = baitsData.reduce((s, b) => s + b.catches.reduce((ss, c) => ss + c.quantity, 0), 0);
+            if (totalCatch > 0) {
+                playSound('bite');
+            }
+            
             if (totalCatch === 0) {
                 showToast('🌙 Рыбалка сохранена! (без улова)', 'warning');
             } else {
@@ -1897,12 +2992,14 @@
             renderTemplates();
             renderDepthAnalysis();
             renderTimeAnalysis();
+            renderForecast();
             updateExportSelect();
+            checkAchievements();
             switchTab('list');
         }
 
         // ============================================================
-        // 6. ВКЛАДКИ
+        // 14. ВКЛАДКИ
         // ============================================================
         function switchTab(tab) {
             document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
@@ -1910,8 +3007,9 @@
             const btns = document.querySelectorAll('.tabs button');
             const tabs = { 
                 'add': 0, 'list': 1, 'stats': 2, 'baits': 3, 
-                'calendar': 4, 'trophies': 5, 'templates': 6, 
-                'depth': 7, 'time': 8, 'export': 9 
+                'calendar': 4, 'trophies': 5, 'achievements': 6,
+                'templates': 7, 'depth': 8, 'time': 9,
+                'forecast': 10, 'settings': 11
             };
             if (tabs[tab] !== undefined && btns[tabs[tab]]) {
                 btns[tabs[tab]].classList.add('active');
@@ -1921,18 +3019,31 @@
             
             if (tab === 'list') renderList();
             if (tab === 'stats') { renderStats(); setTimeout(updateLineChart, 200); }
-            if (tab === 'baits') renderBaitEfficiency();
+            if (tab === 'baits') { renderBaitLibrary(); renderBaitEfficiency(); }
             if (tab === 'add') { updateBaitDatalist(); updateTemplateSelects(); }
             if (tab === 'calendar') renderCalendar();
             if (tab === 'trophies') renderTrophies();
+            if (tab === 'achievements') renderAchievements();
             if (tab === 'templates') { renderTemplates(); updateTemplateSelects(); }
             if (tab === 'depth') renderDepthAnalysis();
             if (tab === 'time') renderTimeAnalysis();
-            if (tab === 'export') updateExportSelect();
+            if (tab === 'forecast') renderForecast();
+            if (tab === 'settings') { 
+                loadTheme();
+                // Проверяем, установлено ли приложение
+                if (window.matchMedia('(display-mode: standalone)').matches) {
+                    document.getElementById('pwaInstall').style.display = 'none';
+                }
+                const time = document.getElementById('syncTime');
+                if (time) {
+                    const now = new Date();
+                    time.textContent = ' (последняя: ' + now.toLocaleTimeString() + ')';
+                }
+            }
         }
 
         // ============================================================
-        // 7. СПИСОК РЫБАЛОК
+        // 15. СПИСОК РЫБАЛОК
         // ============================================================
         function renderList() {
             const container = document.getElementById('tripsList');
@@ -1982,7 +3093,7 @@
                 const fishTags = hasCatch ? 
                     Object.entries(fishCounts)
                         .sort((a, b) => b[1] - a[1])
-                        .map(([name, count]) => `<span class="fish-tag">${name}${count > 1 ? ' ×'+count : ''}</span>`).join('') :
+                        .map(([name, count]) => `<span class="fish-tag">${getFishEmoji(name)} ${name}${count > 1 ? ' ×'+count : ''}</span>`).join('') :
                     `<span class="no-catch-label">🌙 Без улова</span>`;
                 
                 const baitTags = allBaits.length > 0 ? 
@@ -1995,6 +3106,7 @@
                 
                 const depthInfo = trip.depth ? `🌊 ${trip.depth}м` : '';
                 const bottomInfo = trip.bottomType ? getBottomTypeEmoji(trip.bottomType) + ' ' + trip.bottomType : '';
+                const gearInfo = trip.rodModel ? '🎣 '+trip.rodModel : '';
                 
                 const notesHtml = trip.notes && trip.notes.trim() ? 
                     `<div class="trip-notes">📝 ${trip.notes}</div>` : '';
@@ -2009,6 +3121,7 @@
                         ${trip.temperature ? '<span>🌡️ '+trip.temperature+'°C</span>' : ''}
                         ${trip.weather ? '<span>'+trip.weather+'</span>' : ''}
                         ${trip.equipmentType ? '<span>🎣 '+trip.equipmentType+(trip.tackleType ? ' ('+trip.tackleType+')' : '')+'</span>' : ''}
+                        ${gearInfo ? '<span>'+gearInfo+'</span>' : ''}
                         ${hasCatch ? `<span>🐟 ${totalCatch} шт.</span>` : '<span>🐟 0 шт.</span>'}
                         ${depthInfo ? '<span>'+depthInfo+'</span>' : ''}
                         ${bottomInfo ? '<span>'+bottomInfo+'</span>' : ''}
@@ -2017,7 +3130,7 @@
                     <div class="trip-fish">${fishTags}</div>
                     ${notesHtml}
                     <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
-                        <span style="font-size:11px;color:#5a7a8a;">
+                        <span style="font-size:11px;color:var(--text-dim);">
                             ${allBaits.length > 0 ? allBaits.length+' приманок' : 'Без приманок'}
                         </span>
                         <button class="delete-btn" onclick="deleteTrip(${trip.id})">🗑️</button>
@@ -2040,12 +3153,14 @@
             renderTrophies();
             renderDepthAnalysis();
             renderTimeAnalysis();
+            renderForecast();
             updateExportSelect();
+            checkAchievements();
             showToast('🗑️ Рыбалка удалена', 'success');
         }
 
         // ============================================================
-        // 8. СТАТИСТИКА
+        // 16. СТАТИСТИКА
         // ============================================================
         function renderStats() {
             const trips = getTrips();
@@ -2096,16 +3211,16 @@
             const maxFish = Math.max(...fishEntries.map(([,v]) => v), 1);
             const fishContainer = document.getElementById('fishChart');
             if (fishEntries.length === 0) {
-                fishContainer.innerHTML = '<div style="text-align:center;padding:20px;color:#5a7a8a;">Нет данных</div>';
+                fishContainer.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim);">Нет данных</div>';
             } else {
                 fishContainer.innerHTML = fishEntries.map(([name, count]) => `
-                    <div class="chart-bar"><span class="label">${name}</span><div class="bar"><div class="bar-fill" style="width:${(count/maxFish*100)}%;background:#4a9e9e;"></div></div><span class="value">${count}</span></div>
+                    <div class="chart-bar"><span class="label">${getFishEmoji(name)} ${name}</span><div class="bar"><div class="bar-fill" style="width:${(count/maxFish*100)}%;background:${getFishColor(name)};"></div></div><span class="value">${count}</span></div>
                 `).join('');
             }
         }
 
         // ============================================================
-        // 9. ЛИНЕЙНАЯ ДИАГРАММА
+        // 17. ЛИНЕЙНАЯ ДИАГРАММА
         // ============================================================
         function updateLineChart() {
             const container = document.getElementById('lineChartContent');
@@ -2366,7 +3481,7 @@
         }
 
         // ============================================================
-        // 10. УЛОВИСТОСТЬ ПРИМАНОК
+        // 18. УЛОВИСТОСТЬ ПРИМАНОК
         // ============================================================
         function renderBaitEfficiency() {
             const container = document.getElementById('baitEfficiencyContainer');
@@ -2439,13 +3554,17 @@
 
             const baitNames = Object.keys(baitStats);
             if (baitNames.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i>🎯</i>
-                        Нет данных о приманках.<br>
-                        Добавьте рыбалки с приманками!
-                    </div>
-                `;
+                const library = getBaitLibrary();
+                if (library.length > 0) {
+                    container.innerHTML = `
+                        <div style="padding:14px;text-align:center;color:var(--text-dim);background:var(--bg-section);border-radius:10px;">
+                            <div style="font-size:24px;margin-bottom:4px;">📊</div>
+                            Приманки добавлены, но ещё не использованы на рыбалках.
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `<div class="text-muted">Нет данных о приманках</div>`;
+                }
                 return;
             }
 
@@ -2475,37 +3594,29 @@
             const maxEfficiency = Math.max(...baitEfficiency.map(b => b.efficiency), 1);
 
             container.innerHTML = `
-                <div style="margin-bottom:14px;color:#6a8a9a;font-size:13px;">
-                    <span>🎯 Всего приманок: <strong style="color:#e8f0f0;">${baitNames.length}</strong></span>
-                    <span style="margin-left:16px;">📊 % от улова на рыбалках с этой приманкой</span>
-                    <span style="margin-left:16px;color:#4a9e9e;">👆 Кликните для деталей</span>
-                </div>
                 ${baitEfficiency.map(b => {
                     let effClass = 'high';
                     if (b.efficiency < 15) effClass = 'low';
                     else if (b.efficiency < 40) effClass = 'medium';
                     
                     return `
-                        <div class="bait-stats-item" onclick="showBaitDetails('${b.name}')">
+                        <div class="bait-stats-item" onclick="showBaitDetails('${b.name}')" style="cursor:pointer;">
                             <span class="bait-name">${b.emoji} ${b.name}</span>
                             <div class="bait-bar-wrap">
-                                <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:#4a9e9e;"></div>
+                                <div class="bait-bar-fill" style="width:${(b.efficiency / maxEfficiency * 100)}%;background:${b.efficiency >= 40 ? 'var(--green)' : b.efficiency >= 15 ? 'var(--gold)' : 'var(--red)'};"></div>
                             </div>
                             <div class="bait-stats">
                                 <span class="catch-count">${b.totalCatch} шт.</span>
-                                <span class="efficiency ${effClass}">${b.efficiency.toFixed(1)}%</span>
+                                <span style="font-size:12px;color:${b.efficiency >= 40 ? 'var(--green)' : b.efficiency >= 15 ? 'var(--gold)' : 'var(--red)'};">${b.efficiency.toFixed(0)}%</span>
                             </div>
                         </div>
                     `;
                 }).join('')}
-                <div style="margin-top:12px;padding:10px 14px;background:rgba(15,26,46,0.3);border-radius:10px;font-size:12px;color:#6a8a9a;">
-                    <span class="gold-text">●</span> Эффективность = (рыбы на приманку / рыба на рыбалках с этой приманкой) × 100%
-                </div>
             `;
         }
 
         // ============================================================
-        // 11. МОДАЛЬНОЕ ОКНО
+        // 19. МОДАЛЬНОЕ ОКНО
         // ============================================================
         function showBaitDetails(baitName) {
             const trips = getTrips();
@@ -2560,15 +3671,15 @@
                 modalDetails.innerHTML = `<div class="modal-empty">На эту приманку пока не было улова</div>`;
             } else {
                 modalDetails.innerHTML = `
-                    <div style="margin-bottom:12px;color:#6a8a9a;font-size:14px;">
-                        Всего рыбы на приманку: <strong style="color:#6ab0b0;">${totalFish} шт.</strong>
+                    <div style="margin-bottom:12px;color:var(--text-muted);font-size:14px;">
+                        Всего рыбы на приманку: <strong style="color:var(--green);">${totalFish} шт.</strong>
                     </div>
                     ${fishNames.map(fish => {
                         const data = fishData[fish];
                         const avgWeight = data.count > 0 ? (data.totalWeight / data.count).toFixed(1) : '—';
                         return `
                             <div class="modal-fish-item">
-                                <div class="fish-name">🐟 ${fish}</div>
+                                <div class="fish-name">${getFishEmoji(fish)} ${fish}</div>
                                 <div class="fish-details">
                                     <span class="total-count">Всего: ${data.total} шт.</span>
                                     ${data.maxWeight > 0 ? `<span class="max-weight">🏆 Макс. вес: ${data.maxWeight} г</span>` : ''}
@@ -2594,7 +3705,7 @@
         });
 
         // ============================================================
-        // 12. КАЛЕНДАРЬ
+        // 20. КАЛЕНДАРЬ
         // ============================================================
         let calendarState = { year: new Date().getFullYear(), month: new Date().getMonth() };
 
@@ -2661,7 +3772,7 @@
                 const isToday = dateStr === todayStr;
                 const hasTrip = !!data && data.trips.length > 0;
                 
-                let color = 'rgba(15,26,46,0.3)';
+                let color = 'var(--bg-section)';
                 let catchText = '';
                 let biteEmoji = '';
                 
@@ -2670,7 +3781,7 @@
                     const r = Math.round(74 + (74 * intensity));
                     const g = Math.round(158 - (80 * intensity));
                     const b = Math.round(158 - (80 * intensity));
-                    color = `rgba(${r}, ${g}, ${b}, 0.3)`;
+                    color = `rgba(${r}, ${g}, ${b}, 0.2)`;
                     catchText = `🐟${data.totalCatch}`;
                     
                     const avgBite = data.trips.reduce((s, t) => s + t.biteLevel, 0) / data.trips.length;
@@ -2731,9 +3842,9 @@
             });
             
             let html = `
-                <div style="background:rgba(15,26,46,0.3);border-radius:12px;padding:14px;border-left:3px solid #4a9e9e;">
-                    <div style="font-weight:700;color:#e8f0f0;font-size:15px;">📅 ${date}</div>
-                    <div style="color:#6a8a9a;font-size:13px;margin-top:4px;">🐟 Всего рыбы: <strong style="color:#6ab0b0;">${totalCatch} шт.</strong> (${dayTrips.length} рыбалок)</div>
+                <div style="background:var(--bg-section);border-radius:var(--radius-sm);padding:14px;border-left:3px solid var(--accent);">
+                    <div style="font-weight:700;color:var(--text-primary);font-size:15px;">📅 ${date}</div>
+                    <div style="color:var(--text-muted);font-size:13px;margin-top:4px;">🐟 Всего рыбы: <strong style="color:var(--green);">${totalCatch} шт.</strong> (${dayTrips.length} рыбалок)</div>
                 </div>
             `;
             
@@ -2756,19 +3867,19 @@
                 const uniqueFish = [...new Set(fishList)];
                 
                 html += `
-                    <div style="margin-top:8px;padding:10px 14px;background:rgba(15,26,46,0.2);border-radius:10px;border-left:2px solid ${trip.biteLevel >= 3 ? '#4a9e9e' : trip.biteLevel >= 2 ? '#d4a04a' : '#e87060'};">
+                    <div style="margin-top:8px;padding:10px 14px;background:var(--bg-section);border-radius:10px;border-left:2px solid ${trip.biteLevel >= 3 ? 'var(--green)' : trip.biteLevel >= 2 ? 'var(--gold)' : 'var(--red)'};">
                         <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <span style="font-weight:600;color:#d0e0e8;font-size:13px;">
+                            <span style="font-weight:600;color:var(--text-primary);font-size:13px;">
                                 ${timeStart}${timeEnd ? '-'+timeEnd : ''}
                                 ${trip.location ? '📍 '+trip.location : ''}
                             </span>
                             <span>${biteEmoji}</span>
                         </div>
-                        <div style="font-size:12px;color:#8aa8b8;margin-top:2px;">
+                        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
                             ${catchCount > 0 ? `🐟 ${catchCount} шт.` : '🐟 0 шт.'}
                             ${uniqueFish.length > 0 ? ' | ' + uniqueFish.join(', ') : ''}
                         </div>
-                        ${trip.notes ? `<div style="font-size:11px;color:#6a8a9a;margin-top:3px;">📝 ${trip.notes}</div>` : ''}
+                        ${trip.notes ? `<div style="font-size:11px;color:var(--text-dim);margin-top:3px;">📝 ${trip.notes}</div>` : ''}
                     </div>
                 `;
             });
@@ -2777,7 +3888,7 @@
         }
 
         // ============================================================
-        // 13. ТРОФЕЙНЫЙ АЛЬБОМ
+        // 21. ТРОФЕЙНЫЙ АЛЬБОМ
         // ============================================================
         function renderTrophies() {
             const container = document.getElementById('trophiesContainer');
@@ -2829,7 +3940,7 @@
                     <div class="trophy-item">
                         <span class="trophy-rank">${medal}</span>
                         <div class="trophy-info">
-                            <div class="trophy-fish">🐟 ${t.fish}</div>
+                            <div class="trophy-fish">${getFishEmoji(t.fish)} ${t.fish}</div>
                             <div class="trophy-details">
                                 ${t.location ? '📍 '+t.location : ''}
                                 ${t.bait ? ' | 🎯 '+t.bait : ''}
@@ -2844,7 +3955,7 @@
         }
 
         // ============================================================
-        // 14. АНАЛИЗ ГЛУБИНЫ
+        // 22. АНАЛИЗ ГЛУБИНЫ
         // ============================================================
         function renderDepthAnalysis() {
             const container = document.getElementById('depthContainer');
@@ -2898,7 +4009,7 @@
             const maxCatch = Math.max(1, ...sorted.map(([, data]) => data.totalCatch / data.count));
             
             container.innerHTML = `
-                <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
                     📊 ${depthData.length} рыбалок с указанием глубины
                 </div>
                 ${sorted.map(([range, data]) => {
@@ -2914,7 +4025,7 @@
                     const topBait = Object.entries(baitCounts).sort((a, b) => b[1] - a[1])[0];
                     
                     return `
-                        <div class="depth-card" style="${isBest ? 'border-color:#d4a04a;background:rgba(74,158,158,0.06);' : ''}">
+                        <div class="depth-card" style="${isBest ? 'border-color:var(--gold);background:rgba(74,158,158,0.06);' : ''}">
                             <div class="depth-header">
                                 <span>🌊 ${range}</span>
                                 <span>🐟 ${data.totalCatch} шт. (${avgCatch} ср.)</span>
@@ -2923,12 +4034,12 @@
                                 <span>🎣 ${data.count} рыбалок</span>
                                 <span>Клёв: ${avgBite}</span>
                                 ${bottomTypes.length > 0 ? `<span>${bottomTypes.map(t => getBottomTypeEmoji(t)+' '+t).join(', ')}</span>` : ''}
-                                ${topBait ? `<span style="color:#d4a04a;">🎯 Рек. приманка: ${topBait[0]}</span>` : ''}
+                                ${topBait ? `<span style="color:var(--gold);">🎯 Рек. приманка: ${topBait[0]}</span>` : ''}
                             </div>
-                            <div style="margin-top:6px;height:4px;background:rgba(74,158,158,0.10);border-radius:2px;overflow:hidden;">
-                                <div style="height:100%;width:${(avgCatch / maxCatch * 100)}%;background:#4a9e9e;border-radius:2px;"></div>
+                            <div style="margin-top:6px;height:4px;background:var(--bg-input);border-radius:2px;overflow:hidden;">
+                                <div style="height:100%;width:${(avgCatch / maxCatch * 100)}%;background:var(--accent);border-radius:2px;"></div>
                             </div>
-                            ${isBest ? '<div style="margin-top:4px;font-size:11px;color:#d4a04a;">🏆 Лучшая глубина</div>' : ''}
+                            ${isBest ? '<div style="margin-top:4px;font-size:11px;color:var(--gold);">🏆 Лучшая глубина</div>' : ''}
                         </div>
                     `;
                 }).join('')}
@@ -2944,13 +4055,13 @@
                 const bottomTypes = [...new Set(bestData.bottomTypes)];
                 
                 recContainer.innerHTML = `
-                    <div style="background:rgba(74,158,158,0.06);border-radius:12px;padding:14px;border:1px solid rgba(74,158,158,0.10);">
-                        <div style="font-weight:700;color:#e8f0f0;font-size:14px;">🎯 Рекомендация для глубины ${bestDepth}</div>
-                        <div style="font-size:13px;color:#8aa8b8;margin-top:4px;">
+                    <div style="background:rgba(74,158,158,0.06);border-radius:var(--radius-sm);padding:14px;border:1px solid rgba(74,158,158,0.10);">
+                        <div style="font-weight:700;color:var(--text-primary);font-size:14px;">🎯 Рекомендация для глубины ${bestDepth}</div>
+                        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">
                             ${topBaits.length > 0 ? 'Лучшие приманки: ' + topBaits.map(b => getBaitEmoji(b[0]) + ' ' + b[0]).join(', ') : ''}
                             ${bottomTypes.length > 0 ? ' | Дно: ' + bottomTypes.map(t => t).join(', ') : ''}
                         </div>
-                        <div style="font-size:12px;color:#6a8a9a;margin-top:4px;">
+                        <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">
                             Средний улов: ${(bestData.totalCatch / bestData.count).toFixed(1)} шт. | Клёв: ${(bestData.bites.reduce((s,b) => s + b, 0) / bestData.bites.length).toFixed(1)}
                         </div>
                     </div>
@@ -2959,7 +4070,7 @@
         }
 
         // ============================================================
-        // 15. АНАЛИЗ ВРЕМЕНИ КЛЁВА
+        // 23. АНАЛИЗ ВРЕМЕНИ КЛЁВА
         // ============================================================
         function renderTimeAnalysis() {
             const container = document.getElementById('timeContainer');
@@ -3033,19 +4144,19 @@
             `;
             
             html += `
-                <div style="margin-bottom:12px;color:#8aa8b8;font-size:13px;">
+                <div style="margin-bottom:12px;color:var(--text-muted);font-size:13px;">
                     📊 По времени суток
                 </div>
-                <div class="weather-analytics" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
                     ${Object.entries(timeOfDayData).sort((a, b) => (b[1].totalCatch / b[1].count) - (a[1].totalCatch / a[1].count)).map(([tod, data]) => {
                         const avg = data.totalCatch / data.count;
                         const isBest = tod === getTimeOfDay(bestHour.hour);
                         return `
-                            <div class="weather-card" style="background:rgba(15,26,46,0.4);border-radius:12px;padding:12px 14px;border:1px solid ${isBest ? 'rgba(74,158,158,0.3)' : 'rgba(74,158,158,0.06)'};text-align:center;">
+                            <div style="background:var(--bg-section);border-radius:var(--radius-sm);padding:12px 14px;border:1px solid ${isBest ? 'rgba(74,158,158,0.3)' : 'var(--border-light)'};text-align:center;">
                                 <span style="font-size:24px;display:block;">${getTimeEmoji(tod)}</span>
-                                <div style="font-size:20px;font-weight:700;color:#e8f0f0;">${data.totalCatch}</div>
-                                <div style="font-size:12px;color:#6ab0b0;">${avg.toFixed(1)} шт./рыбалка</div>
-                                <div style="font-size:11px;color:#6a8a9a;margin-top:2px;">${getTimeLabel(tod)} (${data.count})</div>
+                                <div style="font-size:20px;font-weight:700;color:var(--text-primary);">${data.totalCatch}</div>
+                                <div style="font-size:12px;color:var(--green);">${avg.toFixed(1)} шт./рыбалка</div>
+                                <div style="font-size:11px;color:var(--text-dim);margin-top:2px;">${getTimeLabel(tod)} (${data.count})</div>
                             </div>
                         `;
                     }).join('')}
@@ -3053,12 +4164,12 @@
             `;
             
             html += `
-                <hr style="border:none;border-top:1px solid rgba(74,158,158,0.06);margin:14px 0;">
-                <div style="font-size:13px;font-weight:600;color:#8aa8b8;margin-bottom:10px;">📈 По часам</div>
+                <hr class="divider">
+                <div style="font-size:13px;font-weight:600;color:var(--text-muted);margin-bottom:10px;">📈 По часам</div>
                 <div class="time-chart">
                     ${hoursWithData.map(h => {
                         const percent = (h.avgCatch / maxCatch * 100);
-                        const color = h.avgCatch >= maxCatch * 0.7 ? '#4a9e9e' : h.avgCatch >= maxCatch * 0.3 ? '#d4a04a' : '#e87060';
+                        const color = h.avgCatch >= maxCatch * 0.7 ? 'var(--green)' : h.avgCatch >= maxCatch * 0.3 ? 'var(--gold)' : 'var(--red)';
                         const timeLabel = String(h.hour).padStart(2, '0') + ':00';
                         return `
                             <div class="time-row">
@@ -3077,10 +4188,10 @@
             
             const bestTimeOfDay = getTimeOfDay(bestHour.hour);
             html += `
-                <hr style="border:none;border-top:1px solid rgba(74,158,158,0.06);margin:14px 0;">
-                <div style="font-size:13px;color:#8aa8b8;padding:8px 4px;">
+                <hr class="divider">
+                <div style="font-size:13px;color:var(--text-muted);padding:8px 4px;">
                     💡 <strong>Рекомендация:</strong> 
-                    Лучше всего рыбачить в <strong style="color:#4a9e9e;">${getTimeLabel(bestTimeOfDay)}</strong> 
+                    Лучше всего рыбачить в <strong style="color:var(--accent);">${getTimeLabel(bestTimeOfDay)}</strong> 
                     (${String(bestHour.hour).padStart(2, '0')}:00-${String(bestHour.hour + 1).padStart(2, '0')}:00).
                     Средний улов в это время — ${bestHour.avgCatch.toFixed(1)} шт.
                 </div>
@@ -3090,7 +4201,7 @@
         }
 
         // ============================================================
-        // 16. ЭКСПОРТ
+        // 24. ЭКСПОРТ
         // ============================================================
         function updateExportSelect() {
             const trips = getTrips();
@@ -3152,8 +4263,8 @@
             const headers = [
                 'Дата', 'Время начала', 'Время окончания', 'Место', 'Температура',
                 'Погода', 'Ветер', 'Клёв', 'Глубина', 'Тип дна',
-                'Снасть', 'Класс', 'Рыба', 'Количество', 'Вес (г)',
-                'Приманка', 'Заметки'
+                'Снасть', 'Класс', 'Спиннинг', 'Тест', 'Катушка', 'Шнур', 'Тип приманок',
+                'Рыба', 'Количество', 'Вес (г)', 'Приманка', 'Заметки'
             ];
             
             let csv = '\uFEFF' + headers.join(';') + '\n';
@@ -3176,6 +4287,11 @@
                                     t.bottomType || '',
                                     t.equipmentType || '',
                                     t.tackleType || '',
+                                    (t.rodModel || '').replace(/;/g, ','),
+                                    (t.rodTest || '').replace(/;/g, ','),
+                                    (t.reelModel || '').replace(/;/g, ','),
+                                    (t.lineModel || '').replace(/;/g, ','),
+                                    t.baitType || '',
                                     c.fishType || '',
                                     c.quantity || 0,
                                     c.weight || '',
@@ -3198,6 +4314,11 @@
                                 t.bottomType || '',
                                 t.equipmentType || '',
                                 t.tackleType || '',
+                                (t.rodModel || '').replace(/;/g, ','),
+                                (t.rodTest || '').replace(/;/g, ','),
+                                (t.reelModel || '').replace(/;/g, ','),
+                                (t.lineModel || '').replace(/;/g, ','),
+                                t.baitType || '',
                                 '',
                                 0,
                                 '',
@@ -3221,6 +4342,11 @@
                         t.bottomType || '',
                         t.equipmentType || '',
                         t.tackleType || '',
+                        (t.rodModel || '').replace(/;/g, ','),
+                        (t.rodTest || '').replace(/;/g, ','),
+                        (t.reelModel || '').replace(/;/g, ','),
+                        (t.lineModel || '').replace(/;/g, ','),
+                        t.baitType || '',
                         '',
                         0,
                         '',
@@ -3235,247 +4361,12 @@
             showToast('📊 CSV экспортирован (' + data.length + ' рыбалок)', 'success');
         }
 
-        function exportHTML() {
-            const data = getExportData();
-            if (!data || data.length === 0) {
-                showToast('Нет данных для экспорта', 'error');
-                return;
-            }
-            
-            const mode = document.querySelector('input[name="exportMode"]:checked').value;
-            const title = mode === 'single' ? '🌙 Отчёт о рыбалке' : '🌙 Отчёт о всех рыбалках';
-            
-            let html = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset="UTF-8">
-                    <title>${title}</title>
-                    <style>
-                        * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body { 
-                            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-                            background: #0f1a2e; 
-                            color: #c8d6e5; 
-                            padding: 30px 20px; 
-                            max-width: 900px; 
-                            margin: 0 auto; 
-                        }
-                        h1 { color: #4a9e9e; margin-bottom: 8px; font-size: 28px; }
-                        .subtitle { color: #6a8a9a; margin-bottom: 24px; font-size: 14px; }
-                        .stats-row { 
-                            display: flex; 
-                            gap: 16px; 
-                            flex-wrap: wrap; 
-                            margin-bottom: 24px; 
-                            background: rgba(26,42,58,0.5); 
-                            padding: 16px 20px; 
-                            border-radius: 14px; 
-                            border: 1px solid rgba(74,158,158,0.08);
-                        }
-                        .stats-row .stat { 
-                            display: flex; 
-                            align-items: baseline; 
-                            gap: 6px; 
-                            font-size: 14px; 
-                            color: #8aa8b8; 
-                        }
-                        .stats-row .stat .num { 
-                            font-size: 22px; 
-                            font-weight: 700; 
-                            color: #e8f0f0; 
-                        }
-                        .stats-row .stat .num.gold { color: #d4a04a; }
-                        .stats-row .stat .num.green { color: #6ab0b0; }
-                        
-                        .trip { 
-                            background: rgba(26,42,58,0.6); 
-                            border-radius: 14px; 
-                            padding: 18px 20px; 
-                            margin-bottom: 14px; 
-                            border-left: 4px solid #4a9e9e;
-                            border: 1px solid rgba(74,158,158,0.06);
-                        }
-                        .trip .trip-header { 
-                            display: flex; 
-                            justify-content: space-between; 
-                            align-items: center; 
-                            flex-wrap: wrap;
-                            gap: 8px;
-                        }
-                        .trip .trip-header .date { 
-                            font-weight: 700; 
-                            font-size: 16px; 
-                            color: #d0e0e8; 
-                        }
-                        .trip .trip-header .bite { font-size: 22px; }
-                        .trip .trip-details { 
-                            font-size: 13px; 
-                            color: #6a8a9a; 
-                            margin: 6px 0; 
-                            display: flex; 
-                            flex-wrap: wrap; 
-                            gap: 4px 16px; 
-                        }
-                        .trip .trip-details span { color: #8aa8b8; }
-                        .trip .trip-details .catch-count { color: #6ab0b0; font-weight: 600; }
-                        .trip .trip-details .depth-info { color: #4a9e9e; }
-                        .trip .trip-details .bottom-info { color: #d4a04a; }
-                        
-                        .trip .fish-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-                        .trip .fish-list .fish-tag {
-                            background: rgba(74,158,158,0.10);
-                            padding: 2px 12px;
-                            border-radius: 20px;
-                            font-size: 12px;
-                            font-weight: 600;
-                            color: #6ab0b0;
-                            border: 1px solid rgba(74,158,158,0.08);
-                        }
-                        .trip .bait-list { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
-                        .trip .bait-list .bait-tag {
-                            background: rgba(212,160,74,0.08);
-                            padding: 2px 10px;
-                            border-radius: 20px;
-                            font-size: 11px;
-                            color: #d4a04a;
-                            border: 1px solid rgba(212,160,74,0.08);
-                        }
-                        .trip .notes {
-                            margin-top: 8px;
-                            font-size: 13px;
-                            color: #8aa8b8;
-                            background: rgba(15,26,46,0.3);
-                            padding: 8px 12px;
-                            border-radius: 8px;
-                            border-left: 2px solid #d4a04a;
-                        }
-                        .trip .trip-footer {
-                            margin-top: 8px;
-                            font-size: 11px;
-                            color: #5a7a8a;
-                            display: flex;
-                            justify-content: space-between;
-                        }
-                        
-                        @media print {
-                            body { background: white; color: #222; }
-                            .stats-row { background: #f0f4f8; border-color: #d0d8e0; }
-                            .stats-row .stat .num { color: #1a2a3a; }
-                            .trip { background: #f5f8fa; border-color: #d0d8e0; }
-                            .trip .trip-header .date { color: #1a2a3a; }
-                            .trip .trip-details span { color: #4a6a7a; }
-                            .trip .fish-list .fish-tag { background: #e8f0f0; color: #2a6a6a; }
-                            .trip .bait-list .bait-tag { background: #f5ece0; color: #8a6a2a; }
-                            .trip .notes { background: #f5f5f0; color: #4a4a4a; }
-                            .trip .trip-footer { color: #8a8a8a; }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <h1>${title}</h1>
-                    <div class="subtitle">Дата отчёта: ${new Date().toLocaleDateString('ru-RU')}</div>
-            `;
-            
-            let totalCatch = 0;
-            let totalFish = 0;
-            const allFish = {};
-            const allBaits = {};
-            
-            data.forEach(t => {
-                if (t.baits) {
-                    t.baits.forEach(b => {
-                        if (b.name) allBaits[b.name] = (allBaits[b.name] || 0) + 1;
-                        if (b.catches) {
-                            b.catches.forEach(c => {
-                                totalCatch += c.quantity || 0;
-                                totalFish++;
-                                if (c.fishType) allFish[c.fishType] = (allFish[c.fishType] || 0) + (c.quantity || 0);
-                            });
-                        }
-                    });
-                }
-            });
-            
-            html += `
-                <div class="stats-row">
-                    <div class="stat">🎣 Рыбалок: <span class="num">${data.length}</span></div>
-                    <div class="stat">🐟 Всего рыбы: <span class="num green">${totalCatch}</span></div>
-                    <div class="stat">🏆 Видов рыб: <span class="num gold">${Object.keys(allFish).length}</span></div>
-                    <div class="stat">🎯 Приманок: <span class="num">${Object.keys(allBaits).length}</span></div>
-                </div>
-            `;
-            
-            data.sort((a, b) => new Date(b.date) - new Date(a.date));
-            data.forEach(t => {
-                const date = new Date(t.date).toLocaleDateString('ru-RU');
-                const timeStart = (t.timeStart || '').slice(0,5);
-                const timeEnd = (t.timeEnd || '').slice(0,5);
-                const biteEmoji = t.biteLevel === 3 ? '🟢' : t.biteLevel === 2 ? '🟠' : '🔴';
-                
-                let tripCatch = 0;
-                const fishCounts = {};
-                const baits = [];
-                if (t.baits) {
-                    t.baits.forEach(b => {
-                        if (b.name) baits.push(b.name);
-                        if (b.catches) {
-                            b.catches.forEach(c => {
-                                tripCatch += c.quantity || 0;
-                                fishCounts[c.fishType] = (fishCounts[c.fishType] || 0) + (c.quantity || 0);
-                            });
-                        }
-                    });
-                }
-                
-                const fishTags = Object.entries(fishCounts)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([name, count]) => `<span class="fish-tag">${name}${count > 1 ? ' ×'+count : ''}</span>`).join('');
-                
-                const baitTags = baits.map(b => `<span class="bait-tag">${getBaitEmoji(b)} ${b}</span>`).join('');
-                
-                html += `
-                    <div class="trip">
-                        <div class="trip-header">
-                            <span class="date">${date} ${timeStart}${timeEnd ? '-'+timeEnd : ''}</span>
-                            <span class="bite">${biteEmoji}</span>
-                        </div>
-                        <div class="trip-details">
-                            ${t.location ? '<span>📍 '+t.location+'</span>' : ''}
-                            ${t.temperature ? '<span>🌡️ '+t.temperature+'°C</span>' : ''}
-                            ${t.weather ? '<span>'+t.weather+'</span>' : ''}
-                            ${t.equipmentType ? '<span>🎣 '+t.equipmentType+(t.tackleType ? ' ('+t.tackleType+')' : '')+'</span>' : ''}
-                            ${tripCatch > 0 ? `<span class="catch-count">🐟 ${tripCatch} шт.</span>` : '<span>🐟 0 шт.</span>'}
-                            ${t.depth ? `<span class="depth-info">🌊 ${t.depth}м</span>` : ''}
-                            ${t.bottomType ? `<span class="bottom-info">${t.bottomType}</span>` : ''}
-                        </div>
-                        ${baitTags ? '<div class="bait-list">'+baitTags+'</div>' : ''}
-                        ${fishTags ? '<div class="fish-list">'+fishTags+'</div>' : ''}
-                        ${t.notes ? `<div class="notes">📝 ${t.notes}</div>` : ''}
-                        <div class="trip-footer">
-                            <span>${baits.length > 0 ? baits.length+' приманок' : 'Без приманок'}</span>
-                            <span>${t.id ? '#'+t.id.toString().slice(-6) : ''}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            html += `
-                </body>
-                </html>
-            `;
-            
-            downloadFile(html, 'отчёт_рыбалки.html', 'text/html;charset=utf-8');
-            showToast('📄 HTML отчёт экспортирован (' + data.length + ' рыбалок)', 'success');
-        }
-
         function exportJSON() {
             const data = getExportData();
             if (!data || data.length === 0) {
                 showToast('Нет данных для экспорта', 'error');
                 return;
             }
-            
             const json = JSON.stringify(data, null, 2);
             downloadFile(json, 'рыбалки.json', 'application/json;charset=utf-8');
             showToast('📦 JSON экспортирован (' + data.length + ' рыбалок)', 'success');
@@ -3487,19 +4378,14 @@
                 showToast('Нет данных для экспорта', 'error');
                 return;
             }
-            
             const mode = document.querySelector('input[name="exportMode"]:checked').value;
             const title = mode === 'single' ? 'МОЯ РЫБАЛКА' : 'МОИ РЫБАЛКИ';
-            
-            let text = '🌙 ' + title + '\n';
-            text += '='.repeat(40) + '\n\n';
-            
+            let text = '🌙 ' + title + '\n' + '='.repeat(40) + '\n\n';
             data.sort((a, b) => new Date(b.date) - new Date(a.date));
             data.forEach((t, i) => {
                 const date = new Date(t.date).toLocaleDateString('ru-RU');
                 const timeStart = (t.timeStart || '').slice(0,5);
                 const timeEnd = (t.timeEnd || '').slice(0,5);
-                
                 let totalCatch = 0;
                 const fishList = [];
                 const baitList = [];
@@ -3509,13 +4395,11 @@
                         if (b.catches) {
                             b.catches.forEach(c => {
                                 totalCatch += c.quantity || 0;
-                                const fishStr = c.fishType + (c.quantity > 1 ? ' ×'+c.quantity : '') + (c.weight ? ' ('+c.weight+'г)' : '');
-                                fishList.push(fishStr);
+                                fishList.push(c.fishType + (c.quantity > 1 ? ' ×'+c.quantity : '') + (c.weight ? ' ('+c.weight+'г)' : ''));
                             });
                         }
                     });
                 }
-                
                 text += `🎣 Рыбалка #${i+1}\n`;
                 text += `📅 ${date} ${timeStart}${timeEnd ? '-'+timeEnd : ''}\n`;
                 if (t.location) text += `📍 ${t.location}\n`;
@@ -3525,42 +4409,23 @@
                 if (t.depth) text += `🌊 Глубина: ${t.depth}м\n`;
                 if (t.bottomType) text += `🪨 Дно: ${t.bottomType}\n`;
                 if (t.equipmentType) text += `🎣 Снасть: ${t.equipmentType}${t.tackleType ? ' ('+t.tackleType+')' : ''}\n`;
+                if (t.rodModel) text += `   Спиннинг: ${t.rodModel}${t.rodTest ? ' ('+t.rodTest+')' : ''}\n`;
+                if (t.reelModel) text += `   Катушка: ${t.reelModel}\n`;
+                if (t.lineModel) text += `   Шнур: ${t.lineModel}\n`;
+                if (t.baitType) text += `   Тип приманок: ${t.baitType}\n`;
                 text += `🐟 Улов: ${totalCatch} шт.\n`;
                 if (fishList.length > 0) text += `   Рыба: ${fishList.join(', ')}\n`;
                 if (baitList.length > 0) text += `   Приманки: ${baitList.join(', ')}\n`;
                 if (t.notes) text += `📝 ${t.notes}\n`;
                 text += '─'.repeat(30) + '\n\n';
             });
-            
-            text += `📊 Итого: ${data.length} рыбалок, ${data.reduce((s, t) => {
-                let c = 0;
-                if (t.baits) {
-                    t.baits.forEach(b => {
-                        if (b.catches) {
-                            b.catches.forEach(f => { c += f.quantity || 0; });
-                        }
-                    });
-                }
-                return s + c;
-            }, 0)} шт. рыбы\n`;
-            
+            text += `📊 Итого: ${data.length} рыбалок, ${data.reduce((s, t) => { let c = 0; if (t.baits) { t.baits.forEach(b => { if (b.catches) { b.catches.forEach(f => { c += f.quantity || 0; }); } }); } return s + c; }, 0)} шт. рыбы\n`;
             downloadFile(text, 'рыбалки.txt', 'text/plain;charset=utf-8');
             showToast('📝 Текст экспортирован (' + data.length + ' рыбалок)', 'success');
         }
 
-        function downloadFile(content, filename, mimeType) {
-            const blob = new Blob([content], { type: mimeType + ';charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        }
-
         // ============================================================
-        // 17. УВЕДОМЛЕНИЯ
+        // 25. УВЕДОМЛЕНИЯ
         // ============================================================
         function showToast(msg, type = 'info') {
             const toast = document.getElementById('toast');
@@ -3571,12 +4436,14 @@
         }
 
         // ============================================================
-        // 18. СБРОС
+        // 26. СБРОС
         // ============================================================
         function clearAllData() {
-            if (confirm('Удалить ВСЕ данные о рыбалках и шаблоны?')) {
+            if (confirm('Удалить ВСЕ данные о рыбалках, приманках, шаблонах и достижениях?')) {
                 localStorage.removeItem('fishingTripsV2');
-                localStorage.removeItem('fishingTemplates');
+                localStorage.removeItem('fishingTemplatesV2');
+                localStorage.removeItem('baitLibrary');
+                localStorage.removeItem('achievements');
                 updateBaitDatalist();
                 renderList();
                 renderStats();
@@ -3587,18 +4454,32 @@
                 renderTemplates();
                 renderDepthAnalysis();
                 renderTimeAnalysis();
+                renderForecast();
                 updateExportSelect();
+                renderBaitLibrary();
+                renderAchievements();
                 showToast('Все данные удалены', 'error');
             }
         }
 
         // ============================================================
-        // 19. ЗАПУСК
+        // 27. ЗАПУСК
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('date').value = today;
             document.getElementById('timeStart').value = new Date().toTimeString().slice(0,5);
+            
+            // Скрываем PWA установку если уже установлено
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                document.getElementById('pwaInstall').style.display = 'none';
+            }
+            
+            // Скрываем форму добавления приманки
+            document.getElementById('baitAddForm').style.display = 'none';
+            
+            // Загружаем тему
+            loadTheme();
             
             updateBaitDatalist();
             
@@ -3610,6 +4491,9 @@
             renderTemplates();
             renderDepthAnalysis();
             renderTimeAnalysis();
+            renderForecast();
+            renderBaitLibrary();
+            renderAchievements();
             updateExportSelect();
             setTimeout(updateLineChart, 300);
             
@@ -3622,6 +4506,9 @@
                     updateBaitDatalist();
                 }
             });
+            
+            // Проверяем достижения при старте
+            setTimeout(checkAchievements, 500);
         });
     </script>
 </body>
