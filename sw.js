@@ -1,5 +1,5 @@
 // sw.js — Service Worker для офлайн-режима
-const CACHE_NAME = 'fishing-diary-v1';
+const CACHE_NAME = 'fishing-diary-v3';
 const urlsToCache = [
     './',
     './index.html'
@@ -15,7 +15,7 @@ self.addEventListener('install', function(event) {
     );
 });
 
-// Активация
+// Активация — удаляем старые кэши
 self.addEventListener('activate', function(event) {
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
